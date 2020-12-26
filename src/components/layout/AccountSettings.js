@@ -1,5 +1,4 @@
 import React from "react";
-import GridDisplay from "./GridDisplay";
 import { Layout, Form, Input, Button, Checkbox } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { Context } from "../context/Context";
@@ -28,7 +27,7 @@ class AccountSettings extends React.Component {
     this.setState({email: context.email});
     const dashboards = await GetDashboards(localStorage.getItem('token'))
       .catch(err => {console.log(err); return []});
-    dispatch({type: 'CHANGE SIDEBAR', payload: {dashboards: dashboards}});
+    dispatch({type: 'CHANGE _', payload: {dashboards: dashboards}});
   }
 
   async componentDidUpdate(prevProps) {
@@ -40,7 +39,7 @@ class AccountSettings extends React.Component {
     console.log('Success:', values.email);
     await EditUser(localStorage.getItem('token'), values.email)
       .then(res => {
-        dispatch({type: "CHANGE PROFILE", payload: {email: values.email}});
+        dispatch({type: "CHANGE _", payload: {email: values.email}});
       });
   };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useContext, useState} from "react";
 import "./App.css";
 import Homepage from "./components/layout/Homepage";
 import WidgetDataEntry from "./components/widgetSelection/WidgetDataEntry";
@@ -6,8 +6,8 @@ import SideBar from "./components/layout/SideBar";
 import NavBar from "./components/layout/NavBar";
 import Footer from "./components/layout/Footer";
 // Import context
-import { ThemeProvider } from "./components/context/ThemeContext";
 import { ContextProvider } from "./components/context/Context";
+import { Context } from "./components/context/Context";
 
 import "semantic-ui-css/semantic.min.css";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
@@ -23,12 +23,32 @@ import SignUpPage from "./components/auth/SignUpPage";
 import AccountSettings from "./components/layout/AccountSettings";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { Layout } from 'antd';
+import { ReadUser } from './api/api';
 
 function App() {
   return (
+    <ContextProvider>
+      <Main/>
+    </ContextProvider>
+
+  );
+}
+
+function Main() {
+  const context = useContext(Context);
+  const {dispatch} = context;
+  useEffect(() => {
+      ReadUser(localStorage.getItem('token'))
+          .then(res => {
+            dispatch({type: 'CHANGE _', payload: {email: res.email, loading: false, auth: true}});
+          })
+          .catch(() => {
+            dispatch({type: 'CHANGE _', payload: {loading: false, auth: false}});
+          });
+  }, [])
+  return(
     <Router>
-      <Layout>
-        <ContextProvider>
+        <Layout>
           <Route
             path={['/home', '/settings']}
             component={() => <NavBar title="Peagle" user="DAML" />}
@@ -37,22 +57,22 @@ function App() {
             <Route path={['/home', '/settings']} component={SideBar} />
             <Switch>
               <Redirect exact path = '/' to = '/home'/>
-              <ProtectedRoute exact path="/home" component={Homepage} />
-              <ProtectedRoute exact path="/home/:id" component={Homepage} />
-              <ProtectedRoute exact path="/settings" component={AccountSettings} />
+              <Route exact path="/home" component={Homepage} />
+              <Route exact path="/home/:id" component={Homepage} />
+              <Route exact path="/settings" component={AccountSettings} />
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/signup" component={SignUpPage} />
               <Route exact path="/reset-password" component={FPPage} />
+              <Redirect from="*" to= "/home"/>
             </Switch>
           </Layout>
           <Route
             path={['/home', '/settings']}
             component={Footer}
           />
-        </ContextProvider>
-      </Layout>
-    </Router>
-  );
+        </Layout>
+      </Router>
+  )
 }
 
 export default App;

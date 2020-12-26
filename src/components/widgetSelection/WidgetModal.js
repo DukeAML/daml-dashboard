@@ -5,7 +5,6 @@ import {AppstoreAddOutlined} from "@ant-design/icons";
 import WidgetModalGrid from "./WidgetModalGrid";
 import WidgetDataEntry from "./WidgetDataEntry";
 
-import GridDisplay from "../layout/GridDisplay";
 import SimpleLineChart from "../widgets/SimpleLineChart";
 import SimpleBarChart from "../widgets/SimpleBarChart";
 import BubbleChart from "../widgets/BubbleChart";

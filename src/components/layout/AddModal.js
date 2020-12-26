@@ -21,7 +21,7 @@ class AddModal extends React.Component {
   handleOk = async () => {
       const { context, dispatch } = this.context;
       const dashboard = await CreateDashboard(localStorage.getItem('token'), this.state.title);
-      dispatch({type: 'CHANGE SIDEBAR', payload: {dashboards: context.dashboards.concat(dashboard)}});
+      dispatch({type: 'CHANGE _', payload: {dashboards: context.dashboards.concat(dashboard)}});
       console.log(context)
       if(context.key === '')
         this.props.history.push(`/home/${dashboard._id}`);

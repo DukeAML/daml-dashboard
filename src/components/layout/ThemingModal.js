@@ -42,7 +42,7 @@ class ThemingModal extends React.Component {
 
   handleOk = e => {
     const { theme, dispatch } = this.context;
-    dispatch({ type: "CHANGE THEME", payload: this.state.theme });
+    dispatch({ type: "CHANGE _", payload: this.state.theme });
 
     this.setState({ visible: false, activeSetting: "" });
   };

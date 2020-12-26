@@ -26,7 +26,7 @@ class Homepage extends React.Component {
       .catch(err => {return null})
     console.log(dashboard)
     if(!dashboard) {
-      dispatch({type: 'CHANGE SIDEBAR', payload: {dashboards: dashboards}});
+      dispatch({type: 'CHANGE _', payload: {dashboards: dashboards}});
       this.props.history.push('/home');
     }
     else {
@@ -34,7 +34,7 @@ class Homepage extends React.Component {
         this.setState({private: true});
       }
       let title = dashboard.name;
-      dispatch({type: 'CHANGE SIDEBAR', payload: {key: id, title: title, dashboards: dashboards}});
+      dispatch({type: 'CHANGE _', payload: {key: id, title: title, dashboards: dashboards}});
     }
   }
 
@@ -43,11 +43,11 @@ class Homepage extends React.Component {
     const id = this.props.match.params.id;
     if(prevProps.match.params.id !== id) {
       if(!id) {
-        dispatch({type: 'CHANGE SIDEBAR', payload: {key: id}});
+        dispatch({type: 'CHANGE _', payload: {key: id}});
       }
       else {
         const title = context.dashboards.find(dash => dash._id === id).name
-        dispatch({type: 'CHANGE SIDEBAR', payload: {key: id, title: title}});
+        dispatch({type: 'CHANGE _', payload: {key: id, title: title}});
       }
     }
   }
@@ -76,7 +76,7 @@ class Homepage extends React.Component {
     }
     else {
       return (
-        <Content className = 'content' style = {{marginTop: '10vh'}}>
+        <Content className = 'content' style = {{marginTop: '10vh', marginBottom: '66vh'}}>
           <div style = {{lineHeight: 1.2,  fontSize: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             Welcome, create or choose a dashboard
           </div>

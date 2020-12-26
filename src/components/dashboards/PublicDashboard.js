@@ -257,44 +257,8 @@ class PublicDashboard extends React.PureComponent {
     this.setState({ items: _.reject(this.state.items, { i: i }) });
   };
 
-  save = async () => {
-    const { context, dispatch } = this.context;
-    let nw = [];
-    await Promise.all(this.state.layout.map((chart, i) => {
-      if(chart.i.charAt(0) === 'n') {
-        return CreateChart(localStorage.getItem('token'), {grid: [chart.x, chart.y, chart.w, chart.h], type: this.state.items[i].widgetType})
-          .then(res => {
-            let newitems = [...this.state.items];
-            let newitem = {...newitems[i]};
-            newitem.i = res._id;
-            nw.push(res._id);
-            this.setState({items: newitems});
-          })
-      }
-      else {
-          return UpdateChart(localStorage.getItem('token'), chart.i, {grid: [chart.x, chart.y, chart.w, chart.h], type: this.state.items[i].widgetType})
-            .catch(err => console.log(err));
-      }
-    }))
-    if(this.rem.length > 0) {
-      for(var id of this.rem) {
-        await DeleteChart(localStorage.getItem('token'), id)
-          .catch(err => console.log(err))
-      }
-      this.rem = [];
-    }
-    if(nw.length > 0) {
-      let charts = {
-        charts: nw
-      }
-      await EditDashboard(localStorage.getItem('token'), context.key, charts)
-        .catch(err => console.log(err));
-    }
-  }
-
   changeTitle = (e) => {
     this.setState({title: e.target.value});
-    // console.log(e.target.value);
   }
 
   render() {
@@ -311,6 +275,7 @@ class PublicDashboard extends React.PureComponent {
                 this.handleAddWidget(type, dataProps);
               }}
             />
+            <ThemingModal />
           </div>
         </center>
         <ResponsiveReactGridLayout

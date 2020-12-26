@@ -184,13 +184,14 @@ class WidgetDataEntry extends React.PureComponent {
         initial[name] = XLSX.utils.sheet_to_json(sheet);
         return initial;
       }, {});
+      let arrs = Object.values(jsonHeaderData)[0];
 
       let headers = Object.values(jsonHeaderData)[0][0];
       let content = Object.values(jsonContentData)[0];
       console.log(headers);
       console.log(content);
 
-      PostData({title: fileName, file_data: content})
+      PostData(localStorage.getItem('token'), {title: fileName, file_data: arrs})
 
       this.setState({
         processedFile: {content, headers},

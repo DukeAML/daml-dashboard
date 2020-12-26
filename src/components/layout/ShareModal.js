@@ -33,7 +33,6 @@ class ShareModal extends React.Component {
         .then(res => {return res})
         .catch(err => {return null});
     this.users = dash['users'];
-    console.log(this.users);
     this.setState({pub: this.users.includes("000000000000000000000000")});
   }
 

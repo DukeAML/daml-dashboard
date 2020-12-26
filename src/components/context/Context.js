@@ -4,7 +4,9 @@ import React, { createContext, useContext, useReducer, useState } from "react";
 // const ls = JSON.parse(localStorage.getItem('sidebar'))
 const initialState = 
 {
-  email: '',
+  loading: true,
+  auth: false,
+  email: 'Guest',
   key: '',
   title: '',
   submenu: ['sub1'],
@@ -29,23 +31,11 @@ const reducer = (state, action) => {
   localStorage.setItem('sidebar', JSON.stringify(obj));
 
   switch (type) {
-    case "CHANGE SIDEBAR": {
+    case "CHANGE _": {
       return {
         ...state,
         ...payload
       };
-    }
-    case "CHANGE THEME": {
-      return {
-        ...state,
-        ...payload
-      };
-    }
-    case "CHANGE PROFILE": {
-      return {
-        ...state,
-        ...payload
-      }
     }
     default:
       return state;

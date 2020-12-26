@@ -32,6 +32,9 @@ class NavBar extends React.Component {
 
   render() {
     const { context, dispatch } = this.context;
+    if(!context.auth) {
+      return null;
+    }
     return (
       <Sider
         collapsible

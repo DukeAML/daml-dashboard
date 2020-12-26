@@ -36,13 +36,13 @@ class NavBar extends React.Component{
   toSettings = () => {
     const { context, dispatch } = this.context;
     this.props.history.push('/settings');
-    dispatch({type: 'CHANGE SIDEBAR', payload: {key: '', title: ''}});
+    dispatch({type: 'CHANGE _', payload: {key: '', title: ''}});
     this.setState({showprof: false});
   }
 
   toggleSidebar = () => {
     const { context, dispatch } = this.context;
-    dispatch({type: 'CHANGE SIDEBAR', payload: {collapsed: !context.collapsed}});
+    dispatch({type: 'CHANGE _', payload: {collapsed: !context.collapsed}});
   }
    
    render() {
