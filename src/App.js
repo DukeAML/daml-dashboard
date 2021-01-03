@@ -35,19 +35,29 @@ function App() {
 }
 
 function Main() {
-  const context = useContext(Context);
-  const {dispatch} = context;
+  const con = useContext(Context);
+  const {context, dispatch} = con;
   useEffect(() => {
       ReadUser(localStorage.getItem('token'))
           .then(res => {
+            console.log(res);
             dispatch({type: 'CHANGE _', payload: {email: res.email, loading: false, auth: true}});
           })
-          .catch(() => {
+          .catch(err => {
+            console.log(err);
             dispatch({type: 'CHANGE _', payload: {loading: false, auth: false}});
           });
   }, [])
-  return(
-    <Router>
+  if(context.loading !== false) {
+    return (
+      <div style = {{width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        LOADING ...
+      </div>
+    )
+  }
+  else {
+    return (
+     <Router>
         <Layout>
           <Route
             path={['/home', '/settings']}
@@ -56,14 +66,14 @@ function Main() {
           <Layout>
             <Route path={['/home', '/settings']} component={SideBar} />
             <Switch>
-              <Redirect exact path = '/' to = '/home'/>
+              <Redirect exact from = '/' to = '/home'/>
               <Route exact path="/home" component={Homepage} />
               <Route exact path="/home/:id" component={Homepage} />
               <Route exact path="/settings" component={AccountSettings} />
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/signup" component={SignUpPage} />
               <Route exact path="/reset-password" component={FPPage} />
-              <Redirect from="*" to= "/home"/>
+              <Redirect from="*" to= "/login"/>
             </Switch>
           </Layout>
           <Route
@@ -72,7 +82,8 @@ function Main() {
           />
         </Layout>
       </Router>
-  )
+    )  
+  }
 }
 
 export default App;

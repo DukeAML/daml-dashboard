@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { Row, Col, Divider, Space } from 'antd';
+import { Context } from "../context/Context";
 import {BrowserRouter, Route, Link, withRouter } from 'react-router-dom';
 
 import { Login as login } from '../../api/api';
@@ -25,15 +26,18 @@ const tailLayout = {
 
 
 class Login extends React.Component {
+    static contextType = Context;
     state = {
         username: "root",
         password: "pass",
     }
 
     onFinish = () => {
+        const { context, dispatch } = this.context;
         login(this.state.username, this.state.password)
-        .then(data => {
-            localStorage.setItem('token', data.token);
+        .then(res => {
+            localStorage.setItem('token', res.token);
+            dispatch({type: 'CHANGE _', payload: {email: res.email, auth: true}});
             this.props.history.push('/home');
         })
         .catch(err => {

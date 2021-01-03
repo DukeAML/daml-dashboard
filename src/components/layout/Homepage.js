@@ -2,9 +2,10 @@ import React from "react";
 import OwnedDashboard from "../dashboards/OwnedDashboard";
 import PublicDashboard from "../dashboards/PublicDashboard";
 import { Layout } from 'antd';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { Context } from "../context/Context";
 import { GetDashboards, GetDashboard } from '../../api/api';
+import LoginPage from "../auth/LoginPage";
 import SideBar from './SideBar';
 
 const { Content } = Layout;
@@ -16,26 +17,36 @@ class Homepage extends React.Component {
   }
 
   async componentDidMount() {
+    this.updateDashboards();
+  }
+
+  updateKey = async () => {
+    const { context, dispatch } = this.context;
+    const id = this.props.match.params.id;
+    if(id) {
+      const dashboard = await GetDashboard(localStorage.getItem('token'), id)
+        .then(res => {return res})
+        .catch(err => {return null})
+      if(!dashboard) {
+        this.props.history.push('/home');
+      }
+      else {
+        if(dashboard.edit === 0) {
+          this.setState({private: true});
+        }
+        let title = dashboard.name;
+        dispatch({type: 'CHANGE _', payload: {key: id, title: title}});
+      }
+    }
+  }
+
+  updateDashboards = async () => {
     const { context, dispatch } = this.context;
     const id = this.props.match.params.id;
     const dashboards = await GetDashboards(localStorage.getItem('token'))
       .catch(err => {console.log(err); return []});
-      console.log(dashboards);
-    const dashboard = await GetDashboard(localStorage.getItem('token'), id)
-      .then(res => {return res})
-      .catch(err => {return null})
-    console.log(dashboard)
-    if(!dashboard) {
-      dispatch({type: 'CHANGE _', payload: {dashboards: dashboards}});
-      this.props.history.push('/home');
-    }
-    else {
-      if(dashboard.edit === 0) {
-        this.setState({private: true});
-      }
-      let title = dashboard.name;
-      dispatch({type: 'CHANGE _', payload: {key: id, title: title, dashboards: dashboards}});
-    }
+    this.updateKey();
+    dispatch({type: 'CHANGE _', payload: {dashboards: dashboards}});
   }
 
   async componentDidUpdate(prevProps) {
@@ -75,13 +86,20 @@ class Homepage extends React.Component {
       }
     }
     else {
-      return (
-        <Content className = 'content' style = {{marginTop: '10vh', marginBottom: '66vh'}}>
-          <div style = {{lineHeight: 1.2,  fontSize: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            Welcome, create or choose a dashboard
-          </div>
-        </Content>
-      )   
+      if(context.auth) {
+        return (
+          <Content className = 'content' style = {{marginTop: '10vh', marginBottom: '66vh'}}>
+            <div style = {{lineHeight: 1.2,  fontSize: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+              Welcome, create or choose a dashboard
+            </div>
+          </Content>
+        )          
+      }
+      else {
+        return (
+          <Redirect to = '/login'/>
+        )
+      }
     }
   }
 }
