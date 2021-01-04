@@ -28,7 +28,7 @@ import { ReadUser } from './api/api';
 function App() {
   return (
     <ContextProvider>
-      <Main/>
+      <Main className = 'App'/>
     </ContextProvider>
 
   );
