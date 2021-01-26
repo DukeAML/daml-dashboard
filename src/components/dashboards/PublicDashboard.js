@@ -124,7 +124,7 @@ widgetOptions.forEach(widget => {
   widgetDict[widget.value] = widget.widget;
 });
 
-console.log("widget dict:", widgetDict);
+// console.log("widget dict:", widgetDict);
 
 class PublicDashboard extends React.PureComponent {
   state = {

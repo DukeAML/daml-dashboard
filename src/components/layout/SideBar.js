@@ -7,6 +7,7 @@ import { GetDashboards } from '../../api/api';
 import { Context } from "../context/Context";
 import { withRouter } from 'react-router-dom';
 import AddModal from './AddModal';
+import DataModal from './DataModal';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -77,25 +78,10 @@ class NavBar extends React.Component {
             </span>
           }
           >
-            <SubMenu key="g1" className="option" title={<Option opt="BSR v1" />}>
-              <Menu.Item key="5" className="submenu-data">
-                <Option opt={<span><SwitcherOutlined/>PeanutButter.csv</span>}/>
-              </Menu.Item>
-              <Menu.Item key="6" className="submenu-data"><Option opt={<span><SwitcherOutlined/>BSR API</span>}/></Menu.Item>
-              <Menu.Item key="7" className="submenu-data"><Option opt={<span><SwitcherOutlined/>Sales.csv</span>}/></Menu.Item>
-            </SubMenu>
-
-            <SubMenu key="g2" className="option" title={<Option opt="Phoenix Project" />}>
-              <Menu.Item key="8" className="submenu-data" ><Option opt={<span><SwitcherOutlined/>Companies.csv</span>}/></Menu.Item>
-              <Menu.Item key="9" className="submenu-data"><Option opt={<span><SwitcherOutlined/>Participants.csv</span>}/></Menu.Item>
-              <Menu.Item key="10" className="submenu-data"><Option opt={<span><SwitcherOutlined/>PeanutButter.csv</span>}/></Menu.Item>
-            </SubMenu>
-
-            <SubMenu key="g3" className="option" title={<Option opt="DoD" />}>
-              <Menu.Item key="11" className="submenu-data" ><Option opt={<span><SwitcherOutlined/>Jelly.csv</span>}/></Menu.Item>
-              <Menu.Item key="12" className="submenu-data"><Option opt={<span><SwitcherOutlined/>BeeMovieScript.txt</span>}/></Menu.Item>
-              <Menu.Item key="13" className="submenu-data"><Option opt={<span><SwitcherOutlined/>image.png</span>}/></Menu.Item>
-            </SubMenu>
+            {/* <SubMenu key="g1" className="option" title={<Option opt="BSR v1" />}>
+              
+            </SubMenu> */}
+            <DataModal/>
           </SubMenu>
         </Menu>
       </Sider>

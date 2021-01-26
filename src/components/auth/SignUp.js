@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Input, Button, Checkbox } from "antd";
 import { Row, Col, Divider, Space } from "antd";
+import { Context } from "../context/Context";
 import { withRouter } from "react-router-dom";
 import { Register as register } from "../../api/api";
 import "../../css/Landing.css";
@@ -21,6 +22,7 @@ const tailLayout = {
 };
 
 class SignUp extends React.Component {
+  static contextType = Context;
   state = {
     username: "root",
     email: "email",
@@ -29,12 +31,14 @@ class SignUp extends React.Component {
   };
 
   onFinish = () => {
+    const { context, dispatch } = this.context;
     if (this.state.password !== this.state.passwordV) {
       alert("Passwords must match!");
     } else {
       console.log(this.state.email);
       register(this.state.email, this.state.password)
-        .then((data) => {
+        .then(data => {
+          dispatch({type: 'CHANGE _', payload: {email: data.user.email, auth: true}});
           localStorage.setItem("token", data.token);
           this.props.history.push("/home");
         })

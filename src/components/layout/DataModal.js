@@ -2,10 +2,10 @@ import React from "react";
 import { Modal, Menu, Input, Button } from "antd";
 import { CreateDashboard, GetDashboards } from '../../api/api';
 import { withRouter } from 'react-router-dom';
-import { UserOutlined, ProfileFilled, BlockOutlined, SettingFilled, FileAddFilled, SwitcherOutlined} from '@ant-design/icons';
+import { UserOutlined, ProfileFilled, BlockOutlined, SettingFilled, FileAddFilled, CloudUploadOutlined} from '@ant-design/icons';
 import { Context } from "../context/Context";
 
-class AddModal extends React.Component {
+class DataModal extends React.Component {
   state = { visible: false, title: ''};
   static contextType = Context;
 
@@ -19,13 +19,6 @@ class AddModal extends React.Component {
 
   handleOk = async () => {
       const { context, dispatch } = this.context;
-      const dashboard = await CreateDashboard(localStorage.getItem('token'), this.state.title);
-      dispatch({type: 'CHANGE _', payload: {dashboards: context.dashboards.concat(dashboard)}});
-      console.log(context)
-      if(context.key === '')
-        this.props.history.push(`/home/${dashboard._id}`);
-      else
-        this.props.history.push(dashboard._id);
       this.setState({title: '', visible: false});
   }
 
@@ -33,7 +26,7 @@ class AddModal extends React.Component {
     return (
       <span>
         <Menu.Item key="4" className="menu-item" {...this.props} onClick = {this.showModal}>
-          <span style = {{display: 'flex', alignItems: 'center'}}><FileAddFilled/>Add Dashboard</span>
+          <span style = {{display: 'flex', alignItems: 'center'}}><CloudUploadOutlined/>Upload Data</span>
         </Menu.Item>
         <Modal
           title={"Add Dashboard"}
@@ -49,14 +42,13 @@ class AddModal extends React.Component {
             padding: "2rem 3rem"
           }}
         >
-            <Input placeholder = 'Enter title'
-                onChange = {e => {this.setState({title: e.target.value})}}
-                value = {this.state.title}>
-            </Input>
+            <div>
+              /* Data entry will be here */
+            </div>
         </Modal>
       </span>
     );
   }
 }
 
-export default withRouter(AddModal);
+export default withRouter(DataModal);

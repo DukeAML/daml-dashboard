@@ -40,7 +40,6 @@ function Main() {
   useEffect(() => {
       ReadUser(localStorage.getItem('token'))
           .then(res => {
-            console.log(res);
             dispatch({type: 'CHANGE _', payload: {email: res.email, loading: false, auth: true}});
           })
           .catch(err => {

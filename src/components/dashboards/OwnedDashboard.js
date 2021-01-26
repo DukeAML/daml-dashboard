@@ -125,7 +125,7 @@ widgetOptions.forEach(widget => {
   widgetDict[widget.value] = widget.widget;
 });
 
-console.log("widget dict:", widgetDict);
+// console.log("widget dict:", widgetDict);
 
 class OwnedDashboard extends React.PureComponent {
   state = {
