@@ -12,7 +12,7 @@ import { Context } from "./components/context/Context";
 import "semantic-ui-css/semantic.min.css";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import {
-  BrowserRouter as Router,
+  BrowserRouter as Router, 
   Route,
   Switch,
   Redirect
