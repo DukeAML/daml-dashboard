@@ -1,5 +1,5 @@
 import React from "react";
-import { Dropdown, Row, Col, Upload, Button, Menu } from "antd";
+import { Dropdown, Row, Col, Upload, Button, Menu, Input, Form} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { DownOutlined } from "@ant-design/icons";
 
@@ -123,6 +123,7 @@ class WidgetDataEntry extends React.PureComponent {
     fileList: [],
     processedFile: { contents: "", headers: [] },
     axes: {},
+    chartTitle: "",
     rerenderWidget: false
   };
 
@@ -195,7 +196,8 @@ class WidgetDataEntry extends React.PureComponent {
 
       this.setState({
         processedFile: {content, headers},
-        axes: { x: headers[0], y: headers[1] }
+        axes: { x: headers[0], y: headers[1] },
+        chartTitle: ""
       });
       const dataProps = { data: content, ...this.state.axes };
       this.props.onReceiveDataProps(dataProps);
@@ -213,6 +215,13 @@ class WidgetDataEntry extends React.PureComponent {
     const { headers } = this.state.processedFile;
     this.setState({ axes: { ...this.state.axes, [axis]: headers[key] } });
   };
+
+  handleChartTitleChange = e => {
+    console.log(e.target.value);
+    //this.setState({chartTitle: e.target.value});
+    //const titleProps = {chartTitle: e.target.value};
+    this.props.onReceiveTitleProps(e.target.value);
+  } //create titleprops string and not object
 
   render() {
     const { context, dispatch } = this.context;
@@ -269,6 +278,26 @@ class WidgetDataEntry extends React.PureComponent {
         ""
       );
 
+    const {TextArea} = Input;
+
+    const inputTitle = headers.length != 0 ? (
+      
+      <React.Fragment>
+        <div className="widget-header">
+          Insert your chart name here (50 character limit).
+        </div>
+        <div style={{margin: "1rem"}}>
+          <Input 
+           maxLength={50} 
+          placeholder="Title"
+          onChange={this.handleChartTitleChange}/>
+        </div>
+      </React.Fragment>
+    ) : (
+      ""
+    );
+
+
     const dataProps = content ? { data: content, ...this.state.axes } : {};
 
     return (
@@ -276,7 +305,8 @@ class WidgetDataEntry extends React.PureComponent {
         {/*
         can also use this.props.widget as title text; decide later what
         makes more sense
-        */}
+        */
+        }
         <center className="widget-header"> {selectedWidget.value} </center>
         <Row>
           <Col style={{ height: "20rem" }} span={24}>
@@ -302,6 +332,7 @@ class WidgetDataEntry extends React.PureComponent {
             </div>
           </Col>
           <Col span={24}>{axesConfig}</Col>
+          <Col span={24}>{inputTitle}</Col>
         </Row>
       </div>
     );
