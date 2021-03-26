@@ -1,9 +1,8 @@
 import React from 'react';
 import ProfileForm from './ProfileForm';
-import {BrowserRouter, Route, Link} from 'react-router-dom';
-import { Layout, Menu, Breadcrumb, Button } from 'antd';
-import { Drawer, Descriptions, Card } from 'antd';
-import { Row, Col, Divider } from 'antd';
+import { Layout, Button } from 'antd';
+import { Descriptions, Card } from 'antd';
+import { Row, Col } from 'antd';
 import "antd/dist/antd.css";
 import '../../css/ProfilePage.css';
 import {EditOutlined} from '@ant-design/icons';
@@ -13,10 +12,8 @@ import { UserProfileInfoStore } from '../context/UserProfileInfoContext';
 const { Header, Content, Footer, Sider } = Layout;
 
 class ProfilePage extends React.Component {
-    constructor(props, context) {
-        super(props, context)
+    constructor() {
         this.drawerElement = React.createRef()
-        console.log(this.context)
         this.setState({
             userID: this.context.userID,
             firstName: this.context.firstName,

@@ -3,7 +3,7 @@ import { Dropdown, Row, Col, Upload, Button, Menu, Input, Form} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { DownOutlined } from "@ant-design/icons";
 
-import { Context } from "../context/Context";
+import { Context } from "../../context/Context";
 
 // import widgets
 import SimpleLineChart from "../widgets/SimpleLineChart";
@@ -23,7 +23,6 @@ import SimpleRadialBarChart from "../widgets/SimpleRadialBarChart";
 
 // Import data processing tools
 import { processFile } from "../../tools/dataHandling/csvHandling";
-import { PostData } from "../../api/api";
 import * as XLSX from "xlsx";
 
 const widgets = [
@@ -163,7 +162,7 @@ class WidgetDataEntry extends React.PureComponent {
 //what the customrequest calls, works for both xlsx and csv DOES ASYNC MAKE SENSE HERE?
    onFileChange({ file, onSuccess }) {
     console.log(file);
-    let fileName = file['name']
+    // let fileName = file['name']
     let workBook = null;
     let jsonHeaderData = null;
     let jsonContentData = null;
@@ -185,14 +184,14 @@ class WidgetDataEntry extends React.PureComponent {
         initial[name] = XLSX.utils.sheet_to_json(sheet);
         return initial;
       }, {});
-      let arrs = Object.values(jsonHeaderData)[0];
+      // let arrs = Object.values(jsonHeaderData)[0];
 
       let headers = Object.values(jsonHeaderData)[0][0];
       let content = Object.values(jsonContentData)[0];
       console.log(headers);
       console.log(content);
 
-      PostData(localStorage.getItem('token'), {title: fileName, file_data: arrs})
+      // PostData(localStorage.getItem('token'), {title: fileName, file_data: arrs})
 
       this.setState({
         processedFile: {content, headers},
@@ -224,7 +223,6 @@ class WidgetDataEntry extends React.PureComponent {
   } //create titleprops string and not object
 
   render() {
-    const { context, dispatch } = this.context;
 
     const { processedFile } = this.state;
     const { content, headers } = processedFile;
@@ -233,14 +231,14 @@ class WidgetDataEntry extends React.PureComponent {
       w => w.value === this.props.widget
     )[0];
 
-    let WidgetRender = selectedWidget != null ? selectedWidget.widget : <div />;
+    let WidgetRender = selectedWidget !== null ? selectedWidget.widget : <div />;
 
     const headersMenu = headers.map((header, index) => (
       <Menu.Item key={index}>{header}</Menu.Item>
     ));
 
     const axesConfig =
-      headers.length != 0 ? (
+      headers.length !== 0 ? (
         <React.Fragment>
           <div className="widget-header">
             Configure the axes of your widget.

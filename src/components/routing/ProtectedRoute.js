@@ -1,23 +1,18 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { ReadUser } from '../../api/api';
-import { Context } from "../context/Context";
+import { Context } from "../../context/Context";
 
 class ProtectedRoute extends React.Component {
     static contextType = Context;
 
     render() {
         const { component: Component, ...rest } = this.props;
-        const { context, dispatch } = this.context;
-
+        const { context } = this.context;
+        
+        // Load component if auth, otherwise push to login
         return (
-        <Route {...rest}>
-            {
-            context.loading ? 
-                (
-                    <div>LOADING dot dot dot</div>
-                ) :
-                (
+            <Route {...rest}>
+                {
                     context.auth ? 
                     (
                         <Component/>
@@ -25,9 +20,8 @@ class ProtectedRoute extends React.Component {
                     (
                         <Redirect to={{ pathname: '/login' }} />
                     )
-                )
-            }
-        </Route>
+                }
+            </Route>
         );
     }
 }

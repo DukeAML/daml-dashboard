@@ -1,50 +1,42 @@
 import React from 'react';
-import { Form, Input, Button} from 'antd';
-import "../../css/Landing.css";
-
-import "antd/dist/antd.css";
+import { Form, Input, Button } from 'antd';
 
 const layout = {
-  labelCol: {
-    span: 0,
-  },
-  wrapperCol: {
-    span: 24,
-  },
+    labelCol: {
+        span: 0,
+    },
+    wrapperCol: {
+        span: 24,
+    },
 }
 const tailLayout = {
-  wrapperCol: {
-    span: 24,
-  },
+    wrapperCol: {
+        span: 24,
+    },
 }
 
-
+const validateMessages = {
+    required: '${name} is required!',
+    types: {
+        email: '${name} is not a valid email!',
+        number: '${name} is not a valid number!',
+    },
+    number: {
+        range: '${name} must be between ${min} and ${max}',
+    },
+};
 
 class ForgotPassword extends React.Component {
 
-    state = {
-        email: 'root'
-    }
-
-    onChangeEmail = e => {
-        this.setState({
-            email: e.target.value
-        });
-        console.log(this.state.email);
-    }
-
-    onFinish = values => {
-        this.setState({
-            email: values.email
-        })
-        console.log(this.state.email)
+    onFinish = ({ email }) => {
+        console.log(`Send email reset to ${email}`);
     }
 
     onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
     };
 
-    render (){
+    render() {
         return (
             <>
                 <div>
@@ -55,22 +47,17 @@ class ForgotPassword extends React.Component {
                     {...layout}
                     name="basic"
                     initialValues={{
-                    remember: true,
+                        remember: true,
                     }}
                     onFinish={this.onFinish}
                     onFinishFailed={this.onFinishFailed}
+                    validateMessages = {validateMessages}
                 >
                     <Form.Item
-                            name="email"
-                            rules={[
-                            {
-                                required: true,
-                                message: 'Email required.',
-                            },
-                            ]}
-                            onChange={this.onChangeEmail}
+                        name="email"
+                        rules={[{type: 'email'}]}
                     >
-                        <Input placeholder="Email address"/>
+                        <Input placeholder="Email address" />
                     </Form.Item>
 
                     <Form.Item {...tailLayout}>

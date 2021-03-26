@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useState } from "react";
+import React, { createContext, useReducer } from "react";
 
 // Initialize context with the default theme
 // const ls = JSON.parse(localStorage.getItem('sidebar'))
@@ -9,7 +9,7 @@ const initialState =
   email: 'Guest',
   key: '',
   title: '',
-  submenu: ['sub1'],
+  submenu: ['dashboards'],
   dashboards: [],
   widgetBackgroundColor: "#ffffff",
   gridBackGroundColor: "#D9E0EC",
