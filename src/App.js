@@ -16,7 +16,7 @@ import {
   Route,
   Switch,
   Redirect
-} from "react-router-dom";
+} from "react-router-dom"; 
 import LoginPage from "./components/auth/LoginPage";
 import FPPage from "./components/auth/FPPage";
 import SignUpPage from "./components/auth/SignUpPage";

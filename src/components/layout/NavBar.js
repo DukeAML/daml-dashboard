@@ -48,14 +48,14 @@ class NavBar extends React.Component{
    render() {
     const { context, dispatch } = this.context;
      return (
-       <div style = {{position: 'relative', height: '12vh', width: '100%'}}>
+       <div style = {{position: 'relative', height: '10vh', width: '100%'}}>
         <Header className="header">
           <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
             <span className = 'home-button' onClick = {this.goHome}>
               <img
                       src={logo}
                       alt="Logo"
-                      style={{height: '7.5vh', width: '7.5vh', display: 'inline-block'}}
+                      style={{height: '6vh', width: '6vh', display: 'inline-block'}}
               />
               <div className="title">
                 Peagle
