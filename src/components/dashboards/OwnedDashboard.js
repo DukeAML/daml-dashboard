@@ -130,7 +130,7 @@ widgetOptions.forEach(widget => {
 class OwnedDashboard extends React.PureComponent {
   state = {
     items: [],
-    title: ""
+    title: "",
   }
 
   prevKey = '';
@@ -177,6 +177,7 @@ class OwnedDashboard extends React.PureComponent {
 
   static contextType = Context;
 
+ 
   createElement = el => {
     const { context, dispatch } = this.context;
     const removeStyle = {
@@ -191,6 +192,7 @@ class OwnedDashboard extends React.PureComponent {
       ? widgetDict[el.widgetType]
       : SimpleLineChart;
     return (
+      
       <div
         className="react-grid-item"
         key={i}
@@ -205,6 +207,7 @@ class OwnedDashboard extends React.PureComponent {
           backgroundColor: context.widgetBackgroundColor
         }}
       >
+        <div className="chart-title"> {el.chartTitle}</div>
         <WidgetRender {...el.dataProps} />
         <div
           className="remove"
@@ -214,6 +217,7 @@ class OwnedDashboard extends React.PureComponent {
           x
         </div>
       </div>
+      
     );
   };
 
@@ -221,7 +225,8 @@ class OwnedDashboard extends React.PureComponent {
     this.setState({ widgetDropdown: value });
   };
 
-  handleAddWidget = (type, dataProps) => {
+  handleAddWidget = (type, dataProps, chartTitle) => {
+    console.log(chartTitle); //recognizes type and not chart title
     this.setState({
       // Add a new item - must have a unique key!
       items: this.state.items.concat({
@@ -231,7 +236,8 @@ class OwnedDashboard extends React.PureComponent {
         w: 2,
         h: 2,
         widgetType: type,
-        dataProps: dataProps
+        dataProps: dataProps,
+        chartTitle: chartTitle
       }),
       // Increment the counter to ensure key is always unique.
       newCounter: this.state.newCounter + 1,
@@ -297,6 +303,10 @@ class OwnedDashboard extends React.PureComponent {
     this.setState({title: e.target.value});
   }
 
+  /*changeChartTitle = (e) => {
+    this.setState({chartTitle: e.target.value})
+  }*/
+
   render() {
     const { context, dispatch } = this.context;
 
@@ -307,8 +317,8 @@ class OwnedDashboard extends React.PureComponent {
           </Input>
           <div style={{ padding: "1rem 0" }}>
             <WidgetModal
-              onAddWidget={(type, dataProps) => {
-                this.handleAddWidget(type, dataProps);
+              onAddWidget={(type, dataProps, chartTitle) => {
+                this.handleAddWidget(type, dataProps, chartTitle);
               }}
             />
             <ThemingModal />
