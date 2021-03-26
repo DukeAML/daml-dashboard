@@ -45,7 +45,7 @@ class WidgetModal extends React.Component {
     console.log(this.state);
     if (this.state.step === 1) {
       // last step, ready to add the widget
-      this.props.onAddWidget(this.state.widget, this.state.dataProps);
+      this.props.onAddWidget(this.state.widget, this.state.dataProps, this.state.chartTitle);
       this.setState({
         widget: "",
         step: 0,
@@ -84,6 +84,11 @@ class WidgetModal extends React.Component {
     this.setState({ dataProps: props });
   };
 
+  handleReceiveTitleProps = chartTitle => {
+    console.log(chartTitle);
+    this.setState({chartTitle: chartTitle});
+  }
+
   render() {
     const CurrentView = widgetSteps[this.state.step];
     const okText = this.state.step === 1 ? "Add Widget" : "Next";
@@ -121,6 +126,7 @@ class WidgetModal extends React.Component {
             widget={this.state.widget}
             onSelectWidget={type => this.handleSelectWidget(type)}
             onReceiveDataProps={this.handleReceiveDataProps}
+            onReceiveTitleProps={chartTitle => this.handleReceiveTitleProps(chartTitle)}
           />
         </Modal>
       </span>
