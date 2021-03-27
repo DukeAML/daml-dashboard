@@ -1,16 +1,18 @@
 import axios from 'axios';
 
 const client = axios.create({
-	// baseURL: "https://peagle-backend.herokuapp.com"
-	baseURL: "http://localhost:5000"
+	baseURL: "https://peagle-backend.herokuapp.com"
+	// baseURL: "http://localhost:5000"
 });
+
+const printOutput = false;
 
 export const Register = async (email, password) => {
 	const { data } = await client.post("/users", {
 		email: email,
 		password: password
 	});
-	console.log(data);
+	printOutput && console.log(data);
 	return data;
 };
 
@@ -19,7 +21,7 @@ export const Login = async (email, password) => {
 		email: email,
 		password: password
 	});
-	console.log(data);
+	printOutput && console.log(data);
 	return data;
 };
 
@@ -40,7 +42,7 @@ export const LogoutAll = async (token) => {
 			'Authorization': `Bearer ${token}`
 		}
 	});
-	console.log(data);
+	printOutput && console.log(data);
 	return data;
 };
 
@@ -51,7 +53,7 @@ export const ReadUser = async (token) => {
 			'Authorization': `Bearer ${token}`
 		}
 	});
-	console.log(data);
+	printOutput && console.log(data);
 	return data;
 };
 
@@ -66,7 +68,7 @@ export const EditUser = async (token, email) => {
 				'Authorization': `Bearer ${token}`
 			}
 		});
-	console.log(data);
+	printOutput && console.log(data);
 	return data;
 };
 
@@ -76,7 +78,7 @@ export const CreateDashboard = async (token, title) => {
 			'Authorization': `Bearer ${token}`
 		}
 	});
-	console.log(data);
+	printOutput && console.log(data);
 	return data;
 }
 
@@ -86,7 +88,7 @@ export const GetDashboards = async (token) => {
 			'Authorization': `Bearer ${token}`
 		}
 	});
-	console.log(data);
+	printOutput && console.log(data);
 	return data;
 }
 
@@ -97,7 +99,7 @@ export const CreateChart = async (token, chart) => {
 				'Authorization': `Bearer ${token}`
 			}
 		});
-	console.log(data);
+	printOutput && console.log(data);
 	return data;
 }
 
@@ -108,7 +110,7 @@ export const UpdateChart = async (token, id, chart) => {
 				'Authorization': `Bearer ${token}`
 			}
 		});
-	console.log(data);
+	printOutput && console.log(data);
 	return data;
 }
 
@@ -118,7 +120,7 @@ export const GetDashboard = async (token, id) => {
 			'Authorization': `Bearer ${token}`
 		}
 	});
-	console.log(data);
+	printOutput && console.log(data);
 	return data;
 }
 
@@ -128,7 +130,7 @@ export const GetCharts = async (token, id) => {
 			'Authorization': `Bearer ${token}`
 		}
 	});
-	console.log(data);
+	printOutput && console.log(data);
 	return data;
 }
 
@@ -138,7 +140,7 @@ export const EditDashboard = async (token, id, updates) => {
 			'Authorization': `Bearer ${token}`
 		}
 	});
-	console.log(data);
+	printOutput && console.log(data);
 	return data;
 }
 
@@ -148,7 +150,7 @@ export const DeleteChart = async (token, id) => {
 			'Authorization': `Bearer ${token}`
 		}
 	});
-	console.log(data);
+	printOutput && console.log(data);
 	return data;
 }
 
@@ -158,7 +160,7 @@ export const GetData = async (token) => {
 			'Authorization': `Bearer ${token}`
 		}
 	});
-	console.log(data);
+	printOutput && console.log(data);
 	return data;
 }
 
@@ -169,7 +171,7 @@ export const PostData = async (token, dataObj) => {
 				'Authorization': `Bearer ${token}`
 			}
 		});
-	console.log(data);
+	printOutput && console.log(data);
 	return data;
 }
 

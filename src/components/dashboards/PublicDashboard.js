@@ -2,11 +2,9 @@ import React from "react";
 import { WidthProvider, Responsive } from "react-grid-layout";
 import _ from "lodash";
 
-import { Button, Input } from "antd";
-import { SaveFilled } from "@ant-design/icons";
+import { Input } from "antd";
 import { Context } from "../../context/Context";
 import ThemingModal from "./ThemingModal";
-import ShareModal from "./ShareModal";
 // import widgets
 import WidgetModal from "../widgetSelection/WidgetModal";
 import SimpleLineChart from "../widgets/SimpleLineChart";
@@ -23,7 +21,7 @@ import PosAndNegBarChart from "../widgets/PosAndNegBarChart";
 import JointLineScatterChart from "../widgets/JointLineScatterChart";
 import ActiveShapePieChart from "../widgets/ActiveShapePieChart";
 import SimpleRadialBarChart from "../widgets/SimpleRadialBarChart";
-import { GetCharts, CreateChart, UpdateChart, EditDashboard, DeleteChart } from '../../api/api';
+import { GetCharts } from '../../api/api';
 import { withRouter } from 'react-router-dom';
 
 //i don't know if it's with grid display but when you change the axes it shows on the modal but not the actual dashboard

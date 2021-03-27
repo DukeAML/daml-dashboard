@@ -93,9 +93,9 @@ class Homepage extends React.Component {
 			if (context.auth) {
 				return (
 					<Content className='content' style={{ marginTop: '10vh', marginBottom: '66vh' }}>
-						<div style={{ lineHeight: 1.2, fontSize: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
+						<div style={{ fontSize: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
 							Welcome, create or choose a dashboard
-            </div>
+            			</div>
 					</Content>
 				)
 			}

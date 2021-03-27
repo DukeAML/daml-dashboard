@@ -133,6 +133,13 @@ class OwnedDashboard extends React.PureComponent {
 
 	static contextType = Context;
 
+	componentDidMount() {
+		const { context } = this.context;
+		this.prevKey = context.key;
+		this.setState({title: context.title});
+		this.loadDashboard();
+	}
+	
 	componentDidUpdate() {
 		const { context } = this.context;
 		if (context.key !== this.prevKey) {
@@ -158,6 +165,7 @@ class OwnedDashboard extends React.PureComponent {
 					w: i.grid[2] ? i.grid[2] : 0,
 					h: i.grid[3] ? i.grid[3] : 0,
 					widgetType: i.type,
+					chartTitle: i.title
 				};
 			}),
 			newCounter: 0
@@ -175,7 +183,7 @@ class OwnedDashboard extends React.PureComponent {
 
 
 	createElement = el => {
-		const { context, dispatch } = this.context;
+		const { context } = this.context;
 		// Delete button
 		const removeStyle = {
 			position: "absolute",
@@ -265,7 +273,7 @@ class OwnedDashboard extends React.PureComponent {
 			const pos = this.state.layout[i];
 			// If this chart is newly added and does not exist on backend
 			if (chart.i.charAt(0) === 'n') {
-				return CreateChart(localStorage.getItem('token'), { grid: [pos.x, pos.y, pos.w, pos.h], type: chart.widgetType, dashboard: context.key })
+				return CreateChart(localStorage.getItem('token'), { grid: [pos.x, pos.y, pos.w, pos.h], type: chart.widgetType, dashboard: context.key, title: chart.chartTitle })
 					.then(res => {
 						let newitems = [...this.state.items];
 						let newitem = newitems[i];
@@ -276,7 +284,7 @@ class OwnedDashboard extends React.PureComponent {
 			}
 			// Update this chart with current position, type, etc.
 			else {
-				return UpdateChart(localStorage.getItem('token'), chart.i, { grid: [pos.x, pos.y, pos.w, pos.h], type: chart.widgetType })
+				return UpdateChart(localStorage.getItem('token'), chart.i, { grid: [pos.x, pos.y, pos.w, pos.h], type: chart.widgetType, title: chart.chartTitle })
 					.catch(err => console.log(err));
 			}
 		}))

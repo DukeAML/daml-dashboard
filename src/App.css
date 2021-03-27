@@ -76,7 +76,7 @@
 }
 
 body {
-  overflow-x: scroll;
+  overflow-x: hidden;
   user-select: none;
 }
 #content {
@@ -103,6 +103,10 @@ body {
 
 /* MODAL STYLES */
 
+.ant-modal {
+  top: 50px!important;
+}
+
 .modal-button-add {
   margin: 0.5rem;
   z-index: 3;
@@ -120,8 +124,6 @@ body {
   text-align: center;
   font-family: "Roboto", sans-serif;
 }
-
-
 
 .ant-modal-title {
   color: white;

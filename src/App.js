@@ -2,7 +2,6 @@ import React, {useEffect, useContext } from "react";
 import "./App.css";
 import './css/ProfilePage.css';
 import './css/Landing.css';
-import "semantic-ui-css/semantic.min.css";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import Homepage from "./components/layout/Homepage";
 import SideBar from "./components/layout/SideBar";

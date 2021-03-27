@@ -51,9 +51,10 @@ class DataModal extends React.Component {
 	}
 
 	render() {
+		const { staticContext, ...rest } = this.props;
 		return (
 			<span>
-				<Menu.Item key="4" className="menu-item" {...this.props} onClick={this.showModal}>
+				<Menu.Item key="4" className="menu-item" {...rest} onClick={this.showModal}>
 					<span style={{ display: 'flex', alignItems: 'center' }}><CloudUploadOutlined />Upload Data</span>
 				</Menu.Item>
 				<Modal
