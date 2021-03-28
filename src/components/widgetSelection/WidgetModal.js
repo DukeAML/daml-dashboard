@@ -27,7 +27,6 @@ class WidgetModal extends React.Component {
   }
 
   handleOk = e => {
-    console.log(this.state);
     if (this.state.step === 1) {
       // last step, ready to add the widget
       this.props.onAddWidget(this.state.widget, this.state.dataProps, this.state.chartTitle);

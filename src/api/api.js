@@ -5,7 +5,7 @@ const client = axios.create({
 	// baseURL: "http://localhost:5000"
 });
 
-const printOutput = false;
+const printOutput = true;
 
 export const Register = async (email, password) => {
 	const { data } = await client.post("/users", {
