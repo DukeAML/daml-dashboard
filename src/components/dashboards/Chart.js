@@ -120,7 +120,7 @@ function Chart(props) {
                     right: "2px",
                     top: 0,
                     cursor: "pointer"}}
-                onClick={() => props.onRemoveItem(props.el.i)}
+                onClick={() => props.onRemoveItem(props.el)}
             >
                 x
             </div>

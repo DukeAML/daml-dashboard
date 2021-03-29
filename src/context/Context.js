@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 
 // Initialize context with the default theme
 // const ls = JSON.parse(localStorage.getItem('sidebar'))
@@ -44,6 +44,14 @@ const reducer = (state, action) => {
 
 const ContextProvider = props => {
   const [context, dispatch] = useReducer(reducer, initialState);
+  useEffect(() => {
+    // Re-render react grid layout
+    for (let t = 0; t <= 400; t += 400) {
+      setTimeout(() => {
+        window.dispatchEvent(new Event('resize'))
+      }, t)
+    }
+  }, [context.collapsed])
   return (
     <Context.Provider value={{ context, dispatch }}>
       {props.children}

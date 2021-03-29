@@ -19,8 +19,8 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 class OwnedDashboard extends React.PureComponent {
 	state = {
-		items: [],
-		title: ""
+		title: "".backgroundColor,
+		layout: [],
 	}
 	prevKey = '';
 	rem = [];
@@ -51,7 +51,7 @@ class OwnedDashboard extends React.PureComponent {
 			.then(res => { return res })
 		// Convert chart to expected format
 		const charts = {
-			items: c.map(i => {
+			layout: c.map(i => {
 				return {
 					i: i._id.toString(),
 					x: i.grid[0] ? i.grid[0] : 0,
@@ -103,9 +103,9 @@ class OwnedDashboard extends React.PureComponent {
 	handleAddWidget = (type, dataProps, chartTitle) => { //recognizes type and not chart title
 		this.setState({
 			// Add a new item - must have a unique key!
-			items: this.state.items.concat({
+			layout: this.state.layout.concat({
 				i: "n" + this.state.newCounter,
-				x: (this.state.items.length * 2) % (this.state.cols || 12),
+				x: (this.state.layout.length * 2) % (this.state.cols || 12),
 				y: Infinity, // puts it at the bottom
 				w: 2,
 				h: 2,
@@ -127,46 +127,46 @@ class OwnedDashboard extends React.PureComponent {
 	};
 
 	onLayoutChange = layout => {
-		this.setState({ layout: layout });
+		const currLayout = [...this.state.layout];
+		const positions = layout.map(obj =>_.pick(obj, ['x', 'y', 'w', 'h']));
+		// Update positions of elements in this.state.layout, dont want to rerender
+		currLayout.forEach((item, i) => Object.assign(item, positions[i]));
+		this.setState({layout: currLayout});
 	};
 
 	// Remove chart with index i from dashboard
-	onRemoveItem = i => {
-		if (i.charAt(0) !== 'n')
-			this.rem.push(i);
-		this.setState({ items: _.reject(this.state.items, { i: i }) });
+	onRemoveItem = el => {
+		// Everything in this.rem will be deleted from db when save is clicked
+		if (el.i.charAt(0) !== 'n')
+			this.rem.push(el);
+		this.setState({ layout: _.reject(this.state.layout, { i: el.i }) });
 	};
 
 	// Save current chart content and state to db
 	save = async () => {
 		const { context } = this.context;
 		console.log('Saving...');
-		await Promise.all(this.state.items.map((chart, i) => {
-			// Layout has different coords than items?
-			const pos = this.state.layout[i];
+		await Promise.all(this.state.layout.map((chart, i) => {
 			// If this chart is newly added and does not exist on backend
 			if (chart.i.charAt(0) === 'n') {
-				return CreateChart(localStorage.getItem('token'), { grid: [pos.x, pos.y, pos.w, pos.h], type: chart.widgetType, dashboard: context.key, title: chart.chartTitle })
+				return CreateChart(localStorage.getItem('token'), { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, dashboard: context.key, title: chart.chartTitle })
 					.then(res => {
-						let newitems = [...this.state.items];
-						let newitem = newitems[i];
 						// Give the newly created chart its id to replace n{number}
-						newitem.i = res._id;
+						this.state.layout[i].i = res._id;
 						// Dont want to rerender because items does not contain right coords
-						this.state.items = newitems;
 					})
 			}
 			// Update this chart with current position, type, etc.
 			else {
-				return UpdateChart(localStorage.getItem('token'), chart.i, { grid: [pos.x, pos.y, pos.w, pos.h], type: chart.widgetType, title: chart.chartTitle })
+				return UpdateChart(localStorage.getItem('token'), chart.i, { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, title: chart.chartTitle })
 					.catch(err => console.log(err));
 			}
 		}))
 		// If charts have been removed
 		if (this.rem.length > 0) {
-			for (let id of this.rem) {
-				console.log("Deleting chart", id);
-				await DeleteChart(localStorage.getItem('token'), id)
+			for (let el of this.rem) {
+				console.log("Deleting chart", el.i);
+				await DeleteChart(localStorage.getItem('token'), el.i)
 					.catch(err => console.log(err))
 			}
 			this.rem = [];
@@ -185,7 +185,6 @@ class OwnedDashboard extends React.PureComponent {
 
 	render() {
 		const { context } = this.context;
-
 		return (
 			<div style={{ width: '100%', marginBottom: '5vh' }}>
 				<center style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -217,7 +216,7 @@ class OwnedDashboard extends React.PureComponent {
 						backgroundColor: context.gridBackGroundColor
 					}}
 				>
-					{_.map(this.state.items, el => this.createElement(el))}
+					{_.map(this.state.layout, el => this.createElement(el))}
 				</ResponsiveReactGridLayout>
 			</div>
 		);

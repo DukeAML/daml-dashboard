@@ -47,9 +47,9 @@ class NavBar extends React.Component {
 				width='15vw'
 				collapsed={context.collapsed}
 				trigger={null}
-				className={context.collapsed ? "site-layout-background" : "site-layout-background-uncollapsed"}
+				className="site-layout-background"
 			>
-				<div className="logo"><div className="daml"><span><UserOutlined /> DAML</span></div></div>
+				<div className="logo"><UserOutlined /><div>DAML</div></div>
 				<Menu
 					mode="inline"
 					style={{ background: '#4C5B69' }}
