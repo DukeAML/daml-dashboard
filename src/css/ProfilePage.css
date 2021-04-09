@@ -1,0 +1,22 @@
+.nav-container {
+  display: grid;
+  /*background:#1890ff;*/
+  background: white;
+  height: 5vh;
+}
+
+.site-layout-content {
+  background: #fff;
+  padding: 24px;
+  min-height: 280px;
+}
+
+
+
+.info-container {
+    display: grid;
+    height: 100vh;
+    margin: auto;
+    background: #f0f0f0;
+
+}
