@@ -34,7 +34,7 @@ export default class PosAndNegBarChart extends PureComponent {
 		const { context } = this.context;
 		const { primary, secondary } = context;
 		return (
-			<ResponsiveContainer width="100%" height="100%">
+			<ResponsiveContainer width="95%" height="100%">
 				<BarChart
 					data={this.props.data || data}
 				>
