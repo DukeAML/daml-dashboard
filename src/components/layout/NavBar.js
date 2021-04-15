@@ -4,8 +4,8 @@ import { UserOutlined, LogoutOutlined, SettingOutlined, MenuOutlined } from '@an
 import { withRouter } from 'react-router-dom';
 import { Logout as logout } from "../../api/api";
 import { Context } from "../../context/Context";
+import logo from '../../images/logoPeagle.svg';
 const { Header } = Layout;
-const logo = require("../../images/logoPeagle.svg");
 
 class NavBar extends React.Component {
 	static contextType = Context;
@@ -70,23 +70,21 @@ class NavBar extends React.Component {
 					<div className='welcome'>
 						<div style={{ position: 'relative', display: 'flex' }}>
 							<div className="user" onClick={this.showProf}>
-								Welcome, DAML <UserOutlined />
+								Welcome{context.fname ? `, ${context.fname}` : ', DAML'} <UserOutlined />
 							</div>
 						</div>
 						{this.state.showprof &&
-							<div style={{ position: 'relative', width: '100%' }}>
-								<Card title={<div
-									style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-								>
-									{context.email}
-									<SettingOutlined style={{ position: 'absolute', right: '5%', cursor: 'pointer' }} onClick={this.toSettings} />
-								</div>
-								} className='profpage'>
-									<div onClick={this.handleClick} className='signout'>
-										Sign Out <LogoutOutlined />
-									</div>
-								</Card>
+							<Card title={<div
+								style={{ padding: '10px 30px' }}
+							>
+								{context.email}
+								<SettingOutlined style={{ position: 'absolute', right: '5%', cursor: 'pointer' }} onClick={this.toSettings} />
 							</div>
+							} className='profpage'>
+								<div onClick={this.handleClick} className='signout'>
+									Sign Out <LogoutOutlined />
+								</div>
+							</Card>
 						}
 					</div>
 				</Header>

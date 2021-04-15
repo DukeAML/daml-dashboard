@@ -1,50 +1,8 @@
 @import '~antd/dist/antd.css';
 
-.App {
-  overflow-x: hidden;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .page-title {
   font-size: 1.5rem;
   padding: 0.25rem 0;
-  z-index: 1;
-  height: fit-content;
-  word-break: break-word;
   width: auto;
   text-align: center;
 
@@ -52,7 +10,7 @@
   font-style: normal;
   font-weight: normal;
   line-height: 1.5rem;
-  background:rgba(121, 141, 228, 0.66);
+  background:rgba(169, 181, 238);
   border-radius: 5px;
   color:white;
 }
@@ -79,6 +37,7 @@ body {
   overflow-x: hidden;
   user-select: none;
 }
+
 #content {
   width: 100%;
   height: 100%;
@@ -100,13 +59,7 @@ body {
 }
 
 
-
-/* MODAL STYLES */
-
-.ant-modal {
-  top: 50px!important;
-}
-
+/* BUTTON STYLES */
 .modal-button-add {
   margin: 0.5rem;
   z-index: 3;
@@ -119,18 +72,6 @@ body {
   font-family:"Roboto", sans-serif;
 }
 
-.ant-modal-header {
-  background-color: #ECBA91;
-  text-align: center;
-  font-family: "Roboto", sans-serif;
-}
-
-.ant-modal-title {
-  color: white;
-  font-size: 24px;
-  font-weight: 450;
-}
-
 .ant-btn:hover{
   color:black;
   border-color: black;
@@ -139,16 +80,6 @@ body {
 .ant-btn:focus{
   border-color: rgb(217, 217, 217);;
   color: rgb(0,0,0,0.65);
-}
-
-.modal-button-add:hover, .modal-button-theme:hover{
-  background: #ECBA91;
-  border-color: #ffa39e;
-}
-
-.modal-button-add:focus, .modal-button-theme:focus{
-  background: #ECBA91;
-  border-color: #91cfbf;
 }
 
 .ant-btn-primary{
@@ -168,10 +99,6 @@ body {
   color: white;
 }
 
-.ant-input:hover{
-  border-color: black;
-}
-
 .ant-upload:focus{
   border-color: black;
 }
@@ -180,14 +107,23 @@ body {
   border-color:black;
 }
 
+/* MODAL STYLES */
+.ant-modal-header {
+  background-color: #ECBA91;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+}
 
+.ant-modal-title {
+  color: white;
+  font-size: 24px;
+  font-weight: 450;
+}
 
 .modal-style{
   font-family:"Roboto", sans-serif;
-  
+  top: 50px!important;
 }
-
-
 
 
 /* GRID LAYOUT STYLES */
@@ -256,15 +192,6 @@ body {
   height: 120px;
   overflow: scroll;
 }
-
-.hide-button {
-  cursor: pointer;
-  position: absolute;
-  font-size: 20px;
-  top: 0px;
-  right: 5px;
-}
-
 .toolbox__title {
   font-size: 24px;
   margin-bottom: 5px;
@@ -355,6 +282,7 @@ body {
   display: none;
 }
 
+/* SUBMENU STYLING */
 .logo {
   cursor: default;
   width: 100%;
@@ -386,64 +314,16 @@ body {
 
 .ant-menu-item .anticon, .ant-menu-submenu-title .anticon{
   font-size: 18px;
-  vertical-align: 0.5px;
 }
 
 .ant-layout{
   background: white;
 }
 
-.ant-layout-sider-children {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  margin-top: -0.1px;
-  padding-top: 0.1px;
-}
-
 .site-layout-background {
   min-height: 100vh;
   background: #4C5B69;
 }
-
-.ant-menu-submenu-title:hover {
-  color: white!important;
-}
-
-.ant-menu-submenu.ant-menu-submenu-inline.option{
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 300;
-  /* font-size: 22px; */
-  line-height: 28px;
-  text-indent: 8%;
-  color: #FFFFFF;
-  
-}
-
-.option{
-  border:none;
-}
-
-.ant-menu.ant-menu-light .ant-menu-submenu-open.option{
-  background:#637585;
-}
-
-
-.menu-layout-background{
-  flex-grow: 10;
-
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-
-
 
 .ant-menu-item.menu-item{
   left: 0px;
@@ -465,78 +345,56 @@ body {
   border-right: 1px solid #4C5B69;
 }
 
-
-.link-item{
-  color:white;
-}
-
-.link-item:hover {
-  background-color: #8c9bd1;
-  color: white;
-}
-
 .ant-menu.ant-menu-light .ant-menu-item-selected.menu-item{
   background-color: #798DE4;
 }
-
-
 
 .ant-menu-inline .ant-menu-selected::after, .ant-menu-inline .ant-menu-item-selected::after {
   opacity: 0;
 }
 
-
-
 .menu-item:hover {
   background-color: #8c9bd1;
-  color: white;
 }
 
+.ant-menu-submenu-arrow::before, .ant-menu-submenu-arrow::after {
+  background: white!important;
+}
 
+.ant-menu-vertical .ant-menu-item:not(:last-child), .ant-menu-vertical-left .ant-menu-item:not(:last-child), .ant-menu-vertical-right .ant-menu-item:not(:last-child), .ant-menu-inline .ant-menu-item:not(:last-child){
+  margin-bottom: 0px;
+}
 
-
-
-
-.main-menu{
+.ant-menu-inline .ant-menu-submenu-title {
+  display: flex;
+  background: #4C5B69;
   color: white;
-  border: 0px;
-  width: 100%;
   font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 1rem;
   line-height: 28px;
   align-items: center;
-  
+  padding-right: 0px!important;
 }
 
-.ant-menu-submenu ant-menu-submenu-inline main-menu ant-menu-submenu-open
-
-.ant-menu-submenu-title .ant-menu-submenu-arrow{
-    background: white;
+.ant-menu-inline::after .ant-menu-submenu-title::after {
+  display: flex;
+  background: #4C5B69;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1rem;
+  line-height: 28px;
+  align-items: center;
 }
 
-
-.ant-menu-submenu-arrow::before, .ant-menu-submenu-arrow::after {
-  background: white!important;
-
-}
-
+/* LAYOUT STYLING */
 .content {
   height: 100%;
   display: flex;
   justify-content: center;
-}
-
-.header {
-    width: 100%;
-    height: 10vh;
-    position: fixed;
-    z-index: 6;
-    background: #798DE4;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 }
 
 .footer {
@@ -544,33 +402,20 @@ body {
   background: #8BCECE;
 }
 
-.lower-header {
-  position: relative;
-  width: 80%;
-  left: 100%;
-  top: 87px;
-  z-index: -1;
-  background-color: rgba(0, 0, 0, 0.25);
+/* NAVBAR STYLING */
+.header {
+  width: 100%;
+  height: 10vh;
+  position: fixed;
+  z-index: 6;
+  background: #798DE4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .ant-card-body {
   padding: 20px 0px;
-}
-
-.signout {
-  width: 100%;
-  padding: 5px 8%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-color: black;
-  color: black;
-  transition: .3s;
-}
-
-.signout:hover {
-  cursor: pointer;
-  background: #e3e3e3;
 }
 
 .title {
@@ -597,14 +442,17 @@ body {
   }
 }
 
+.welcome {
+  position: relative;
+}
+
 .user {
   position: relative;
   font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: #FFFFFF;
-  margin-right: 6px;
   cursor: pointer;
   white-space: nowrap;
 
@@ -616,58 +464,30 @@ body {
   user-select: none;
 }
 
-.usericon{
-  background-color: #FFFFFF;
-  display: flex;
-}
-
-.logout-button {
-  /* margin-left: 5px; */
-}
-
 .profpage {
   position: absolute;
-  width: 150%;
+  min-width: 100%;
+  max-width: 25vw;
   right: 0;
   border-radius: 7px;
   box-shadow: 5px 8px 24px 5px rgba(208, 216, 243, 0.6) ;
 }
 
-.ant-menu.ant-menu-light .ant-menu-item-selected.submenu-data{
-  background: #7083CB;
-}
-
-.submenu-data:hover{
-  background: #8c9bd1;
-  color:white;
-}
-
-.ant-menu-vertical .ant-menu-item, .ant-menu-vertical-left .ant-menu-item, .ant-menu-vertical-right .ant-menu-item, .ant-menu-inline .ant-menu-item, .ant-menu-vertical .ant-menu-submenu-title, .ant-menu-vertical-left .ant-menu-submenu-title, .ant-menu-vertical-right .ant-menu-submenu-title, .ant-menu-inline .ant-menu-submenu-title {
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
-
-.ant-menu-vertical .ant-menu-item:not(:last-child), .ant-menu-vertical-left .ant-menu-item:not(:last-child), .ant-menu-vertical-right .ant-menu-item:not(:last-child), .ant-menu-inline .ant-menu-item:not(:last-child){
-  margin-bottom: 0px;
-}
-
-.ant-menu-inline .ant-menu-submenu-title {
+.signout {
+  width: 100%;
+  padding: 8px 8%;
   display: flex;
-  background: #4C5B69;
-  color: white;
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 1rem;
-  line-height: 28px;
+  justify-content: space-between;
   align-items: center;
+  transition: .3s;
+}
+
+.signout:hover {
+  cursor: pointer;
+  background: #e3e3e3;
 }
 
 .anticon.anticon-switcher {
   font-size: 17px;
   vertical-align: -2px;
-}
-
-.ant-card-head {
-  text-align: center;
 }

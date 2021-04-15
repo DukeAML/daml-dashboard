@@ -1,26 +1,20 @@
 import React from "react";
-import { WidthProvider, Responsive } from "react-grid-layout";
 import _ from "lodash";
 
 import { Button, Input } from "antd";
 import { SaveFilled } from "@ant-design/icons";
 import { Context } from "../../context/Context";
-import Chart from './Chart';
 import ThemingModal from "./ThemingModal";
 import ShareModal from "./ShareModal";
-// import widgets
 import WidgetModal from "../widgetSelection/WidgetModal";
 import { GetCharts, CreateChart, UpdateChart, DeleteChart } from '../../api/api';
 import { withRouter } from 'react-router-dom';
-
-//i don't know if it's with grid display but when you change the axes it shows on the modal but not the actual dashboard
-
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
+import Grid from './Grid';
 
 class OwnedDashboard extends React.PureComponent {
 	state = {
-		title: "".backgroundColor,
-		layout: [],
+		title: "",
+		layout: []
 	}
 	prevKey = '';
 	rem = [];
@@ -67,39 +61,6 @@ class OwnedDashboard extends React.PureComponent {
 		this.setState(charts);
 	}
 
-	static defaultProps = {
-		className: "layout",
-		isDraggable: true,
-		isResizable: true,
-		cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
-		rowHeight: 100
-	};
-
-
-	createElement = el => {
-		const { context } = this.context;
-		return (
-			<div
-				key={el.i}
-				data-grid={{
-					x: el.x,
-					y: el.y,
-					w: el.w,
-					h: el.h
-				}}
-				style={{
-					padding: "1rem",
-					backgroundColor: context.widgetBackgroundColor
-				}}
-			>
-				<Chart
-					el={el}
-					onRemoveItem={this.onRemoveItem}
-				/>
-			</div>
-		);
-	}
-
 	handleAddWidget = (type, dataProps, chartTitle) => { //recognizes type and not chart title
 		this.setState({
 			// Add a new item - must have a unique key!
@@ -118,20 +79,13 @@ class OwnedDashboard extends React.PureComponent {
 		});
 	};
 
-	// We're using the cols coming back from this to calculate where to add new items.
-	onBreakpointChange = (breakpoint, cols) => {
-		this.setState({
-			breakpoint: breakpoint,
-			cols: cols
-		});
-	};
-
 	onLayoutChange = layout => {
 		const currLayout = [...this.state.layout];
 		const positions = layout.map(obj =>_.pick(obj, ['x', 'y', 'w', 'h']));
-		// Update positions of elements in this.state.layout, dont want to rerender
 		currLayout.forEach((item, i) => Object.assign(item, positions[i]));
-		this.setState({layout: currLayout});
+		// Update positions of elements in this.state.layout, dont want to rerender
+		this.state.layoyt = currLayout;
+		// this.setState({layout: currLayout});
 	};
 
 	// Remove chart with index i from dashboard
@@ -174,17 +128,24 @@ class OwnedDashboard extends React.PureComponent {
 		console.log('Finished saving');
 	}
 
-	// Update title in state
+	// Update dashboard title in state
 	changeTitle = (e) => {
 		this.setState({ title: e.target.value });
 	}
 
-	/*changeChartTitle = (e) => {
-	  this.setState({chartTitle: e.target.value})
-	}*/
+	updateChart = el => {
+		const layoutCopy = [...this.state.layout];
+
+		// Update this chart with info from EditModal
+		layoutCopy.forEach((old, i) =>{
+			if(old.i === el.i) {
+				layoutCopy[i] = el;
+			}	
+		});
+		this.setState({layout: layoutCopy})
+	}
 
 	render() {
-		const { context } = this.context;
 		return (
 			<div style={{ width: '100%', marginBottom: '5vh' }}>
 				<center style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -197,7 +158,7 @@ class OwnedDashboard extends React.PureComponent {
 							}}
 						/>
 						<ThemingModal />
-						<ShareModal />
+						<ShareModal style={{ margin: '0.5rem 0 0.5rem 0.5rem' }}/>
 						<Button style={{
 							margin: '0.5rem 0 0.5rem 0.5rem',
 							fontFamily: "Roboto, sans-serif",
@@ -208,16 +169,10 @@ class OwnedDashboard extends React.PureComponent {
 						</Button>
 					</div>
 				</center>
-				<ResponsiveReactGridLayout
-					{...this.props}
-					onBreakpointChange={this.onBreakpointChange}
-					onLayoutChange={this.onLayoutChange}
-					style={{
-						backgroundColor: context.gridBackGroundColor
-					}}
-				>
-					{_.map(this.state.layout, el => this.createElement(el))}
-				</ResponsiveReactGridLayout>
+				<Grid layout = {this.state.layout} 
+					onLayoutChange = {this.onLayoutChange}
+					onRemoveItem = {this.onRemoveItem}
+					updateChart = {this.updateChart}/>
 			</div>
 		);
 	}

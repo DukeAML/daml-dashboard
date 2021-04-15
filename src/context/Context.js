@@ -6,6 +6,8 @@ const initialState =
 {
   loading: true,
   auth: false,
+  fname: 'Guest',
+  lname: '',
   email: 'Guest',
   key: '',
   title: '',
@@ -46,11 +48,11 @@ const ContextProvider = props => {
   const [context, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
     // Re-render react grid layout
-    for (let t = 0; t <= 400; t += 400) {
+    // for (let t = 0; t <= 400; t += 400) {
       setTimeout(() => {
         window.dispatchEvent(new Event('resize'))
-      }, t)
-    }
+      }, 400)
+    // }
   }, [context.collapsed])
   return (
     <Context.Provider value={{ context, dispatch }}>

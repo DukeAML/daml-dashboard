@@ -28,18 +28,14 @@ class DataView extends React.Component {
             		</div>
 					<div style={{ display: 'flex', flexDirection: 'column', marginTop: '2vh' }}>
 						{this.state.data && this.state.data.map(d => {
-							const columns = d.file_data[0].map((v, i) => { return { title: v, dataIndex: i, key: i } });
-							const source = d.file_data.splice(1).map(row => {
-								let obj = {};
-								row.forEach((v, i) => { obj[i] = v });
-								console.log(obj);
-								return obj;
+							const columns = Object.keys(d.file_data[0]).map((v, i) => { return { title: v, dataIndex: v, key: i } });
+							d.file_data.forEach((row, i) => {
+								row.key = i;
 							});
-							console.log(source);
 							return (
-								<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '2vh' }}>
+								<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '2vh' }} key={d.title} >
 									{d.title}
-									<Table columns={columns} dataSource={source} />
+									<Table columns={columns} dataSource={d.file_data}/>
 								</div>
 							)
 						})}

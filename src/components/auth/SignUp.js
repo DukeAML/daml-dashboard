@@ -19,36 +19,21 @@ const tailLayout = {
 	},
 };
 
-const validateMessages = {
-	required: '${label} is required!',
-	types: {
-		email: '${name} is not a valid email!',
-		number: '${label} is not a valid number!',
-	},
-	number: {
-		range: '${label} must be between ${min} and ${max}',
-	},
-};
-
 class SignUp extends React.Component {
 	static contextType = Context;
 
-	onFinish = ({ email, password }, passwordV) => {
+	onFinish = (info) => {
 		const { dispatch } = this.context;
-		// Validate password confirmation
-		if (password !== passwordV) {
-			alert("Passwords must match!");
-		} else {
-			// Create account on backend
-			register(email, password)
-				.then(data => {
-					// Same as login: save token, update context, push to homepage
-					localStorage.setItem("token", data.token);
-					dispatch({ type: 'CHANGE _', payload: { email: data.user.email, auth: true } });
-					this.props.history.push("/home");
-				})
-				.catch((err) => alert('Registration failed'));
-		}
+		const { email, password, fname, lname } = info;
+		// Create account on backend
+		register(email, password, fname, lname)
+			.then(data => {
+				// Same as login: save token, update context, push to homepage
+				localStorage.setItem("token", data.token);
+				dispatch({ type: 'CHANGE _', payload: { email: email, fname: fname, lname: lname, auth: true } });
+				this.props.history.push("/home");
+			})
+			.catch(err => alert(err.response.data));
 	};
 
 	onFinishFailed = (errorInfo) => {
@@ -68,13 +53,26 @@ class SignUp extends React.Component {
 					name="basic"
 					onFinish={this.onFinish}
 					onFinishFailed={this.onFinishFailed}
-					validateMessages={validateMessages}
 				>
 					<Form.Item
 						name="email"
-						rules={[{ type: 'email' }]}
+						rules={[{ type: 'email', message: 'Invalid email' }, {required: true, message: 'Email is required'}]}
 					>
 						<Input placeholder="Email" />
+					</Form.Item>
+
+					<Form.Item
+						name="fname"
+						rules={[{ required: true, message: 'First name required' }]}
+					>
+						<Input placeholder="First Name" />
+					</Form.Item>
+
+					<Form.Item
+						name="lname"
+						rules={[{ required: true, message: 'Last name required' }]}
+					>
+						<Input placeholder="Last Name" />
 					</Form.Item>
 
 					<Form.Item
@@ -82,23 +80,42 @@ class SignUp extends React.Component {
 						rules={[
 							{
 								required: true,
-								message: "Password required",
+								message: 'Please input your password!'
 							},
+							() => ({
+								validator(_, value) {
+									if (value.length == 0 || value.length >= 7) {
+										return Promise.resolve();
+									}
+									return Promise.reject(new Error('Password must be at least 7 characters'));
+								},
+							}),
 						]}
+						hasFeedback
 					>
-						<Input.Password placeholder="Password" class="form-input" />
+						<Input.Password placeholder = 'Password'/>
 					</Form.Item>
 
 					<Form.Item
-						name="passwordV"
+						name="confirm"
+						dependencies={['password']}
+						hasFeedback
 						rules={[
 							{
 								required: true,
-								message: "Password verification required.",
+								message: 'Please confirm your password!',
 							},
+							({ getFieldValue }) => ({
+								validator(_, value) {
+									if (!value || getFieldValue('password') === value) {
+										return Promise.resolve();
+									}
+									return Promise.reject(new Error('The two passwords that you entered do not match!'));
+								},
+							}),
 						]}
 					>
-						<Input.Password placeholder="Verify Password" class="form-input" />
+						<Input.Password placeholder="Verify Password" />
 					</Form.Item>
 
 					<Form.Item {...tailLayout}>

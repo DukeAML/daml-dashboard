@@ -1,6 +1,5 @@
 import React, {useEffect, useContext } from "react";
 import "./App.css";
-import './css/ProfilePage.css';
 import './css/Landing.css';
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import Homepage from "./components/layout/Homepage";
@@ -30,7 +29,6 @@ function App() {
     <ContextProvider>
       <Main className = 'App'/>
     </ContextProvider>
-
   );
 }
 
@@ -41,7 +39,8 @@ function Main() {
   useEffect(() => {
       ReadUser(localStorage.getItem('token'))
           .then(res => {
-            dispatch({type: 'CHANGE _', payload: {email: res.email, loading: false, auth: true}});
+            console.log(res)
+            dispatch({type: 'CHANGE _', payload: {email: res.email, fname: res.fname, lname: res.lname, loading: false, auth: true}});
           })
           .catch(err => {
             console.log(err);
@@ -52,7 +51,7 @@ function Main() {
   if(context.loading !== false) {
     return (
       <div style = {{width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        LOADING ...
+        LOADING DOT DOT DOT
       </div>
     )
   }

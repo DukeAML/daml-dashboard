@@ -70,7 +70,7 @@ class Homepage extends React.Component {
 			// No edit access
 			if (this.state.private) {
 				return (
-					<Content className='content' style={{ marginTop: '5vh' }}>
+					<Content className='content'>
 						<div style={{ display: 'flex', justifyContent: 'center', width: '90%' }}>
 							<PublicDashboard />
 						</div>
@@ -80,7 +80,7 @@ class Homepage extends React.Component {
 			// Edit access
 			else {
 				return (
-					<Content className='content' style={{ marginTop: '5vh' }}>
+					<Content className='content'>
 						<div style={{ display: 'flex', justifyContent: 'center', width: '90%' }}>
 							<OwnedDashboard />
 						</div>

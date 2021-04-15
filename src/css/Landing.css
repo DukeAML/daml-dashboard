@@ -4,8 +4,6 @@
     color: #1e2c3a;
 }
 
-/*@primary-color: #1890ff;*/
-
 .secondarytext {
     font-size: 20px;
     font-weight: normal;
@@ -17,10 +15,4 @@
   height: 95vh;
   grid-gap: 10px;
   padding: 10px;
-}
-
-.button-container {
-  .ant-btn-primary {
-    background-color: palevioletred;
-  }
 }

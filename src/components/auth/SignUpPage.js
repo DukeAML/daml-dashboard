@@ -1,7 +1,7 @@
 import React from 'react';
 import SignUp from './SignUp';
 import { Row, Col } from 'antd';
-const logo = require("../../images/logoPeagle.svg");
+import logo from '../../images/logoPeagle.svg';
 
 
 class SignUpPage extends React.Component {

@@ -58,7 +58,7 @@ class NavBar extends React.Component {
 					defaultOpenKeys={context.submenu}
 				>
 					<SubMenu key="dashboards"
-						className="main-menu"
+						// className="main-menu"
 						title={
 							<span style={{ display: 'flex', alignItems: 'center' }}>
 								<BlockOutlined />

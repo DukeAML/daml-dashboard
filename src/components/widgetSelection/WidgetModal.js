@@ -28,8 +28,8 @@ class WidgetModal extends React.Component {
 
   handleOk = e => {
     if (this.state.step === 1) {
-      // last step, ready to add the widget
-      this.props.onAddWidget(this.state.widget, this.state.dataProps, this.state.chartTitle);
+      // Last step, ready to add the widget
+      this.props.onAddWidget(this.state.widget, this.state.dataProps, this.state.chartTitle || undefined);
       this.setState({
         widget: "",
         step: 0,
@@ -37,7 +37,7 @@ class WidgetModal extends React.Component {
         errorMessage: ""
       });
     } else {
-      // continue to next step
+      // Continue to next step
       if (this.state.step === 0 && !this.state.widget) {
         this.setState({
           errorMessage: "You must select a widget type before continuing."
@@ -61,7 +61,6 @@ class WidgetModal extends React.Component {
 
   handleSelectWidget = type => {
     this.setState({ widget: type });
-    console.log(type);
   };
 
   handleReceiveDataProps = props => {
@@ -69,7 +68,6 @@ class WidgetModal extends React.Component {
   };
 
   handleReceiveTitleProps = chartTitle => {
-    console.log(chartTitle);
     this.setState({chartTitle: chartTitle});
   }
 

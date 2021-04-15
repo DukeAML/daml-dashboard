@@ -1,14 +1,17 @@
 import axios from 'axios';
 
 const client = axios.create({
-	baseURL: "https://peagle-backend.herokuapp.com"
-	// baseURL: "http://localhost:5000"
+	// baseURL: "https://peagle-backend.herokuapp.com"
+	baseURL: "http://localhost:5000"
 });
 
 const printOutput = true;
 
-export const Register = async (email, password) => {
+/* ---------- AUTHENTICATION ---------- */
+export const Register = async (email, password, fname, lname) => {
 	const { data } = await client.post("/users", {
+		fname: fname,
+		lname: lname,
 		email: email,
 		password: password
 	});
@@ -72,6 +75,7 @@ export const EditUser = async (token, email) => {
 	return data;
 };
 
+/* ---------- DASHBOARDS ---------- */
 export const CreateDashboard = async (token, title) => {
 	const { data } = await client.post("/dashboards", { name: title }, {
 		headers: {
@@ -92,6 +96,37 @@ export const GetDashboards = async (token) => {
 	return data;
 }
 
+export const GetDashboard = async (token, id) => {
+	const { data } = await client.get(`/dashboards/${id}`, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+export const EditDashboard = async (token, id, updates) => {
+	const { data } = await client.patch(`/dashboards/edit/${id}`, updates, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+export const DeleteDashboard = async (token, id) => {
+	const { data } = await client.delete(`/dashboards/${id}`, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+/* ---------- CHARTS ---------- */
 export const CreateChart = async (token, chart) => {
 	const { data } = await client.post(`/charts`, chart,
 		{
@@ -114,28 +149,8 @@ export const UpdateChart = async (token, id, chart) => {
 	return data;
 }
 
-export const GetDashboard = async (token, id) => {
-	const { data } = await client.get(`/dashboards/${id}`, {
-		headers: {
-			'Authorization': `Bearer ${token}`
-		}
-	});
-	printOutput && console.log(data);
-	return data;
-}
-
 export const GetCharts = async (token, id) => {
 	const { data } = await client.get(`/dashboards/${id}/charts`, {
-		headers: {
-			'Authorization': `Bearer ${token}`
-		}
-	});
-	printOutput && console.log(data);
-	return data;
-}
-
-export const EditDashboard = async (token, id, updates) => {
-	const { data } = await client.patch(`/dashboards/edit/${id}`, updates, {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		}
@@ -154,6 +169,7 @@ export const DeleteChart = async (token, id) => {
 	return data;
 }
 
+/* ---------- DATA ---------- */
 export const GetData = async (token) => {
 	const { data } = await client.get(`/data/me`, {
 		headers: {
@@ -175,4 +191,18 @@ export const PostData = async (token, dataObj) => {
 	return data;
 }
 
-export default { Register, Login, Logout, LogoutAll, ReadUser, EditUser, CreateDashboard, GetDashboards, CreateChart, UpdateChart, GetDashboard, GetCharts, DeleteChart, GetData, PostData };
+export const GetDataIds = async (token) => {
+	const { data } = await client.get(`/data/ids`, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+export default { Register, Login, Logout, LogoutAll, ReadUser, EditUser, 
+	CreateDashboard, GetDashboards, GetDashboard, DeleteDashboard, 
+	CreateChart, UpdateChart, GetCharts, DeleteChart, 
+	GetData, PostData, GetDataIds 
+};

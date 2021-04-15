@@ -39,7 +39,7 @@ class Login extends React.Component {
             .then(res => {
                 // Save token to localstorage, update context, push to homepage
                 localStorage.setItem('token', res.token);
-                dispatch({ type: 'CHANGE _', payload: { email: res.user.email, auth: true } });
+                dispatch({ type: 'CHANGE _', payload: { email: res.user.email, fname: res.user.fname, lname: res.user.lname, auth: true } });
                 this.props.history.push('/home');
             })
             .catch(err => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import ForgotPassword from './FP';
 import { Row, Col } from 'antd';
-const logo = require("../../images/logoPeagle.svg");
+import logo from '../../images/logoPeagle.svg';
 
 class ForgotPasswordPage extends React.Component {
 	render() {

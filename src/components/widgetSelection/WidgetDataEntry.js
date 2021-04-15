@@ -2,117 +2,11 @@ import React from "react";
 import { Dropdown, Row, Col, Upload, Button, Menu, Input } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { DownOutlined } from "@ant-design/icons";
-
 import { Context } from "../../context/Context";
-
 // import widgets
-import SimpleLineChart from "../widgets/SimpleLineChart";
-import SimpleBarChart from "../widgets/SimpleBarChart";
-import BubbleChart from "../widgets/BubbleChart";
-import SimpleAreaChart from "../widgets/SimpleAreaChart";
-import SimplePieChart from "../widgets/SimplePieChart";
-import SimpleRadarChart from "../widgets/SimpleRadarChart";
-import SimpleScatterChart from "../widgets/SimpleScatterChart";
-import TreeMap from "../widgets/TreeMap";
-import VerticalLineChart from "../widgets/VerticalLineChart";
-import DashedLineChart from "../widgets/DashedLineChart";
-import PosAndNegBarChart from "../widgets/PosAndNegBarChart";
-import JointLineScatterChart from "../widgets/JointLineScatterChart";
-import ActiveShapePieChart from "../widgets/ActiveShapePieChart";
-import SimpleRadialBarChart from "../widgets/SimpleRadialBarChart";
-
+import widgets from '../dashboards/Constants';
 // Import data processing tools
-import { processFile } from "../../tools/dataHandling/csvHandling";
 import * as XLSX from "xlsx";
-
-const widgets = [
-	{
-		key: "SimpleLineChart",
-		text: "Simple line chart",
-		value: "Simple line chart",
-		widget: SimpleLineChart
-	},
-	{
-		key: "SimpleBarChart",
-		value: "Simple bar chart",
-		text: "Simple bar chart",
-		widget: SimpleBarChart
-	},
-	{
-		key: "BubbleChart",
-		text: "Bubble chart",
-		value: "Bubble chart",
-		widget: BubbleChart
-	},
-	{
-		key: "SimpleAreaChart",
-		text: "Simple area chart",
-		value: "Simple area chart",
-		widget: SimpleAreaChart
-	},
-	{
-		key: "SimplePieChart",
-		text: "Simple pie chart",
-		value: "Simple pie chart",
-		widget: SimplePieChart
-	},
-	{
-		key: "SimpleRadarChart",
-		text: "Simple radar chart",
-		value: "Simple radar chart",
-		widget: SimpleRadarChart
-	},
-	{
-		key: "SimpleScatterChart",
-		text: "Simple scatter chart",
-		value: "Simple scatter chart",
-		widget: SimpleScatterChart
-	},
-	{
-		key: "TreeMap",
-		text: "Tree map",
-		value: "Tree map",
-		widget: TreeMap
-	},
-	{
-		key: "VerticalLineChart",
-		text: "Vertical line chart",
-		value: "Vertical line chart",
-		widget: VerticalLineChart
-	},
-	{
-		key: "DashedLineChart",
-		text: "Dashed line chart",
-		value: "Dashed line chart",
-		widget: DashedLineChart
-	},
-	{
-		key: "PosAndNegBarChart",
-		text: "Positive and negative bar chart",
-		value: "Positive and negative bar chart",
-		widget: PosAndNegBarChart
-	},
-	{
-		key: "JointLineScatterChart",
-		text: "Joint line scatter chart",
-		value: "Joint line scatter chart",
-		widget: JointLineScatterChart
-	},
-	{
-		key: "ActiveShapePieChart",
-		text: "Active shape pie chart",
-		value: "Active shape pie chart",
-		widget: ActiveShapePieChart
-	},
-	{
-		key: "SimpleRadialBarChart",
-		text: "Simple radial bar chart",
-		value: "Simple radial bar chart",
-		widget: SimpleRadialBarChart
-	}
-
-
-];
 
 class WidgetDataEntry extends React.PureComponent {
 
@@ -133,98 +27,54 @@ class WidgetDataEntry extends React.PureComponent {
 		});
 	};
 
-	//og csv handling but onFileChange works for csv too
-	handleUpload = ({ file, onSuccess }) => {
-		console.log(file);
-		let reader = new window.FileReader();
-		reader.readAsText(file);
-		reader.onload = (...args) => {
-			let fileContents = reader.result;
 
-			// Do some file processing (perhaps converting an image to base 64?)
-			console.log(fileContents);
-			const { content, headers } = processFile(fileContents);
-			console.log(content);
-			console.log(headers);
-			this.setState({
-				processedFile: { content, headers },
-				axes: { x: headers[0], y: headers[1] }
-			});
-			const dataProps = { data: content, ...this.state.axes };
-			this.props.onReceiveDataProps(dataProps);
-			// Show that you have to call onSuccess with `<some string>, file`
-			onSuccess("done", file);
-		};
-	};
-
-
-	//what the customrequest calls, works for both xlsx and csv DOES ASYNC MAKE SENSE HERE?
+	// Adding file from file explorer
 	onFileChange({ file, onSuccess }) {
-		console.log(file);
-		// let fileName = file['name']
-		let workBook = null;
-		let jsonHeaderData = null;
-		let jsonContentData = null;
-
 		const reader = new FileReader();
-		reader.onload = (event) => {
-			const data = reader.result;
-			workBook = XLSX.read(data, { type: 'binary' });
-			console.log(workBook.SheetNames[0]);
-			jsonHeaderData = workBook.SheetNames.reduce((initial, name) => {
-				const sheet = workBook.Sheets[name];
-				initial[name] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-				var headers = initial[name];
-				console.log(headers[0]);
+		reader.onload = () => {
+			const workBook = reader.result;
+			const wb = XLSX.read(workBook, { type: "binary" });
+			const wsname = wb.SheetNames[0];
+			const ws = wb.Sheets[wsname];
+			const jsonContentData = wb.SheetNames.reduce((initial, name) => {
+				// Gets all data
+				// ex. initial[name] = [{x: 1, y: 10, __rowNum__: 1}, {x: 2, y: 1, __rowNum__: 2}, ...]
+				initial[name] = XLSX.utils.sheet_to_json(ws, { defval: null });
 				return initial;
 			}, {});
-			jsonContentData = workBook.SheetNames.reduce((initial, name) => {
-				const sheet = workBook.Sheets[name];
-				initial[name] = XLSX.utils.sheet_to_json(sheet);
-				return initial;
-			}, {});
-			// let arrs = Object.values(jsonHeaderData)[0];
 
-			let headers = Object.values(jsonHeaderData)[0][0];
+			// Only gets data for first workbook for now
 			let content = Object.values(jsonContentData)[0];
-			console.log(headers);
-			console.log(content);
-
-			// PostData(localStorage.getItem('token'), {title: fileName, file_data: arrs})
+			// Only gets headers for first workbook for now (we can get headers simply from the content at any time)
+			let headers = Object.keys(content[0]);
 
 			this.setState({
 				processedFile: { content, headers },
-				axes: { x: headers[0], y: headers[1] },
+				axes: { x: headers[0], y: headers[1] || headers[0] },
 				chartTitle: ""
 			});
 			const dataProps = { data: content, ...this.state.axes };
 			this.props.onReceiveDataProps(dataProps);
-
-			// what is this for ?
-			onSuccess("done", file);
+			// Mark file finished reading
+			onSuccess("Done", file);
 		}
-
 		reader.readAsBinaryString(file);
-
 	}
 
 	handleAxesConfigChange = (axis, { key }) => {
-		console.log(axis, key);
-		const { headers } = this.state.processedFile;
-		this.setState({ axes: { ...this.state.axes, [axis]: headers[key] } });
+		const { content, headers } = this.state.processedFile;
+		// Update axes in dataProps
+		this.setState({ axes: { ...this.state.axes, [axis]: headers[key] } }, () => {
+			this.props.onReceiveDataProps({ data: content, ...this.state.axes });
+		});
 	};
 
 	handleChartTitleChange = e => {
-		console.log(e.target.value);
-		//this.setState({chartTitle: e.target.value});
-		//const titleProps = {chartTitle: e.target.value};
 		this.props.onReceiveTitleProps(e.target.value);
-	} //create titleprops string and not object
+	}
 
 	render() {
-
-		const { processedFile } = this.state;
-		const { content, headers } = processedFile;
+		const { content, headers } = this.state.processedFile;
 
 		const selectedWidget = widgets.filter(
 			w => w.value === this.props.widget
@@ -245,7 +95,7 @@ class WidgetDataEntry extends React.PureComponent {
 					<div style={{ margin: "1rem" }}>
 						<Row gutter={48}>
 							{["x", "y"].map((axis, index) => (
-								<React.Fragment>
+								<React.Fragment key={index}>
 									<Col span={4} key={index}>
 										{axis}-axis
                     					<br />
@@ -271,10 +121,7 @@ class WidgetDataEntry extends React.PureComponent {
 						</Row>
 					</div>
 				</React.Fragment>
-			) : (
-				""
-			);
-
+			) : "";
 		const { TextArea } = Input;
 
 		const inputTitle = headers.length !== 0 ? (
@@ -289,9 +136,7 @@ class WidgetDataEntry extends React.PureComponent {
 						onChange={this.handleChartTitleChange} />
 				</div>
 			</React.Fragment>
-		) : (
-			""
-		);
+		) : "";
 
 
 		const dataProps = content ? { data: content, ...this.state.axes } : {};
@@ -317,7 +162,6 @@ class WidgetDataEntry extends React.PureComponent {
 								name="file"
 								fileList={this.state.fileList}
 								action="memory"
-								//customRequest={this.handleUpload}
 								customRequest={this.onFileChange.bind(this)}
 								onChange={this.handleFileChange}
 							>

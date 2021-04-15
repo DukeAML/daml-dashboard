@@ -1,7 +1,7 @@
 import React from "react";
 import Login from "./Login";
 import { Row, Col } from "antd";
-const logo = require("../../images/logoPeagle.svg");
+import logo from '../../images/logoPeagle.svg';
 
 class LoginPage extends React.Component {
 	render() {
