@@ -44,7 +44,7 @@ class SimplePieChart extends React.Component {
 		const { primary, extendedColors } = context;
 
 		return (
-			<ResponsiveContainer width="100%" height="100%">
+			<ResponsiveContainer width="95%" height="100%">
 				<PieChart>
 					<Pie
 						data={this.props.data || data}

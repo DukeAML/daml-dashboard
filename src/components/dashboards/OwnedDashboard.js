@@ -151,7 +151,7 @@ class OwnedDashboard extends React.PureComponent {
 				<center style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 					<Input className="page-title" value={this.state.title} onChange={this.changeTitle}>
 					</Input>
-					<div style={{ padding: "1rem 0" }}>
+					<div style={{ padding: "1rem 0" }} >
 						<WidgetModal
 							onAddWidget={(type, dataProps, chartTitle) => {
 								this.handleAddWidget(type, dataProps, chartTitle);
