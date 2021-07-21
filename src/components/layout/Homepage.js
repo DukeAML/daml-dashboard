@@ -1,4 +1,5 @@
 import React from "react";
+import './Layout.css';
 import OwnedDashboard from "../dashboards/OwnedDashboard";
 import PublicDashboard from "../dashboards/PublicDashboard";
 import { Layout } from 'antd';

@@ -1,4 +1,5 @@
 import React from "react";
+import './Layout.css';
 import { Modal, Menu, Upload, Button, Row, Col, Select } from "antd";
 import { PostData } from '../../api/api';
 import { withRouter } from 'react-router-dom';

@@ -4,6 +4,7 @@ import { CreateDashboard } from '../../api/api';
 import { withRouter } from 'react-router-dom';
 import { FileAddFilled } from '@ant-design/icons';
 import { Context } from "../../context/Context";
+import './Layout.css';
 
 class AddModal extends React.Component {
 	state = { visible: false, title: '' };

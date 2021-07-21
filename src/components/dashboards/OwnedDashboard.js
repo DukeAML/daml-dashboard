@@ -14,7 +14,8 @@ import Grid from './Grid';
 class OwnedDashboard extends React.PureComponent {
 	state = {
 		title: "",
-		layout: []
+		layout: [],
+		loadings: []
 	}
 	prevKey = '';
 	rem = [];
@@ -100,6 +101,7 @@ class OwnedDashboard extends React.PureComponent {
 	save = async () => {
 		const { context } = this.context;
 		console.log('Saving...');
+		this.enterLoading(0);
 		await Promise.all(this.state.layout.map((chart, i) => {
 			// If this chart is newly added and does not exist on backend
 			if (chart.i.charAt(0) === 'n') {
@@ -144,6 +146,27 @@ class OwnedDashboard extends React.PureComponent {
 		});
 		this.setState({layout: layoutCopy})
 	}
+
+	enterLoading = index => {
+		this.setState(({ loadings }) => {
+		  const newLoadings = [...loadings];
+		  newLoadings[index] = true;
+	
+		  return {
+			loadings: newLoadings,
+		  };
+		});
+		setTimeout(() => {
+		  this.setState(({ loadings }) => {
+			const newLoadings = [...loadings];
+			newLoadings[index] = false;
+	
+			return {
+			  loadings: newLoadings,
+			};
+		  });
+		}, 6000);
+	  };
 
 	render() {
 		return (

@@ -12,6 +12,7 @@ import PosAndNegBarChart from "../widgets/PosAndNegBarChart";
 import JointLineScatterChart from "../widgets/JointLineScatterChart";
 import ActiveShapePieChart from "../widgets/ActiveShapePieChart";
 import SimpleRadialBarChart from "../widgets/SimpleRadialBarChart";
+import DraftWidget from "../widgets/DraftWidget";
 
 const widgets = [
     {
@@ -97,6 +98,12 @@ const widgets = [
         text: "Simple radial bar chart",
         value: "Simple radial bar chart",
         widget: SimpleRadialBarChart
+    },
+    {
+        key: "DraftWidget",
+        text: "Text Box",
+        value: "Text Box",
+        widget: DraftWidget
     }
 ];
 

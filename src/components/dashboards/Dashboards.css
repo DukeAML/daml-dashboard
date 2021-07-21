@@ -1,0 +1,32 @@
+@import '~antd/dist/antd.css';
+
+.page-title {
+    font-size: 1.5rem;
+    padding: 0.25rem 0;
+    z-index: 1;
+    height: fit-content;
+    word-break: break-word;
+    width: auto;
+    text-align: center;
+  
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.5rem;
+    background:rgba(121, 141, 228, 0.66);
+    border-radius: 5px;
+    color:white;
+  }
+
+  .modal-button-theme{
+    margin: 0.5rem;
+    z-index: 3;
+    font-family:"Roboto", sans-serif;
+  }
+
+  .chart-title{
+    font-weight: bold;
+    text-align: center;
+    font-size: 1rem;
+    padding: 0.1rem;
+  }

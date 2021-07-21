@@ -1,0 +1,23 @@
+@import '~antd/dist/antd.css';
+
+/* MODAL STYLES */
+.modal-button-add {
+    margin: 0.5rem;
+    z-index: 3;
+    font-family: "Roboto", sans-serif;
+}
+
+/* WIDGET STYLES */
+
+.widget-header {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+  }
+  
+  .widget-grid-item {
+    padding-bottom: 4rem;
+    height: 15rem;
+  }

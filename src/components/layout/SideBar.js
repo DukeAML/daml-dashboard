@@ -1,4 +1,5 @@
 import React from "react";
+import './Layout.css';
 import { Layout, Menu } from 'antd';
 import { UserOutlined, ProfileFilled, BlockOutlined } from '@ant-design/icons';
 import { GetDashboards } from '../../api/api';

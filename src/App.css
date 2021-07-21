@@ -1,75 +1,64 @@
 @import '~antd/dist/antd.css';
 
-.page-title {
-  font-size: 1.5rem;
-  padding: 0.25rem 0;
-  width: auto;
-  text-align: center;
-
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1.5rem;
-  background:rgba(169, 181, 238);
-  border-radius: 5px;
-  color:white;
+.App {
+  overflow-x: hidden;
 }
 
-.chart-title{
-  font-size: 1rem;
-  font-family: "Roboto", sans-serif;
-  color:black;
-  text-align: center;
-  font-weight: bold;
-  word-break:break-word;
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
 }
 
-.home-button {
-  white-space: nowrap;
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  cursor: pointer;
-  width: auto;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 body {
-  overflow-x: hidden;
-  user-select: none;
+  overflow-x: scroll;
 }
-
 #content {
   width: 100%;
   height: 100%;
 }
 
-/* WIDGET STYLES */
+/* MODAL STYLES */
 
-.widget-header {
-  font-weight: 600;
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  font-family: "Roboto", sans-serif;
+.ant-modal-header {
+  background-color: #ECBA91;
   text-align: center;
-}
-
-.widget-grid-item {
-  padding-bottom: 4rem;
-  height: 15rem;
-}
-
-
-/* BUTTON STYLES */
-.modal-button-add {
-  margin: 0.5rem;
-  z-index: 3;
   font-family: "Roboto", sans-serif;
 }
 
-.modal-button-theme{
-  margin: 0.5rem;
-  z-index: 3;
-  font-family:"Roboto", sans-serif;
+.ant-modal-title {
+  color: white;
+  font-size: 24px;
+  font-weight: 450;
 }
 
 .ant-btn:hover{
@@ -80,6 +69,16 @@ body {
 .ant-btn:focus{
   border-color: rgb(217, 217, 217);;
   color: rgb(0,0,0,0.65);
+}
+
+.modal-button-add:hover, .modal-button-theme:hover{
+  background: #ECBA91;
+  border-color: #ffa39e;
+}
+
+.modal-button-add:focus, .modal-button-theme:focus{
+  background: #ECBA91;
+  border-color: #91cfbf;
 }
 
 .ant-btn-primary{
@@ -99,6 +98,10 @@ body {
   color: white;
 }
 
+.ant-input:hover{
+  border-color: black;
+}
+
 .ant-upload:focus{
   border-color: black;
 }
@@ -107,26 +110,8 @@ body {
   border-color:black;
 }
 
-/* MODAL STYLES */
-.ant-modal-header {
-  background-color: #ECBA91;
-  text-align: center;
-  font-family: "Roboto", sans-serif;
-}
-
-.ant-modal-title {
-  color: white;
-  font-size: 24px;
-  font-weight: 450;
-}
-
-.modal-style{
-  font-family:"Roboto", sans-serif;
-  top: 50px!important;
-}
-
-
 /* GRID LAYOUT STYLES */
+
 .react-grid-layout {
   background: #eee;
 }
@@ -192,6 +177,15 @@ body {
   height: 120px;
   overflow: scroll;
 }
+
+.hide-button {
+  cursor: pointer;
+  position: absolute;
+  font-size: 20px;
+  top: 0px;
+  right: 5px;
+}
+
 .toolbox__title {
   font-size: 24px;
   margin-bottom: 5px;
@@ -282,47 +276,56 @@ body {
   display: none;
 }
 
-/* SUBMENU STYLING */
-.logo {
-  cursor: default;
-  width: 100%;
-  height: 15vh;
+.daml {
   font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 36px;
-  line-height: 42px;
   font-size: 1.7rem;
   line-height: 42px;
-  background: #4C5B69;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
+
   color: #FFFFFF;
-
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.logo * {
-  margin: 0px 2px;
 }
 
 .ant-menu-item .anticon, .ant-menu-submenu-title .anticon{
   font-size: 18px;
+  vertical-align: 0.5px;
 }
 
 .ant-layout{
   background: white;
 }
 
-.site-layout-background {
-  min-height: 100vh;
-  background: #4C5B69;
+.ant-layout-sider-children {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  margin-top: -0.1px;
+  padding-top: 0.1px;
+}
+
+.ant-menu-submenu-title:hover {
+  color: white!important;
+}
+
+.ant-menu-submenu.ant-menu-submenu-inline.option{
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  /* font-size: 22px; */
+  line-height: 28px;
+  text-indent: 8%;
+  color: #FFFFFF;
+  
+}
+
+.option{
+  border:none;
+}
+
+.ant-menu.ant-menu-light .ant-menu-submenu-open.option{
+  background:#637585;
 }
 
 .ant-menu-item.menu-item{
@@ -345,20 +348,96 @@ body {
   border-right: 1px solid #4C5B69;
 }
 
+
+.link-item{
+  color:white;
+}
+
+.link-item:hover {
+  background-color: #8c9bd1;
+  color: white;
+}
+
 .ant-menu.ant-menu-light .ant-menu-item-selected.menu-item{
   background-color: #798DE4;
 }
+
+
 
 .ant-menu-inline .ant-menu-selected::after, .ant-menu-inline .ant-menu-item-selected::after {
   opacity: 0;
 }
 
+
+
 .menu-item:hover {
   background-color: #8c9bd1;
+  color: white;
 }
+
+.ant-menu-submenu ant-menu-submenu-inline main-menu ant-menu-submenu-open
+
+.ant-menu-submenu-title .ant-menu-submenu-arrow{
+    background: white;
+}
+
 
 .ant-menu-submenu-arrow::before, .ant-menu-submenu-arrow::after {
   background: white!important;
+
+}
+
+.content {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.lower-header {
+  position: relative;
+  width: 80%;
+  left: 100%;
+  top: 87px;
+  z-index: -1;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.ant-card-body {
+  padding: 20px 0px;
+}
+
+
+.usericon{
+  background-color: #FFFFFF;
+  display: flex;
+}
+
+.submenu-data{
+  position: absolute;
+  width: 316px;
+  height: 45px;
+  left: 0px;
+  align-items: center;
+  color:white;
+  background: #7A8EA0;
+  
+  text-indent: -5%;
+  font-size: 1rem;
+  font-family: "Roboto", sans-serif;
+}
+
+.ant-menu.ant-menu-light .ant-menu-item-selected.submenu-data{
+  background: #7083CB;
+}
+
+.submenu-data:hover{
+  background: #8c9bd1;
+  color:white;
+}
+
+.ant-menu-vertical .ant-menu-item, .ant-menu-vertical-left .ant-menu-item, .ant-menu-vertical-right .ant-menu-item, .ant-menu-inline .ant-menu-item, .ant-menu-vertical .ant-menu-submenu-title, .ant-menu-vertical-left .ant-menu-submenu-title, .ant-menu-vertical-right .ant-menu-submenu-title, .ant-menu-inline .ant-menu-submenu-title {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .ant-menu-vertical .ant-menu-item:not(:last-child), .ant-menu-vertical-left .ant-menu-item:not(:last-child), .ant-menu-vertical-right .ant-menu-item:not(:last-child), .ant-menu-inline .ant-menu-item:not(:last-child){
@@ -375,119 +454,13 @@ body {
   font-size: 1rem;
   line-height: 28px;
   align-items: center;
-  padding-right: 0px!important;
-}
-
-.ant-menu-inline::after .ant-menu-submenu-title::after {
-  display: flex;
-  background: #4C5B69;
-  color: white;
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 1rem;
-  line-height: 28px;
-  align-items: center;
-}
-
-/* LAYOUT STYLING */
-.content {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.footer {
-  height: 100%;
-  background: #8BCECE;
-}
-
-/* NAVBAR STYLING */
-.header {
-  width: 100%;
-  height: 10vh;
-  position: fixed;
-  z-index: 6;
-  background: #798DE4;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.ant-card-body {
-  padding: 20px 0px;
-}
-
-.title {
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 1.5rem;
-  color: #FFFFFF;
-  display: inline-block;
-  margin-left: 10%;
-  user-select: none;
-
-  -webkit-touch-callout: none;
-  -webkit-user-select: none; 
-   -khtml-user-select: none; 
-     -moz-user-select: none; 
-      -ms-user-select: none; 
-          user-select: none;
-}
-
-@media only screen and (max-width: 600px){
-  .welcome {
-    display: none;
-  }
-}
-
-.welcome {
-  position: relative;
-}
-
-.user {
-  position: relative;
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 1.2rem;
-  color: #FFFFFF;
-  cursor: pointer;
-  white-space: nowrap;
-
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.profpage {
-  position: absolute;
-  min-width: 100%;
-  max-width: 25vw;
-  right: 0;
-  border-radius: 7px;
-  box-shadow: 5px 8px 24px 5px rgba(208, 216, 243, 0.6) ;
-}
-
-.signout {
-  width: 100%;
-  padding: 8px 8%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: .3s;
-}
-
-.signout:hover {
-  cursor: pointer;
-  background: #e3e3e3;
 }
 
 .anticon.anticon-switcher {
   font-size: 17px;
   vertical-align: -2px;
+}
+
+.ant-card-head {
+  text-align: center;
 }

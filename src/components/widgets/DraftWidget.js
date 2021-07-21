@@ -1,41 +1,51 @@
 import React, {PureComponent} from 'react';
-import {Editor, EditorState, RichUtils} from 'draft-js';
+import {Editor, EditorState, RichUtils, convertToRaw, convertFromRaw} from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Context } from "../../context/Context";
 
 export default class DraftWidget extends PureComponent {
     static contextType = Context;
-    state = {
-        editorState: EditorState.createEmpty()
 
-    };
-    onChange = editorState => {
-        this.setState({editorState});
-    }
-    //this is if we use the Editor component
-    handleKeyCommand(command, editorState) {
-      const newState = RichUtils.handleKeyCommand(editorState, command);
-  
-      if (newState) {
-        this.onChange(newState);
-        return 'handled';
+      constructor(props) {
+        super(props);
+        this.state = {
+          content: "",
+
+        }
+        
+        const content = window.localStorage.getItem('content');
+
+        if(content) {
+          this.state.editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(content))); //locally save things
+        } else {
+          this.state.editorState = EditorState.createEmpty();
+        }
       }
-  
-      return 'not-handled';
-    }
+
+      saveContent = (content) => {
+        window.localStorage.setItem('content', JSON.stringify(convertToRaw(content)))
+      }
     
-    render() {
-      return (
-        <div>
-        <textarea>
-          Insert text here
-        </textarea>
-        </div>
-      );
-      
-    }
+      onChange = (editorState) => {
+        const contentState = editorState.getCurrentContent();
+        this.saveContent(contentState);
+        this.setState({
+          editorState,
+        });
+        
+      }
     
-  }
+      render() {
+        return (
+          <div>
+            <Editor
+              editorState={this.state.editorState}
+              onChange={this.onChange}
+            />
+          </div>
+        );
+      }
+    }
 
   /* editor component just in case 
     render() {
