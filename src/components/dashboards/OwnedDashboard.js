@@ -7,14 +7,15 @@ import { Context } from "../../context/Context";
 import ThemingModal from "./ThemingModal";
 import ShareModal from "./ShareModal";
 import WidgetModal from "../widgetSelection/WidgetModal";
-import { GetCharts, CreateChart, UpdateChart, DeleteChart } from '../../api/api';
+import { GetCharts, CreateChart, UpdateChart, DeleteChart, GetDataIds, GetDataById } from '../../api/api';
 import { withRouter } from 'react-router-dom';
 import Grid from './Grid';
 
 class OwnedDashboard extends React.PureComponent {
 	state = {
 		title: "",
-		layout: []
+		layout: [],
+		dataIds: []
 	}
 	prevKey = '';
 	rem = [];
@@ -26,6 +27,7 @@ class OwnedDashboard extends React.PureComponent {
 		this.prevKey = context.key;
 		this.setState({title: context.title});
 		this.loadDashboard();
+		this.getIds();
 	}
 	
 	componentDidUpdate() {
@@ -38,14 +40,30 @@ class OwnedDashboard extends React.PureComponent {
 		}
 	}
 
+	getIds = () => {
+		GetDataIds(localStorage.getItem('token'))
+			.then(res => this.setState({dataIds: res}))
+			.catch(e => console.log(e));
+	}
+
 	loadDashboard = async () => {
 		const { context } = this.context;
 		// Retrieve all charts
 		const c = await GetCharts(localStorage.getItem('token'), context.key)
 			.then(res => { return res })
 		// Convert chart to expected format
+
 		const charts = {
-			layout: c.map(i => {
+			layout: await Promise.all(c.map(async i => {
+				// Load in data to this chart if it is connected to a data object
+				let data = undefined;
+				if(i.data) {
+					data = await GetDataById(localStorage.getItem('token'), i.data)
+						.then(res => res.file_data);
+					const axes = Object.keys(data[0]);
+					data = {data: data};
+					axes.forEach(axis => data[axis] = axis);
+				}
 				return {
 					i: i._id.toString(),
 					x: i.grid[0] ? i.grid[0] : 0,
@@ -53,11 +71,14 @@ class OwnedDashboard extends React.PureComponent {
 					w: i.grid[2] ? i.grid[2] : 0,
 					h: i.grid[3] ? i.grid[3] : 0,
 					widgetType: i.type,
+					data: i.data,
+					dataProps: data,
 					chartTitle: i.title
 				};
-			}),
+			})),
 			newCounter: 0
 		}
+		console.log(charts);
 		this.setState(charts);
 	}
 
@@ -112,7 +133,8 @@ class OwnedDashboard extends React.PureComponent {
 			}
 			// Update this chart with current position, type, etc.
 			else {
-				return UpdateChart(localStorage.getItem('token'), chart.i, { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, title: chart.chartTitle })
+				console.log(chart, i);
+				return UpdateChart(localStorage.getItem('token'), chart.i, { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, title: chart.chartTitle, data: chart.data })
 					.catch(err => console.log(err));
 			}
 		}))
@@ -170,6 +192,7 @@ class OwnedDashboard extends React.PureComponent {
 					</div>
 				</center>
 				<Grid layout = {this.state.layout} 
+					dataIds = {this.state.dataIds}
 					onLayoutChange = {this.onLayoutChange}
 					onRemoveItem = {this.onRemoveItem}
 					updateChart = {this.updateChart}/>

@@ -19,6 +19,7 @@ class Grid extends React.Component {
     render() {
         const { context } = this.context;
         const { layout, onRemoveItem, onLayoutChange, updateChart } = this.props;
+        console.log(layout)
         return (
             <ResponsiveReactGridLayout
                 className="layout"
@@ -48,6 +49,7 @@ class Grid extends React.Component {
                         }}
                     >
                         <Chart
+                            dataIds={this.props.dataIds}
                             el={el}
                             onRemoveItem={onRemoveItem}
                             updateChart={updateChart}

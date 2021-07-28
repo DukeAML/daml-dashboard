@@ -53,6 +53,8 @@ body {
   text-align: center;
 }
 
+
+
 .widget-grid-item {
   padding-bottom: 4rem;
   height: 15rem;
@@ -470,7 +472,7 @@ body {
   max-width: 25vw;
   right: 0;
   border-radius: 7px;
-  box-shadow: 5px 8px 24px 5px rgba(208, 216, 243, 0.6) ;
+  box-shadow: 5px 8px 24px 5px rgba(208, 216, 243, 0.6);
 }
 
 .signout {

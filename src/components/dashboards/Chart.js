@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import widgets from './Constants';
 import EditModal from './EditModal';
 
@@ -13,7 +13,6 @@ function Chart(props) {
         : widgets[0];
 
     const [visible, setVisible] = useState(false);
-    
     return (
         <span>
             <EditModal visible={visible}
@@ -21,6 +20,7 @@ function Chart(props) {
                 el={props.el}
                 updateChart={props.updateChart}
                 onClose = {props.toggleDrag}
+                dataIds = {props.dataIds}
             />
             <span onDoubleClick={() => {
                     props.toggleDrag();
