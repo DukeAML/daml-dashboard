@@ -22,14 +22,7 @@ class NavBar extends React.Component {
 
 	// Clicking a dashboard
 	changePage = e => {
-		let sub = e.item.props;
-		// Temporary code that will be used to keep track of which menus are open in context
-		let subs = [];
-		while (sub.parentMenu.constructor.name === 'SubMenu') {
-			subs.push(sub.parentMenu.props.eventKey);
-			sub = sub.parentMenu.props;
-		}
-		this.props.history.push(`/home/${e.item.props.eventKey}`)
+		this.props.history.push(`/home/${e.key}`)
 	};
 
 	static contextType = Context;
