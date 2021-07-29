@@ -6,6 +6,7 @@ import { Context } from "../../context/Context";
 import { withRouter } from 'react-router-dom';
 import AddModal from './AddModal';
 import DataModal from './DataModal';
+import './Layout.css';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;

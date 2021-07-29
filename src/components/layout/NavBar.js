@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom';
 import { Logout as logout } from "../../api/api";
 import { Context } from "../../context/Context";
 import logo from '../../images/logoPeagle.svg';
+import './Layout.css';
+
 const { Header } = Layout;
 
 class NavBar extends React.Component {

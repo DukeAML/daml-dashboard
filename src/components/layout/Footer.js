@@ -1,5 +1,7 @@
 import React from "react";
 import { Layout } from "antd";
+import './Layout.css';
+
 const { Footer: Ftr } = Layout;
 
 class Footer extends React.Component {

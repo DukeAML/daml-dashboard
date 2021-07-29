@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom';
 import { UploadOutlined, CloudUploadOutlined, DownOutlined } from '@ant-design/icons';
 import { Context } from "../../context/Context";
 import * as XLSX from "xlsx";
+import './Layout.css';
+
 const { Option } = Select;
 
 class DataModal extends React.Component {

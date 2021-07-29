@@ -1,38 +1,5 @@
 @import '~antd/dist/antd.css';
 
-.page-title {
-  font-size: 1.5rem;
-  padding: 0.25rem 0;
-  width: auto;
-  text-align: center;
-
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1.5rem;
-  background:rgba(169, 181, 238);
-  border-radius: 5px;
-  color:white;
-}
-
-.chart-title{
-  font-size: 1rem;
-  font-family: "Roboto", sans-serif;
-  color:black;
-  text-align: center;
-  font-weight: bold;
-  word-break:break-word;
-}
-
-.home-button {
-  white-space: nowrap;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  cursor: pointer;
-  width: auto;
-}
-
 body {
   overflow-x: hidden;
   user-select: none;
@@ -43,48 +10,20 @@ body {
   height: 100%;
 }
 
-/* WIDGET STYLES */
-
-.widget-header {
-  font-weight: 600;
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  font-family: "Roboto", sans-serif;
-  text-align: center;
-}
-
-
-
-.widget-grid-item {
-  padding-bottom: 4rem;
-  height: 15rem;
-}
-
-
 /* BUTTON STYLES */
-.modal-button-add {
-  margin: 0.5rem;
-  z-index: 3;
-  font-family: "Roboto", sans-serif;
-}
 
-.modal-button-theme{
-  margin: 0.5rem;
-  z-index: 3;
-  font-family:"Roboto", sans-serif;
-}
-
-.ant-btn:hover{
-  color:black;
+.ant-btn:hover {
+  color: black;
   border-color: black;
 }
 
-.ant-btn:focus{
-  border-color: rgb(217, 217, 217);;
-  color: rgb(0,0,0,0.65);
+.ant-btn:focus {
+  border-color: rgb(217, 217, 217);
+  ;
+  color: rgb(0, 0, 0, 0.65);
 }
 
-.ant-btn-primary{
+.ant-btn-primary {
   background: #ECBA91;
   border-color: #ECBA91;
 }
@@ -95,21 +34,22 @@ body {
   background: #ECBA91;
 }
 
-.ant-btn-primary:focus{
+.ant-btn-primary:focus {
   background: #ECBA91;
   border-color: rgba(0, 0, 0, 0);
   color: white;
 }
 
-.ant-upload:focus{
+.ant-upload:focus {
   border-color: black;
 }
 
 .ant-upload .ant-upload-select:focus {
-  border-color:black;
+  border-color: black;
 }
 
 /* MODAL STYLES */
+
 .ant-modal-header {
   background-color: #ECBA91;
   text-align: center;
@@ -122,16 +62,7 @@ body {
   font-weight: 450;
 }
 
-.modal-style{
-  font-family:"Roboto", sans-serif;
-  top: 50px!important;
-}
-
-
 /* GRID LAYOUT STYLES */
-.react-grid-layout {
-  background: #eee;
-}
 
 .react-grid-layout.layout {
   position: relative;
@@ -139,30 +70,37 @@ body {
   height: 100vh;
   width: 100%;
 }
+
 .layoutJSON {
   background: #ddd;
   border: 1px solid black;
   margin-top: 10px;
   padding: 10px;
 }
+
 .columns {
   -moz-columns: 120px;
   -webkit-columns: 120px;
   columns: 120px;
 }
+
 .react-grid-item {
   box-sizing: border-box;
 }
+
 .react-grid-item:not(.react-grid-placeholder) {
   background: #ccc;
   border: 1px solid black;
 }
+
 .react-grid-item.resizing {
   opacity: 0.9;
 }
+
 .react-grid-item.static {
   background: #cce;
 }
+
 .react-grid-item .text {
   font-size: 24px;
   text-align: center;
@@ -175,44 +113,22 @@ body {
   height: 24px;
   font-family: "Roboto", sans-serif;
 }
+
 .react-grid-item .minMax {
   font-size: 12px;
 }
+
 .react-grid-item .add {
   cursor: pointer;
 }
+
 .react-grid-dragHandleExample {
-  cursor: move; /* fallback if grab cursor is unsupported */
+  cursor: move;
   cursor: grab;
   cursor: -moz-grab;
   cursor: -webkit-grab;
 }
 
-.toolbox {
-  background-color: #dfd;
-  width: 100%;
-  height: 120px;
-  overflow: scroll;
-}
-.toolbox__title {
-  font-size: 24px;
-  margin-bottom: 5px;
-}
-.toolbox__items {
-  display: block;
-}
-.toolbox__items__item {
-  display: inline-block;
-  text-align: center;
-  line-height: 40px;
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-  padding: 10px;
-  margin: 5px;
-  border: 1px solid black;
-  background-color: #ddd;
-}
 .droppable-element {
   width: 150px;
   text-align: center;
@@ -226,13 +142,16 @@ body {
   position: relative;
   transition: height 200ms ease;
 }
+
 .react-grid-item {
   transition: all 200ms ease;
   transition-property: left, top;
 }
+
 .react-grid-item.cssTransforms {
   transition-property: transform;
 }
+
 .react-grid-item.resizing {
   z-index: 1;
   will-change: width, height;
@@ -260,7 +179,7 @@ body {
   user-select: none;
 }
 
-.react-grid-item > .react-resizable-handle {
+.react-grid-item>.react-resizable-handle {
   position: absolute;
   width: 20px;
   height: 20px;
@@ -269,7 +188,7 @@ body {
   cursor: se-resize;
 }
 
-.react-grid-item > .react-resizable-handle::after {
+.react-grid-item>.react-resizable-handle::after {
   content: "";
   position: absolute;
   right: 3px;
@@ -280,54 +199,21 @@ body {
   border-bottom: 2px solid rgba(0, 0, 0, 0.4);
 }
 
-.react-resizable-hide > .react-resizable-handle {
+.react-resizable-hide>.react-resizable-handle {
   display: none;
 }
 
 /* SUBMENU STYLING */
-.logo {
-  cursor: default;
-  width: 100%;
-  height: 15vh;
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 36px;
-  line-height: 42px;
-  font-size: 1.7rem;
-  line-height: 42px;
-  background: #4C5B69;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #FFFFFF;
 
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.logo * {
-  margin: 0px 2px;
-}
-
-.ant-menu-item .anticon, .ant-menu-submenu-title .anticon{
+.ant-menu-item .anticon, .ant-menu-submenu-title .anticon {
   font-size: 18px;
 }
 
-.ant-layout{
+.ant-layout {
   background: white;
 }
 
-.site-layout-background {
-  min-height: 100vh;
-  background: #4C5B69;
-}
-
-.ant-menu-item.menu-item{
+.ant-menu-item.menu-item {
   left: 0px;
   height: 40px;
   background: #4C5B69;
@@ -340,14 +226,14 @@ body {
   align-items: center;
   color: white;
   margin-top: 0px;
-  margin-bottom:0px;
+  margin-bottom: 0px;
 }
 
 .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
   border-right: 1px solid #4C5B69;
 }
 
-.ant-menu.ant-menu-light .ant-menu-item-selected.menu-item{
+.ant-menu.ant-menu-light .ant-menu-item-selected.menu-item {
   background-color: #798DE4;
 }
 
@@ -363,7 +249,7 @@ body {
   background: white!important;
 }
 
-.ant-menu-vertical .ant-menu-item:not(:last-child), .ant-menu-vertical-left .ant-menu-item:not(:last-child), .ant-menu-vertical-right .ant-menu-item:not(:last-child), .ant-menu-inline .ant-menu-item:not(:last-child){
+.ant-menu-vertical .ant-menu-item:not(:last-child), .ant-menu-vertical-left .ant-menu-item:not(:last-child), .ant-menu-vertical-right .ant-menu-item:not(:last-child), .ant-menu-inline .ant-menu-item:not(:last-child) {
   margin-bottom: 0px;
 }
 
@@ -393,100 +279,17 @@ body {
 }
 
 /* LAYOUT STYLING */
+
 .content {
   height: 100%;
   display: flex;
   justify-content: center;
 }
 
-.footer {
-  height: 100%;
-  background: #8BCECE;
-}
-
 /* NAVBAR STYLING */
-.header {
-  width: 100%;
-  height: 10vh;
-  position: fixed;
-  z-index: 6;
-  background: #798DE4;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 
 .ant-card-body {
   padding: 20px 0px;
-}
-
-.title {
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 1.5rem;
-  color: #FFFFFF;
-  display: inline-block;
-  margin-left: 10%;
-  user-select: none;
-
-  -webkit-touch-callout: none;
-  -webkit-user-select: none; 
-   -khtml-user-select: none; 
-     -moz-user-select: none; 
-      -ms-user-select: none; 
-          user-select: none;
-}
-
-@media only screen and (max-width: 600px){
-  .welcome {
-    display: none;
-  }
-}
-
-.welcome {
-  position: relative;
-}
-
-.user {
-  position: relative;
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 1.2rem;
-  color: #FFFFFF;
-  cursor: pointer;
-  white-space: nowrap;
-
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.profpage {
-  position: absolute;
-  min-width: 100%;
-  max-width: 25vw;
-  right: 0;
-  border-radius: 7px;
-  box-shadow: 5px 8px 24px 5px rgba(208, 216, 243, 0.6);
-}
-
-.signout {
-  width: 100%;
-  padding: 8px 8%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: .3s;
-}
-
-.signout:hover {
-  cursor: pointer;
-  background: #e3e3e3;
 }
 
 .anticon.anticon-switcher {

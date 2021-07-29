@@ -1,8 +1,8 @@
 import React from "react";
-
 import { Row, Col } from "antd";
 import { Context } from "../../context/Context";
 import widgets from '../dashboards/Constants';
+import './WidgetSelection.css';
 
 class WidgetModalGrid extends React.PureComponent {
 	state = { selected: "" };

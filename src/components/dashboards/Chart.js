@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import widgets from './Constants';
 import EditModal from './EditModal';
+import './Dashboards.css';
+
 
 function Chart(props) {
 

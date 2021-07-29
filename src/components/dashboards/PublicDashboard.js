@@ -1,7 +1,6 @@
 import React from "react";
 import { WidthProvider, Responsive } from "react-grid-layout";
 import _ from "lodash";
-
 import { Input } from "antd";
 import { Context } from "../../context/Context";
 import ThemingModal from "./ThemingModal";
@@ -23,6 +22,7 @@ import ActiveShapePieChart from "../widgets/ActiveShapePieChart";
 import SimpleRadialBarChart from "../widgets/SimpleRadialBarChart";
 import { GetCharts } from '../../api/api';
 import { withRouter } from 'react-router-dom';
+import './Dashboards.css';
 
 //i don't know if it's with grid display but when you change the axes it shows on the modal but not the actual dashboard
 
@@ -189,7 +189,6 @@ class PublicDashboard extends React.PureComponent {
 			: SimpleLineChart;
 		return (
 			<div
-				className="react-grid-item"
 				key={i}
 				data-grid={{
 					x: el.x,

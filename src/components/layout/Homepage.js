@@ -5,6 +5,7 @@ import { Layout } from 'antd';
 import { withRouter, Redirect } from 'react-router-dom';
 import { Context } from "../../context/Context";
 import { GetDashboard } from '../../api/api';
+import './Layout.css';
 
 const { Content } = Layout;
 

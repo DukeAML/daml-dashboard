@@ -4,6 +4,7 @@ import { Context } from "../../context/Context";
 import { ShareAltOutlined } from "@ant-design/icons";
 import { GetDashboard, EditDashboard } from '../../api/api';
 import { withRouter } from 'react-router-dom';
+import './Dashboards.css';
 
 class ShareModal extends React.Component {
 	state = { visible: false };

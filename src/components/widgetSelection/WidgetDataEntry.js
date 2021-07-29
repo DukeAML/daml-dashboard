@@ -3,10 +3,9 @@ import { Dropdown, Row, Col, Upload, Button, Menu, Input } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { DownOutlined } from "@ant-design/icons";
 import { Context } from "../../context/Context";
-// import widgets
 import widgets from '../dashboards/Constants';
-// Import data processing tools
 import * as XLSX from "xlsx";
+import './WidgetSelection.css';
 
 class WidgetDataEntry extends React.PureComponent {
 

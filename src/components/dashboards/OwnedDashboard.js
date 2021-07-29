@@ -1,6 +1,5 @@
 import React from "react";
 import _ from "lodash";
-
 import { Button, Input } from "antd";
 import { SaveFilled } from "@ant-design/icons";
 import { Context } from "../../context/Context";
@@ -10,6 +9,7 @@ import WidgetModal from "../widgetSelection/WidgetModal";
 import { GetCharts, CreateChart, UpdateChart, DeleteChart, GetDataIds, GetDataById } from '../../api/api';
 import { withRouter } from 'react-router-dom';
 import Grid from './Grid';
+import './Dashboards.css';
 
 class OwnedDashboard extends React.PureComponent {
 	state = {

@@ -2,8 +2,8 @@ import React from "react";
 import { Modal, Button, Input, Row, Col } from "antd";
 import { Context } from "../../context/Context";
 import { EditOutlined } from "@ant-design/icons";
-
 import { SketchPicker } from "react-color";
+import './Dashboards.css';
 
 const themeProperties = {
 	widgetBackgroundColor: "Widget background color",

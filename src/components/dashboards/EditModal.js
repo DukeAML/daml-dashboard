@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Col, Input, Select } from 'antd';
 import widgets from './Constants';
 import { GetDataById } from '../../api/api';
-
+import './Dashboards.css';
 
 class EditModal extends React.Component {
     state = {

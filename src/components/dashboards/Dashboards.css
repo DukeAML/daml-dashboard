@@ -1,0 +1,54 @@
+/* WIDGET STYLES */
+
+.widget-header {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+}
+
+.widget-grid-item {
+  padding-bottom: 4rem;
+  height: 15rem;
+}
+
+/* BUTTON STYLES */
+
+.modal-button-theme {
+  margin: 0.5rem;
+  z-index: 3;
+  font-family: "Roboto", sans-serif;
+}
+
+/* MODAL STYLES */
+
+.modal-style {
+  font-family: "Roboto", sans-serif;
+  top: 50px!important;
+}
+
+/* OTHER */
+
+.page-title {
+  font-size: 1.5rem;
+  padding: 0.25rem 0;
+  width: auto;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.5rem;
+  background: rgba(169, 181, 238);
+  border-radius: 5px;
+  color: white;
+}
+
+.chart-title {
+  font-size: 1rem;
+  font-family: "Roboto", sans-serif;
+  color: black;
+  text-align: center;
+  font-weight: bold;
+  word-break: break-word;
+}

@@ -1,9 +1,9 @@
 import React from "react";
 import { Modal, Button } from "antd";
 import {AppstoreAddOutlined} from "@ant-design/icons";
-
 import WidgetModalGrid from "./WidgetModalGrid";
 import WidgetDataEntry from "./WidgetDataEntry";
+import './WidgetSelection.css';
 
 // Array of modal content views indexed by step number in the widget selection process
 const widgetSteps = [WidgetModalGrid, WidgetDataEntry];
@@ -77,7 +77,7 @@ class WidgetModal extends React.Component {
     return (
       <span>
         <Button
-          className="modal-button-add"
+          className="modal-button-theme"
           type="primary"
           onClick={this.showModal}
         >

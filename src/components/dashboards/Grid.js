@@ -3,6 +3,7 @@ import { Context } from '../../context/Context';
 import _ from "lodash";
 import { WidthProvider, Responsive } from "react-grid-layout";
 import Chart from './Chart';
+import './Dashboards.css';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 class Grid extends React.Component {
