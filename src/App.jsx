@@ -1,10 +1,7 @@
 import React, {useEffect, useContext } from "react";
 //Import CSS
 import "./App.css";
-import "./components/dashboards/Dashboards.css";
 import './Landing.css';
-import "./components/layout/Layout.css";
-import "./components/widgetSelection/WidgetSelection.css";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import Homepage from "./components/layout/Homepage";
 import SideBar from "./components/layout/SideBar";
@@ -37,17 +34,14 @@ function App() {
 }
 
 function Main() {
-  const con = useContext(Context);
-  const {context, dispatch } = con;
+  const { context, dispatch } = useContext(Context);
   // Check Authentication
   useEffect(() => {
       ReadUser(localStorage.getItem('token'))
           .then(res => {
-            console.log(res)
             dispatch({type: 'CHANGE _', payload: {email: res.email, fname: res.fname, lname: res.lname, loading: false, auth: true}});
           })
           .catch(err => {
-            console.log(err);
             dispatch({type: 'CHANGE _', payload: {loading: false, auth: false}});
           });
   }, [])
@@ -69,7 +63,7 @@ function Main() {
             component={() => <NavBar title="Peagle" user="DAML" />}
           />
           <Layout>
-            <Route path={['/home', '/settings', '/data']} component={SideBar} />
+            <ProtectedRoute path={['/home', '/settings', '/data']} component={SideBar} />
             <Switch>
               <Redirect exact from = '/' to = '/home'/>
               <ProtectedRoute exact path="/home" component={Homepage} />

@@ -12,7 +12,7 @@ const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 
-class NavBar extends React.Component {
+class SideBar extends React.Component {
 	async componentDidMount() {
 		const { dispatch } = this.context;
 		// Load sidebar contents
@@ -31,7 +31,7 @@ class NavBar extends React.Component {
 	render() {
 		const { context } = this.context;
 		// If somehow sidebar is loaded without being authenticated
-		if (!context.auth) {
+		if (!context.dashboards) {
 			return null;
 		}
 		return (
@@ -83,4 +83,4 @@ class NavBar extends React.Component {
 	}
 }
 
-export default withRouter(NavBar);
+export default withRouter(SideBar);

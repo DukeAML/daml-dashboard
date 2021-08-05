@@ -97,7 +97,7 @@ class ThemingModal extends React.Component {
 					onClick={this.showModal}
 				>
 					<EditOutlined /> Edit
-        </Button>
+        		</Button>
 				<Modal
 					title={"Customize Theming"}
 					visible={this.state.visible}

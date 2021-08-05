@@ -57,7 +57,7 @@ class AccountSettings extends React.Component {
 				<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
 					<div style={{ lineHeight: 1.2, fontSize: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 						Settings
-            </div>
+            		</div>
 					<Form
 						ref={this.formRef}
 						{...layout}
@@ -77,7 +77,7 @@ class AccountSettings extends React.Component {
 						<Form.Item {...tailLayout}>
 							<Button type="primary" htmlType="submit">
 								Save
-                </Button>
+                			</Button>
 						</Form.Item>
 					</Form>
 				</div>

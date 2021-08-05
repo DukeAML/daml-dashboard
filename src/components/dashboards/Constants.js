@@ -14,7 +14,7 @@ import ActiveShapePieChart from "../widgets/ActiveShapePieChart";
 import SimpleRadialBarChart from "../widgets/SimpleRadialBarChart";
 import DraftWidget from "../widgets/DraftWidget";
 
-const widgets = [
+export const widgets = [
     {
         key: "SimpleLineChart",
         text: "Simple line chart",
@@ -106,5 +106,10 @@ const widgets = [
         widget: DraftWidget
     }
 ];
+
+export const widgetDict = widgets.reduce((dict, widget) => {
+    dict[widget.value] = widget.widget;
+    return dict;
+}, {});
 
 export default widgets;
