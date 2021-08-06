@@ -1,7 +1,6 @@
 import React, {useEffect, useContext } from "react";
 //Import CSS
 import "./App.css";
-import './Landing.css';
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import Homepage from "./components/layout/Homepage";
 import SideBar from "./components/layout/SideBar";

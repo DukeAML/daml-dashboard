@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
+import './Landing.css';
 
 const layout = {
     labelCol: {

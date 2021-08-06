@@ -2,6 +2,7 @@ import React from "react";
 import Login from "./Login";
 import { Row, Col } from "antd";
 import logo from '../../images/logoPeagle.svg';
+import './Landing.css';
 
 const LoginPage = props => {
 	return (

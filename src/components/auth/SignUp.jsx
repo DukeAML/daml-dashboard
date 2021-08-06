@@ -4,6 +4,7 @@ import { Space } from "antd";
 import { Context } from "../../context/Context";
 import { withRouter } from "react-router-dom";
 import { Register as register } from "../../api/api";
+import './Landing.css';
 
 const layout = {
 	labelCol: {

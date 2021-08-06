@@ -2,7 +2,7 @@ import React from 'react';
 import SignUp from './SignUp';
 import { Row, Col } from 'antd';
 import logo from '../../images/logoPeagle.svg';
-
+import './Landing.css';
 
 const SignUpPage = props => {
 	return (
