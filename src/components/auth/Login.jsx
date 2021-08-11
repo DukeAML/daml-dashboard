@@ -81,13 +81,13 @@ const Login = props => {
                         },
                     ]}
                 >
-                    <Input.Password placeholder='Password' class="form-input" />
+                    <Input.Password placeholder='Password' className="form-input" />
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>
-                    <div class="tail">
+                    <div className="tail">
                         <Space>
-                            <Button type="primary" htmlType="submit" size="medium" shape="round" class="submit-button">
+                            <Button type="primary" htmlType="submit" size="medium" shape="round" className="submit-button">
                                 Login
                         </Button>
                             <Link to="/reset-password">

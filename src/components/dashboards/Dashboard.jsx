@@ -86,7 +86,7 @@ const Dashboard = props => {
 
     // Remove chart with index i from dashboard
     const onRemoveItem = el => {
-        // Everything in this.rem will be deleted from db when save is clicked
+        // Everything in rem will be deleted from db when save is clicked
         if (el.i.charAt(0) !== 'n') {
             setRem(rem.concat(el));
         }

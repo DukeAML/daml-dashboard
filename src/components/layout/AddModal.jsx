@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Modal, Menu, Input } from "antd";
 import { CreateDashboard } from '../../api/api';
 import { withRouter } from 'react-router-dom';
@@ -6,64 +6,72 @@ import { FileAddFilled } from '@ant-design/icons';
 import { Context } from "../../context/Context";
 import './Layout.css';
 
-class AddModal extends React.Component {
-	state = { visible: false, title: '' };
-	static contextType = Context;
+const AddModal = props => {
+	const {context, dispatch} = useContext(Context);
+	const [visible, setVisible] = useState(false);
+	const [title, setTitle] = useState('');
 
 	// Show modal
-	showModal = () => {
-		this.setState({ visible: true })
+	const showModal = () => {
+		setVisible(true);
 	}
 
 	// Close modal
-	handleCancel = () => {
-		this.setState({ visible: false });
+	const handleCancel = () => {
+		setVisible(false);
 	}
 
-	handleOk = async () => {
-		const { context, dispatch } = this.context;
+	const handleOk = async () => {
 		// Add dashboard with title
-		const dashboard = await CreateDashboard(localStorage.getItem('token'), this.state.title);
-		// Add dashboard to sidebar
-		dispatch({ type: 'CHANGE _', payload: { dashboards: context.dashboards.concat(dashboard) } });
-		// Current route is just '/home'
-		if (context.key === '')
-			this.props.history.push(`/home/${dashboard._id}`);
-		// Current route is '/home/:id'
-		else
-			this.props.history.push(dashboard._id);
-		this.setState({ title: '', visible: false });
+		await CreateDashboard(localStorage.getItem('token'), title)
+			.then(res => {
+				// Add dashboard to sidebar
+				dispatch({ type: 'CHANGE _', payload: { dashboards: context.dashboards.concat(res) } });
+				// Current route is just '/home'
+				if (context.key === '') {
+					props.history.push(`/home/${res._id}`);
+				}
+				// Current route is '/home/:id'
+				else {
+					props.history.push(res._id);
+				}
+			})
+			.catch(err => {
+				console.log("Error creating dashboard", err);
+			})
+		setTitle('');
+		setVisible(false);
 	}
 
-	render() {
-		const { staticContext, ...rest } = this.props;
-		return (
-			<span>
-				<Menu.Item key="4" className="menu-item" {...rest} onClick={this.showModal}>
-					<span style={{ display: 'flex', alignItems: 'center' }}><FileAddFilled />Add Dashboard</span>
-				</Menu.Item>
-				<Modal
-					title={"Add Dashboard"}
-					visible={this.state.visible}
-					onOk={this.handleOk}
-					onCancel={this.handleCancel}
-					okText="Ok"
-					width="50rem"
+	return (
+		<span>
+			<Menu.Item key="4" className="menu-item" onClick={showModal}>
+				<span style={{ display: 'flex', alignItems: 'center' }}>
+					<FileAddFilled style = {{margin: '0 0.5rem 0 0'}}/>
+					Add Dashboard
+				</span>
+			</Menu.Item>
+			<Modal
+				title={"Add Dashboard"}
+				visible={visible}
+				onOk={handleOk}
+				onCancel={handleCancel}
+				okText="Ok"
+				width="50rem"
 
-					className="modal-style"
-					bodyStyle={{
-						overflowY: "scroll",
-						padding: "2rem 3rem"
-					}}
-				>
-					<Input placeholder='Enter title'
-						onChange={e => { this.setState({ title: e.target.value }) }}
-						value={this.state.title}>
-					</Input>
-				</Modal>
-			</span>
-		);
-	}
+				className="modal-style"
+				bodyStyle={{
+					overflowY: "scroll",
+					padding: "2rem 3rem"
+				}}
+			>
+				<Input placeholder='Enter title'
+					onChange={e => setTitle(e.target.value)}
+					value={title}>
+				</Input>
+			</Modal>
+		</span>
+	);
 }
 
 export default withRouter(AddModal);

@@ -118,14 +118,14 @@ const SignUp = props => {
 				</Form.Item>
 
 				<Form.Item {...tailLayout}>
-					<div class="tail">
+					<div className="tail">
 						<Space>
 							<Button
 								type="primary"
 								htmlType="submit"
 								size="medium"
 								shape="round"
-								class="submit-button"
+								classNames="submit-button"
 							>
 								Sign Up!
 							</Button>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Button } from "antd";
 import {AppstoreAddOutlined} from "@ant-design/icons";
 import WidgetModalGrid from "./WidgetModalGrid";
@@ -9,111 +9,99 @@ import './WidgetSelection.css';
 const widgetSteps = [WidgetModalGrid, WidgetDataEntry];
 const stepTitles = ["Select Widget", "Enter Data"];
 
-class WidgetModal extends React.Component {
-  state = { visible: false, widget: "", step: 0, errorMessage: "" };
+const WidgetModal = props => {
+  	const [visible, setVisible] = useState(false);
+  	const [widget, setWidget] = useState('');
+	const [step, setStep] = useState(0);
+	const [errorMessage, setErrorMessage] = useState('');
+	const [dataProps, setDataProps] = useState(undefined);
+	const [title, setTitle] = useState(undefined);
 
-  showModal = () => {
-    this.setState({
-      visible: true
-    });
-  };
+	const showModal = () => {
+		setVisible(true);
+	};
 
-  renderError() {
-    return(
-      <div className="ui error message">
-        You must select a widget type before continuing.
-      </div>
-    );
-  }
+	const resetState = () => {
+		setStep(0);
+		setWidget('');
+		setErrorMessage('');
+	}
 
-  handleOk = e => {
-    if (this.state.step === 1) {
-      // Last step, ready to add the widget
-      this.props.onAddWidget(this.state.widget, this.state.dataProps, this.state.chartTitle || undefined);
-      this.setState({
-        widget: "",
-        step: 0,
-        visible: false,
-        errorMessage: ""
-      });
-    } else {
-      // Continue to next step
-      if (this.state.step === 0 && !this.state.widget) {
-        this.setState({
-          errorMessage: "You must select a widget type before continuing."
-        });
-      } else {
-        this.setState({ step: this.state.step + 1, errorMessage: "" });
-      }
-    }
-  };
+	const handleOk = e => {
+		if (step === 1) {
+			// Last step, ready to add the widget
+			props.onAddWidget(widget, dataProps, title || undefined);
+			setVisible(false);
+			resetState();
+		} else {
+			// Continue to next step
+			if (step === 0 && !widget) {
+				setErrorMessage('You must select a widget type before continuing.');
+			} else {
+				setStep(step + 1);
+				setErrorMessage('');
+			}
+		}
+	}
 
-  handleCancel = e => {
-    this.setState(
-      {
-        visible: false
-      },
-      () => {
-        this.setState({ widget: "", errorMessage: "", step: 0 });
-      }
-    );
-  };
+	const handleCancel = e => {
+		setVisible(false);
+		resetState();
+	}
 
-  handleSelectWidget = type => {
-    this.setState({ widget: type });
-  };
+	const handleSelectWidget = type => {
+		setWidget(type);
+	}
 
-  handleReceiveDataProps = props => {
-    this.setState({ dataProps: props });
-  };
+	const handleReceiveDataProps = dataProps => {
+		setDataProps(dataProps);
+	};
 
-  handleReceiveTitleProps = chartTitle => {
-    this.setState({chartTitle: chartTitle});
-  }
+	const handleReceiveTitleProps = chartTitle => {
+		setTitle(chartTitle);
+	}
 
-  render() {
-    const CurrentView = widgetSteps[this.state.step];
-    const okText = this.state.step === 1 ? "Add Widget" : "Next";
-    return (
-      <span>
-        <Button
-          className="modal-button-theme"
-          type="primary"
-          onClick={this.showModal}
-        >
-          <AppstoreAddOutlined /> Add
-        </Button>
-        <Modal
-          title={stepTitles[this.state.step]}
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-          okText={okText}
-          width="50rem"
-          className="modal-style"
-          bodyStyle={{
-            overflowY: "scroll",
-            height: "50rem",
-            maxWidth: "90vw",
-            maxHeight: "70vh",
-            padding: "2rem 3rem"
-          }}
-        >
-          {this.state.errorMessage ? (
-            <div style={{ height: "4rem", color: "red" }}>{this.state.errorMessage}</div>
-          ) : (
-            ""
-          )}
-          <CurrentView
-            widget={this.state.widget}
-            onSelectWidget={type => this.handleSelectWidget(type)}
-            onReceiveDataProps={this.handleReceiveDataProps}
-            onReceiveTitleProps={chartTitle => this.handleReceiveTitleProps(chartTitle)}
-          />
-        </Modal>
-      </span>
-    );
-  }
+	const CurrentView = widgetSteps[step];
+	const okText = step === 1 ? "Add Widget" : "Next";
+	return (
+		<span>
+			<Button
+				className="modal-button-theme"
+				type="primary"
+				onClick={showModal}
+			>
+				<AppstoreAddOutlined /> Add
+			</Button>
+			<Modal
+				title={stepTitles[step]}
+				visible={visible}
+				onOk={handleOk}
+				onCancel={handleCancel}
+				okText={okText}
+				width="50rem"
+				className="modal-style"
+				bodyStyle={{
+					overflowY: "scroll",
+					height: "50rem",
+					maxWidth: "90vw",
+					maxHeight: "70vh",
+					padding: "2rem 3rem"
+				}}
+			>
+				{errorMessage ? (
+					<div style={{ height: "4rem", color: "red" }}>{errorMessage}</div>
+				) : (
+					""
+				)}
+				<CurrentView
+					widget={widget}
+					onSelectWidget={type => handleSelectWidget(type)}
+					onReceiveDataProps={handleReceiveDataProps}
+					onReceiveTitleProps={chartTitle => handleReceiveTitleProps(chartTitle)}
+				/>
+			</Modal>
+		</span>
+	);
 }
 
 export default WidgetModal;
