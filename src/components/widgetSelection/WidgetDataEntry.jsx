@@ -140,7 +140,6 @@ class WidgetDataEntry extends React.PureComponent {
 
 		const dataProps = content ? { data: content, ...this.state.axes } : {};
 
-		console.log(dataProps)
 		return (
 			<div>
 				{/*

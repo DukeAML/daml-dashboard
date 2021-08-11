@@ -12,7 +12,7 @@ const initialState =
   key: '',
   title: '',
   submenu: ['dashboards'],
-  dashboards: null,
+  dashboards: [],
   widgetBackgroundColor: "#ffffff",
   gridBackGroundColor: "#D9E0EC",
   selectedWidgetBackgroundColor: "#D9E0EC",

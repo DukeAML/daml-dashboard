@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Layout, Form, Input, Button } from 'antd';
-import { withRouter } from 'react-router-dom';
 import { Context } from "../../context/Context";
 import { EditUser } from '../../api/api';
 
@@ -14,18 +13,27 @@ const tailLayout = {
 	wrapperCol: { offset: 8, span: 16 },
 };
 
-class AccountSettings extends React.Component {
-	static contextType = Context;
-	formRef = React.createRef();
+const validateMessages = {
+	required: '${name} is required!',
+	types: {
+		email: '${name} is not a valid email!',
+		number: '${name} is not a valid number!',
+	},
+	number: {
+		range: '${name} must be between ${min} and ${max}',
+	},
+};
 
-	componentDidMount() {
-		const { context } = this.context;
+const AccountSettings = props => {
+	const { context, dispatch } = useContext(Context)
+	const [form] = Form.useForm();
+
+	useEffect(() => {
 		// Set initial email in input
-		this.formRef.current.setFieldsValue({ Email: context.email })
-	}
+		form.setFieldsValue({ Email: context.email });
+	}, [])
 
-	onFinish = ({ Email: email }) => {
-		const { dispatch } = this.context;
+	const onFinish = ({Email: email}) => {
 		// Save changes
 		EditUser(localStorage.getItem('token'), email)
 			.then(res => {
@@ -33,57 +41,46 @@ class AccountSettings extends React.Component {
 				alert('Saved new profile info')
 			})
 			.catch(e => alert("Could not update profile info"));
-	};
+	}
 
 	// Finish failed
-	onFinishFailed = errorInfo => {
+	const onFinishFailed = errorInfo => {
 		console.log('Failed:', errorInfo);
 	};
 
-	validateMessages = {
-		required: '${name} is required!',
-		types: {
-			email: '${name} is not a valid email!',
-			number: '${name} is not a valid number!',
-		},
-		number: {
-			range: '${name} must be between ${min} and ${max}',
-		},
-	};
-
-	render() {
-		return (
-			<Content className='content' style={{ marginTop: '10vh' }}>
-				<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-					<div style={{ lineHeight: 1.2, fontSize: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-						Settings
-            		</div>
-					<Form
-						ref={this.formRef}
-						{...layout}
-						name="profile"
-						onFinish={this.onFinish}
-						onFinishFailed={this.onFinishFailed}
-						validateMessages={this.validateMessages}
-						style={{ marginTop: 30 }}
-					>
-						<Form.Item
-							name="Email"
-							rules={[{ type: 'email' }]}
-						>
-							<Input />
-						</Form.Item>
-
-						<Form.Item {...tailLayout}>
-							<Button type="primary" htmlType="submit">
-								Save
-                			</Button>
-						</Form.Item>
-					</Form>
+	return (
+		<Content className='content' style={{ marginTop: '10vh' }}>
+			<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+				<div style={{ lineHeight: 1.2, fontSize: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+					Settings
 				</div>
-			</Content>
-		)
-	}
+				<Form
+					form={form}
+					{...layout}
+					name="profile"
+					onFinish={onFinish}
+					onFinishFailed={onFinishFailed}
+					validateMessages={validateMessages}
+					style={{ marginTop: 30 }}
+				>
+					<Form.Item
+						label="Email"
+						name="Email"
+						rules={[{ type: 'email' }]}
+					>
+						<Input />
+					</Form.Item>
+
+					<Form.Item {...tailLayout}>
+						<Button type="primary" htmlType="submit">
+							Save
+						</Button>
+					</Form.Item>
+				</Form>
+			</div>
+		</Content>
+	)
+
 }
 
-export default withRouter(AccountSettings);
+export default AccountSettings;

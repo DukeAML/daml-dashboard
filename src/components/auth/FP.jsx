@@ -39,8 +39,8 @@ const ForgotPassword = props => {
     return (
         <>
             <div>
-                <p class="maintext">Forgot your password?</p>
-                <p class="secondarytext"> Enter your email below to reset your password..</p>
+                <p className="maintext">Forgot your password?</p>
+                <p className="secondarytext"> Enter your email below to reset your password..</p>
             </div>
             <Form
                 {...layout}

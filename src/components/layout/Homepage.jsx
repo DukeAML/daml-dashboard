@@ -32,7 +32,7 @@ function Homepage(props) {
 				.catch(err => { return null })
 			// There is no dashboard with this id
 			if (!dashboard) {
-				this.props.history.push('/home');
+				props.history.push('/home');
 			}
 			else {
 				// Add current dash id and title to context

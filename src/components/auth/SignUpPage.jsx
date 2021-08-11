@@ -6,7 +6,7 @@ import './Landing.css';
 
 const SignUpPage = props => {
 	return (
-		<div class="container">
+		<div className="container">
 			<Row justify="center" align="middle">
 				<Col
 					md={{ span: 10 }}
