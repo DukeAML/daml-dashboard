@@ -1,3 +1,6 @@
+# Peagle
+![sample-dashboard](./08-11-sample.jpg)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## View Current Deploy
