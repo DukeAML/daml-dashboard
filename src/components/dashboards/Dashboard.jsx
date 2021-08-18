@@ -6,7 +6,7 @@ import { Context } from "../../context/Context";
 import ThemingModal from "./ThemingModal";
 import ShareModal from "./ShareModal";
 import WidgetModal from "../widgetSelection/WidgetModal";
-import { GetCharts, CreateChart, UpdateChart, DeleteChart, GetDataIds, GetDataById } from '../../api/api';
+import { GetCharts, CreateChart, UpdateChart, DeleteChart, GetDataIds, GetDataById, EditDashboard } from '../../api/api';
 import Grid from './Grid';
 import './Dashboards.css';
 
@@ -119,6 +119,21 @@ const Dashboard = props => {
                     .catch(err => console.log(err))
             }
             setRem([])
+        }
+        // Save Dashboard (Title changed)
+        if(title !== props.dashboard.title) {
+            console.log(title);
+            await EditDashboard(localStorage.getItem('token'), context.key, { name: title })
+                .then(res => {
+                    // Update dashboard in sidebar
+                    const dashboardsCopy = [...context.dashboards];
+                    const dashToUpdate = dashboardsCopy.find(dash => dash._id === context.key);
+                    dashToUpdate.name = title;
+                    dispatch({ type: 'CHANGE _', payload: { dashboards: dashboardsCopy } });
+                })
+                .catch(err => {
+                    console.log(err);
+                })
         }
         setSaving(false);
     }
