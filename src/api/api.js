@@ -62,7 +62,7 @@ export const ReadUser = async (token) => {
 
 // Edit credentials
 export const EditUser = async (token, email) => {
-	const { data } = await client.patch("/users/me",
+	const { data } = await client.patch("/users",
 		{
 			email: email,
 		},

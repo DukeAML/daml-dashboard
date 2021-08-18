@@ -24,18 +24,24 @@ const EditModal = props => {
     }
 
     const updateDataProps = e => {
-        GetDataById(localStorage.getItem('token'), e)
-            .then(res => {
-                const axes = Object.keys(res.file_data[0]);
-                const newData = { data: res.file_data };
-                axes.forEach(axis => newData[axis] = axis);
-                setDataProps(newData)
-                setDataId(e)
-            })
-            .catch(e => {
-                setDataProps(undefined)
-                setDataId(e)
-            })
+        // Remove data
+        if(!e) {
+            setDataProps(undefined);
+            setDataId(null);
+        }
+        else {
+            GetDataById(localStorage.getItem('token'), e)
+                .then(res => {
+                    const axes = Object.keys(res.file_data[0]);
+                    const newData = { data: res.file_data };
+                    axes.forEach(axis => newData[axis] = axis);
+                    setDataProps(newData);
+                    setDataId(e);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
     }
 
     const selectedWidget = widgetDict[props.el.widgetType];
@@ -66,7 +72,7 @@ const EditModal = props => {
                 <div>
                     Select data
                 </div>
-                <Select style={{ width: 120 }} onChange={updateDataProps} defaultValue={dataId}>
+                <Select	style={{ width: 120 }} onChange={updateDataProps} defaultValue={dataId ? dataId : null}>
                     <Select.Option 
                         key={undefined} 
                         value={undefined}>
