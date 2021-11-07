@@ -16,6 +16,7 @@ const NavBar = props => {
 	const box = useRef(null);
 	useEffect(() => {
 		// Function for click event
+		console.log(showProf)
 		function handleOutsideClick(event) {
 		  if (showProf && box.current && !box.current.contains(event.target)) {
 			setShowProf(sp => !sp);
@@ -68,14 +69,14 @@ const NavBar = props => {
 					</span>
 					<MenuOutlined style={{ color: 'white', marginLeft: '20%', cursor: 'pointer' }} onClick={toggleSidebar} />
 				</div>
-				<div className='welcome' ref={box}>
+				<div ref={box} className='welcome'>
 					<div style={{ position: 'relative', display: 'flex' }}>
 						<div className="user" onClick={() => setShowProf(sp => !sp)}>
 							Welcome{context.fname ? `, ${context.fname}` : ', DAML'} <UserOutlined />
 						</div>
 					</div>
 					{showProf &&
-						<Card title={<div
+						<Card title={<div 
 							style={{ padding: '10px 30px' }}
 						>
 							{context.email}
