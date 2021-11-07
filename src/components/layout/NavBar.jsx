@@ -16,15 +16,16 @@ const NavBar = props => {
 	const box = useRef(null);
 	useEffect(() => {
 		// Function for click event
-		console.log(showProf)
+		//console.log(showProf)
 		function handleOutsideClick(event) {
-		  if (showProf && box.current && !box.current.contains(event.target)) {
-			setShowProf(sp => !sp);
+		  if (box.current && !box.current.contains(event.target)) {
+			setShowProf(false);
 		  }
+		  
 		}
 		// Adding click event listener
 		document.addEventListener("click", handleOutsideClick);
-	  }, [box]);
+	  }, []);
 
 	// Sign out clicked
 	const handleClick = async () => {
