@@ -22,7 +22,8 @@ const NavBar = props => {
 		  }
 		}
 		document.addEventListener("click", handleOutsideClick);
-	  }, []);
+		return () => document.removeEventListener("click", handleOutsideClick);
+	  }, []); 
 
 	// Sign out clicked
 	const handleClick = async () => {
