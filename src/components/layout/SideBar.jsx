@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Layout, Menu } from 'antd';
 import { UserOutlined, ProfileFilled, BlockOutlined } from '@ant-design/icons';
 import { GetDashboards } from '../../api/api';
@@ -13,6 +13,9 @@ const { Sider } = Layout;
 
 const SideBar = props => {
 	const { context, dispatch } = useContext(Context);
+	const [winWidth, setWinWidth] = useState(window.innerWidth);
+
+	function change(){ setWinWidth(window.innerWidth) }
 
 	useEffect(async () => {
 		const dashboards = await GetDashboards(localStorage.getItem('token'))
@@ -25,15 +28,21 @@ const SideBar = props => {
 		props.history.push(`/home/${e.key}`)
 	};
 
+	//change width of sider based on size of window??
+
 	// If somehow sidebar is loaded without being authenticated
 	return (
 		<Sider
+			breakpoint="sm"
 			collapsible
 			collapsedWidth={0}
-			width='15vw'
 			collapsed={context.collapsed}
 			trigger={null}
 			className="site-layout-background"
+			
+			width={window.innerWidth + winWidth - winWidth < 550 ? '100vw': '30vw'}
+			onBreakpoint = {change}
+			
 		>
 			<div className="logo"><UserOutlined /><div>DAML</div></div>
 			<Menu
