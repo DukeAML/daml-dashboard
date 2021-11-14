@@ -13,9 +13,12 @@ const { Sider } = Layout;
 
 const SideBar = props => {
 	const { context, dispatch } = useContext(Context);
+	
 	const [winWidth, setWinWidth] = useState(window.innerWidth);
-
-	function change(){ setWinWidth(window.innerWidth) }
+	function change(wid){ setWinWidth(wid) }
+	let headStyles = winWidth < 576 ? {fontSize: '1.25em'} : {fontSize: '2.25vw'}
+	let subStyles = winWidth < 576 ? {fontSize: '1.25em'} : {fontSize: '2vw'}
+	let addStyles = winWidth < 576 ? {fontSize: '1em'} : {fontSize: '2vw'}
 
 	useEffect(async () => {
 		const dashboards = await GetDashboards(localStorage.getItem('token'))
@@ -28,8 +31,6 @@ const SideBar = props => {
 		props.history.push(`/home/${e.key}`)
 	};
 
-	//change width of sider based on size of window??
-
 	// If somehow sidebar is loaded without being authenticated
 	return (
 		<Sider
@@ -39,10 +40,11 @@ const SideBar = props => {
 			collapsed={context.collapsed}
 			trigger={null}
 			className="site-layout-background"
-			
-			width={window.innerWidth + winWidth - winWidth < 550 ? '100vw': '30vw'}
-			onBreakpoint = {change}
-			
+			width={winWidth < 576 ? '100vw': '30vw'}
+			onBreakpoint = {(broken) => {
+				if(broken) change(575)
+				else change(577)
+			}}
 		>
 			<div className="logo"><UserOutlined /><div>DAML</div></div>
 			<Menu
@@ -57,22 +59,22 @@ const SideBar = props => {
 					title={
 						<span style={{ display: 'flex', alignItems: 'center' }}>
 							<BlockOutlined />
-							<span>My Dashboards</span>
+							<span style={headStyles}>My Dashboards</span>
 						</span>
 					}>
 					{
 						context.dashboards.map(dash => {
-							return <Menu.Item key={dash._id} className="menu-item" onClick={changePage}>{dash.name}</Menu.Item>
+							return <Menu.Item key={dash._id} className="menu-item" onClick={changePage} style={subStyles}>{dash.name}</Menu.Item>
 						})
 					}
-					<AddModal />
+					<AddModal style={addStyles} />
 				</SubMenu>
 
 
 				<SubMenu key="data" className="main-menu" title={
 					<span style={{ display: 'flex', alignItems: 'center' }}>
 						<ProfileFilled />
-						<span>My Data</span>
+						<span style={headStyles}>My Data</span>
 					</span>
 				}
 				>
