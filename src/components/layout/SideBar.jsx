@@ -16,9 +16,9 @@ const SideBar = props => {
 	
 	const [winWidth, setWinWidth] = useState(window.innerWidth);
 	function change(wid){ setWinWidth(wid) }
-	let headStyles = winWidth < 576 ? {fontSize: '1.25em'} : {fontSize: '2.25vw'}
-	let subStyles = winWidth < 576 ? {fontSize: '1.25em'} : {fontSize: '2vw'}
-	let addStyles = winWidth < 576 ? {fontSize: '1em'} : {fontSize: '2vw'}
+	let headStyles = winWidth < 768 ? {fontSize: '1.15em'} : {fontSize: '1.5vw'}
+	let subStyles = winWidth < 768 ? {fontSize: '1.15em'} : {fontSize: '1.25vw', padding: '0 !important'}
+	let addStyles = winWidth < 768 ? {fontSize: '0.85em'} : {fontSize: '1.25vw'}
 
 	useEffect(async () => {
 		const dashboards = await GetDashboards(localStorage.getItem('token'))
@@ -32,18 +32,19 @@ const SideBar = props => {
 	};
 
 	// If somehow sidebar is loaded without being authenticated
+	//github size, add dashboard weird
 	return (
 		<Sider
-			breakpoint="sm"
+			breakpoint="md"
 			collapsible
 			collapsedWidth={0}
 			collapsed={context.collapsed}
 			trigger={null}
 			className="site-layout-background"
-			width={winWidth < 576 ? '100vw': '30vw'}
+			width={winWidth < 768 ? '100vw': '25vw'}
 			onBreakpoint = {(broken) => {
-				if(broken) change(575)
-				else change(577)
+				if(broken) change(767)
+				else change(769)
 			}}
 		>
 			<div className="logo"><UserOutlined /><div>DAML</div></div>

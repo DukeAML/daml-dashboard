@@ -62,7 +62,8 @@ const AddModal = props => {
 				className="modal-style"
 				bodyStyle={{
 					overflowY: "scroll",
-					padding: "2rem 3rem"
+					padding: "2rem 3rem",
+					lineHeight: "2vw"
 				}}
 			>
 				<Input placeholder='Enter title'

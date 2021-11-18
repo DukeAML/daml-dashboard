@@ -278,6 +278,18 @@ body {
   align-items: center;
 }
 
+li.ant-menu-item.ant-menu-item-active.ant-menu-item-only-child.menu-item{
+  /* line-height: 25vw !important; */
+}
+
+span.ant-menu-title-content{
+  padding: 0 !important;
+  align-items: center !important;
+  height: 100% !important;
+  /* height: 100% !important; */
+  /* height: 100px !important; */
+}
+
 /* LAYOUT STYLING */
 
 .content {
