@@ -46,8 +46,8 @@ const AddModal = props => {
 	return (
 		<span>
 			<Menu.Item key="4" className="menu-item" onClick={showModal}>
-				<span style={{ display: 'flex', alignItems: 'center' }, props.style}>
-					<FileAddFilled style = {{margin: '0 0.5rem 0 0'}}/>
+				<span style={{ display: 'flex', alignItems: 'center'}, props.style}>
+					<FileAddFilled style = {{margin: '0.5rem 0.5rem 0.5rem 0'}}/>
 					Add Dashboard
 				</span>
 			</Menu.Item>
@@ -62,8 +62,7 @@ const AddModal = props => {
 				className="modal-style"
 				bodyStyle={{
 					overflowY: "scroll",
-					padding: "2rem 3rem",
-					lineHeight: "2vw"
+					padding: "2rem 3rem"
 				}}
 			>
 				<Input placeholder='Enter title'
