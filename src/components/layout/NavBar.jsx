@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { Layout, Card } from "antd";
 import { UserOutlined, LogoutOutlined, SettingOutlined, MenuOutlined } from '@ant-design/icons';
 import { withRouter } from 'react-router-dom';
@@ -11,7 +11,19 @@ const { Header } = Layout;
 
 const NavBar = props => {
 	const { context, dispatch } = useContext(Context);
-	const [showProf, setShowProf] = useState(false);
+	const [showProf, setShowProf] = useState(false); 
+
+	const box = useRef(null);
+	useEffect(() => {
+
+		function handleOutsideClick(event) {
+		  if (box.current && !box.current.contains(event.target)) {
+			setShowProf(false);
+		  }
+		}
+		document.addEventListener("click", handleOutsideClick);
+		return () => document.removeEventListener("click", handleOutsideClick);
+	  }, []); 
 
 	// Sign out clicked
 	const handleClick = async () => {
@@ -56,14 +68,14 @@ const NavBar = props => {
 					</span>
 					<MenuOutlined style={{ color: 'white', marginLeft: '20%', cursor: 'pointer' }} onClick={toggleSidebar} />
 				</div>
-				<div className='welcome'>
+				<div ref={box} className='welcome'>
 					<div style={{ position: 'relative', display: 'flex' }}>
 						<div className="user" onClick={() => setShowProf(sp => !sp)}>
 							Welcome{context.fname ? `, ${context.fname}` : ', DAML'} <UserOutlined />
 						</div>
 					</div>
 					{showProf &&
-						<Card title={<div
+						<Card title={<div 
 							style={{ padding: '10px 30px' }}
 						>
 							{context.email}
