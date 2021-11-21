@@ -15,7 +15,6 @@ const SideBar = props => {
 	const { context, dispatch } = useContext(Context);
 	
 	const [winWidth, setWinWidth] = useState(window.innerWidth < 768);
-	// function change(wid){ setWinWidth(wid) }
 	let headStyles = winWidth ? {fontSize: '1.15em'} : {fontSize: '2vw'}
 	let subStyles = winWidth ? {fontSize: '1.5em'} : {fontSize: '1.75vw'}
 	let addStyles = winWidth ? {fontSize: '1.15em'} : {fontSize: '2vw'}
