@@ -15,7 +15,7 @@ const SideBar = props => {
 	const { context, dispatch } = useContext(Context);
 	
 	const [winWidth, setWinWidth] = useState(window.innerWidth < 768);
-	function change(wid){ setWinWidth(wid) }
+	// function change(wid){ setWinWidth(wid) }
 	let headStyles = winWidth ? {fontSize: '1.15em'} : {fontSize: '2vw'}
 	let subStyles = winWidth ? {fontSize: '1.5em'} : {fontSize: '1.75vw'}
 	let addStyles = winWidth ? {fontSize: '1.15em'} : {fontSize: '2vw'}
@@ -43,8 +43,8 @@ const SideBar = props => {
 			className="site-layout-background"
 			width={winWidth ? '100vw': '25vw'}
 			onBreakpoint = {(broken) => {
-				if(broken) change(true)
-				else change(false)
+				if(broken) setWinWidth(true)
+				else setWinWidth(false)
 			}}
 		>
 			<div className="logo"><UserOutlined /><div>DAML</div></div>
