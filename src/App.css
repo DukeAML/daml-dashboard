@@ -286,6 +286,12 @@ body {
   justify-content: center;
 }
 
+@media (min-width: 768px) {
+  .ant-menu-sub.ant-menu-inline > .ant-menu-item{
+    height: 3.5vw !important;
+  }
+}
+
 /* NAVBAR STYLING */
 
 .ant-card-body {
