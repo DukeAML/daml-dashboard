@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Layout, Menu } from 'antd';
 import { UserOutlined, ProfileFilled, BlockOutlined } from '@ant-design/icons';
 import { GetDashboards } from '../../api/api';
@@ -13,6 +13,11 @@ const { Sider } = Layout;
 
 const SideBar = props => {
 	const { context, dispatch } = useContext(Context);
+	
+	const [winWidth, setWinWidth] = useState(window.innerWidth < 768);
+	let headStyles = winWidth ? {fontSize: '1.15em'} : {fontSize: '2vw'}
+	let subStyles = winWidth ? {fontSize: '1.5em'} : {fontSize: '1.75vw'}
+	let addStyles = winWidth ? {fontSize: '1.15em'} : {fontSize: '2vw'}
 
 	useEffect(async () => {
 		const dashboards = await GetDashboards(localStorage.getItem('token'))
@@ -26,14 +31,20 @@ const SideBar = props => {
 	};
 
 	// If somehow sidebar is loaded without being authenticated
+	//github size, add dashboard weird
 	return (
 		<Sider
+			breakpoint="md"
 			collapsible
 			collapsedWidth={0}
-			width='15vw'
 			collapsed={context.collapsed}
 			trigger={null}
 			className="site-layout-background"
+			width={winWidth ? '100vw': '25vw'}
+			onBreakpoint = {(broken) => {
+				if(broken) setWinWidth(true)
+				else setWinWidth(false)
+			}}
 		>
 			<div className="logo"><UserOutlined /><div>DAML</div></div>
 			<Menu
@@ -48,22 +59,22 @@ const SideBar = props => {
 					title={
 						<span style={{ display: 'flex', alignItems: 'center' }}>
 							<BlockOutlined />
-							<span>My Dashboards</span>
+							<span style={headStyles}>My Dashboards</span>
 						</span>
 					}>
 					{
 						context.dashboards.map(dash => {
-							return <Menu.Item key={dash._id} className="menu-item" onClick={changePage}>{dash.name}</Menu.Item>
+							return <Menu.Item key={dash._id} className="menu-item" onClick={changePage} style={subStyles}>{dash.name}</Menu.Item>
 						})
 					}
-					<AddModal />
+					<AddModal style={addStyles} />
 				</SubMenu>
 
 
 				<SubMenu key="data" className="main-menu" title={
 					<span style={{ display: 'flex', alignItems: 'center' }}>
 						<ProfileFilled />
-						<span>My Data</span>
+						<span style={headStyles}>My Data</span>
 					</span>
 				}
 				>
