@@ -31,13 +31,16 @@ const AccountSettings = props => {
 	useEffect(() => {
 		// Set initial email in input
 		form.setFieldsValue({ Email: context.email });
+		form.setFieldsValue({ FirstName: context.fname });
+		form.setFieldsValue({ LastName: context.lname });
 	}, [])
 
-	const onFinish = ({Email: email}) => {
+	const onFinish = ({Email: email, FirstName: fname, LastName: lname}) => {
 		// Save changes
-		EditUser(localStorage.getItem('token'), email)
+		// EditUser(localStorage.getItem('token'), email, fname, lname)
+		EditUser(localStorage.getItem('token'), email, fname, lname)
 			.then(res => {
-				dispatch({ type: "CHANGE _", payload: { email: email } });
+				dispatch({ type: "CHANGE _", payload: { email: email, fname: fname, lname:lname } });
 				alert('Saved new profile info')
 			})
 			.catch(e => alert("Could not update profile info"));
@@ -63,10 +66,27 @@ const AccountSettings = props => {
 					validateMessages={validateMessages}
 					style={{ marginTop: 30 }}
 				>
+
 					<Form.Item
 						label="Email"
 						name="Email"
 						rules={[{ type: 'email' }]}
+					>
+						<Input />
+					</Form.Item>
+
+					<Form.Item
+						label="First Name"
+						name="FirstName"
+						// rules={[{ type: 'email' }]}
+					>
+						<Input />
+					</Form.Item>
+
+					<Form.Item
+						label="Last Name"
+						name="LastName"
+						// rules={[{ type: 'email' }]}
 					>
 						<Input />
 					</Form.Item>
