@@ -240,10 +240,11 @@ body {
 .ant-menu-inline .ant-menu-selected::after, .ant-menu-inline .ant-menu-item-selected::after {
   opacity: 0;
 }
-
+/*
 .menu-item:hover {
   background-color: #8c9bd1;
 }
+*/
 
 .ant-menu-submenu-arrow::before, .ant-menu-submenu-arrow::after {
   background: white!important;

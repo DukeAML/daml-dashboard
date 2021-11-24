@@ -134,3 +134,27 @@
   height: 100%;
   background: #8BCECE;
 }
+/*
+.button {
+  float: right;
+
+}
+*/
+
+
+.menu-item {  
+  pointer-events: none;
+  padding: 0 !important;
+
+}
+
+.name {
+  pointer-events: auto;
+}
+
+.menu-item:hover {
+  background-color: #8c9bd1 !important;
+}    
+
+
+
