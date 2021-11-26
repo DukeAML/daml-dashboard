@@ -12,15 +12,15 @@ body {
 
 /* BUTTON STYLES */
 
+/* Handle hover and stuff in component*/
 .ant-btn:hover {
-  color: black;
-  border-color: black;
+  color: white;
+  border-color: white;
 }
 
 .ant-btn:focus {
-  border-color: rgb(217, 217, 217);
-  ;
-  color: rgb(0, 0, 0, 0.65);
+  color: white;
+  border-color: white;
 }
 
 .ant-btn-primary {
@@ -215,18 +215,23 @@ body {
 
 .ant-menu-item.menu-item {
   left: 0px;
-  height: 40px;
+  padding: 0px!important;
+  /* height: 40px; */
   background: #4C5B69;
   font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 300;
   font-size: 1rem;
-  line-height: 10px;
+  /* line-height: 10px; */
   display: flex;
   align-items: center;
   color: white;
   margin-top: 0px;
   margin-bottom: 0px;
+}
+
+.ant-menu-item > .ant-menu-title-content {
+  height: 100%;
 }
 
 .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
@@ -242,7 +247,7 @@ body {
 }
 
 .menu-item:hover {
-  background-color: #8c9bd1;
+  color: white!important;
 }
 
 .ant-menu-submenu-arrow::before, .ant-menu-submenu-arrow::after {
@@ -284,12 +289,6 @@ body {
   height: 100%;
   display: flex;
   justify-content: center;
-}
-
-@media (min-width: 768px) {
-  .ant-menu-sub.ant-menu-inline > .ant-menu-item{
-    height: 3.5vw !important;
-  }
 }
 
 /* NAVBAR STYLING */

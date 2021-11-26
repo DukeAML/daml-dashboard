@@ -47,6 +47,7 @@ const SideBar = props => {
 				mode="inline"
 				style={{ background: '#4C5B69' }}
 				className="menu-layout-background"
+				// Selection is being managed manually in menu-item component
 				selectedKeys={[context.key]}
 				defaultOpenKeys={context.submenu}
 			>
@@ -60,10 +61,10 @@ const SideBar = props => {
 					}>
 					{
 						context.dashboards.map(dash => (
-							<DashboardMenuItem key={dash._id} dash={dash} style={subStyles}/>
+							<DashboardMenuItem key={dash._id} dash={dash} style={subStyles} selected={dash._id===context.key}/>
 						))
 					}
-					<AddModal style={addStyles} />
+					<AddModal style={subStyles} />
 				</SubMenu>
 
 

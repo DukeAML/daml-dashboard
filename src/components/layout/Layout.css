@@ -40,6 +40,10 @@
   background: #4C5B69;  
 }
 
+.add-modal:hover {
+  background: #8c9bd1;
+}
+
 /* NAVBAR STYLING */
 
 .header {
