@@ -15,15 +15,15 @@ const NavBar = props => {
 
 	const box = useRef(null);
 	useEffect(() => {
-
 		function handleOutsideClick(event) {
+			//if user clicks outside navbar, hide navbar 
 		  if (box.current && !box.current.contains(event.target)) {
 			setShowProf(false);
 		  }
 		}
 		document.addEventListener("click", handleOutsideClick);
 		return () => document.removeEventListener("click", handleOutsideClick);
-	  }, []); 
+	}, []); 
 
 	// Sign out clicked
 	const handleClick = async () => {

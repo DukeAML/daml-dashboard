@@ -14,7 +14,7 @@ const tailLayout = {
 };
 
 const validateMessages = {
-	required: '${name} is required!',
+	required: '${label} is required!',
 	types: {
 		email: '${name} is not a valid email!',
 		number: '${name} is not a valid number!',
@@ -37,7 +37,6 @@ const AccountSettings = props => {
 
 	const onFinish = ({Email: email, FirstName: fname, LastName: lname}) => {
 		// Save changes
-		// EditUser(localStorage.getItem('token'), email, fname, lname)
 		EditUser(localStorage.getItem('token'), email, fname, lname)
 			.then(res => {
 				dispatch({ type: "CHANGE _", payload: { email: email, fname: fname, lname:lname } });
@@ -70,7 +69,7 @@ const AccountSettings = props => {
 					<Form.Item
 						label="Email"
 						name="Email"
-						rules={[{ type: 'email' }]}
+						rules={[{ type: 'email', required: true }]}
 					>
 						<Input />
 					</Form.Item>
@@ -78,7 +77,7 @@ const AccountSettings = props => {
 					<Form.Item
 						label="First Name"
 						name="FirstName"
-						// rules={[{ type: 'email' }]}
+						rules={[{ required: true }]}
 					>
 						<Input />
 					</Form.Item>
@@ -86,7 +85,7 @@ const AccountSettings = props => {
 					<Form.Item
 						label="Last Name"
 						name="LastName"
-						// rules={[{ type: 'email' }]}
+						rules={[{ required: true }]}
 					>
 						<Input />
 					</Form.Item>
