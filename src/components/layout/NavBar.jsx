@@ -17,9 +17,9 @@ const NavBar = props => {
 	useEffect(() => {
 
 		function handleOutsideClick(event) {
-		  if (box.current && !box.current.contains(event.target)) {
-			setShowProf(false);
-		  }
+			if (box.current && !box.current.contains(event.target)) {
+				setShowProf(false);
+			}
 		}
 		document.addEventListener("click", handleOutsideClick);
 		return () => document.removeEventListener("click", handleOutsideClick);

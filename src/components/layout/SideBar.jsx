@@ -6,6 +6,7 @@ import { Context } from "../../context/Context";
 import { withRouter } from 'react-router-dom';
 import AddModal from './AddModal';
 import DataModal from './DataModal';
+import DashboardMenuItem from "./DashboardMenuItem";
 import './Layout.css';
 
 const { SubMenu } = Menu;
@@ -24,11 +25,6 @@ const SideBar = props => {
 			.catch(err => { console.log(err); return [] });
 		dispatch({ type: 'CHANGE _', payload: { dashboards: dashboards } });
 	}, [])
-
-	// Clicking a dashboard
-	const changePage = e => {
-		props.history.push(`/home/${e.key}`)
-	};
 
 	// If somehow sidebar is loaded without being authenticated
 	//github size, add dashboard weird
@@ -63,9 +59,9 @@ const SideBar = props => {
 						</span>
 					}>
 					{
-						context.dashboards.map(dash => {
-							return <Menu.Item key={dash._id} className="menu-item" onClick={changePage} style={subStyles}>{dash.name}</Menu.Item>
-						})
+						context.dashboards.map(dash => (
+							<DashboardMenuItem key={dash._id} dash={dash} style={subStyles}/>
+						))
 					}
 					<AddModal style={addStyles} />
 				</SubMenu>
