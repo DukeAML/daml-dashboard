@@ -70,7 +70,7 @@ const DataModal = props => {
 	return (
 		<span>
 			<Menu.Item key="upload-data" className="menu-item" {...rest} onClick={showModal}>
-				<span style={{ display: 'flex', alignItems: 'center' }}>
+				<span style={{ display: 'flex', alignItems: 'center', fontSize: '1.2vw' }}>
 					<CloudUploadOutlined />
 					<span>Upload Data</span>
 				</span>

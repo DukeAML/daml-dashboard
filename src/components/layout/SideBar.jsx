@@ -16,8 +16,8 @@ const SideBar = props => {
 	const { context, dispatch } = useContext(Context);
 	
 	const [winWidth, setWinWidth] = useState(window.innerWidth < 768);
-	let headStyles = winWidth ? {fontSize: '1.15em'} : {fontSize: '1.4vw'}
-	let subStyles = winWidth ? {fontSize: '1.5em'} : {fontSize: '1.2vw'}
+	const headStyles = winWidth ? {fontSize: '1.15em'} : {fontSize: '1.4vw'}
+	const subStyles = winWidth ? {fontSize: '1.5em'} : {fontSize: '1.2vw'}
 
 	useEffect(async () => {
 		const dashboards = await GetDashboards(localStorage.getItem('token'))

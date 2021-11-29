@@ -12,17 +12,6 @@ body {
 
 /* BUTTON STYLES */
 
-/* Handle hover and stuff in component*/
-.ant-btn:hover {
-  color: white;
-  border-color: white;
-}
-
-.ant-btn:focus {
-  color: white;
-  border-color: white;
-}
-
 .ant-btn-primary {
   background: #ECBA91;
   border-color: #ECBA91;
@@ -202,21 +191,11 @@ body {
 .react-resizable-hide>.react-resizable-handle {
   display: none;
 }
+
 /* LAYOUT STYLING */
 
 .content {
   height: 100%;
   display: flex;
   justify-content: center;
-}
-
-/* NAVBAR STYLING */
-
-.ant-card-body {
-  padding: 20px 0px;
-}
-
-.anticon.anticon-switcher {
-  font-size: 17px;
-  vertical-align: -2px;
 }
