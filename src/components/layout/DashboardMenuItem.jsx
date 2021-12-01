@@ -75,19 +75,20 @@ const DashboardMenuItem = props => {
 
     return (
         <span>
-            <Menu.Item className="menu-item" onClick={changePage}
+            <Menu.Item className="menu-item dash-menu-item" onClick={changePage}
                 onMouseOver={onEnter}
                 onMouseOut={onExit}
             >
                 <div style={{
-                    width: '100%', height: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '0px 24px',
+                    width: '100%', height: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '0px 24px 0px 36px',
                     background: backgroundColor, transitionDuration: '250ms', ...props.style
                 }}
                 >
-                    <span>
+                    <div style={{ maxWidth: '80%', textOverflow: 'ellipsis', overflow: 'hidden' }}>
                         {props.dash.name}
-                    </span>
+                    </div>
                     <Button size='small' ghost
+                        className='delete-button'
                         style={{ marginLeft: 'auto', ...buttonStyle }} icon={<DeleteOutlined style={{ fontSize: '1rem' }} />}
                         ref={button}
                         onClick={deleteDashboard}

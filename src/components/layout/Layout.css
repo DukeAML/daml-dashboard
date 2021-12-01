@@ -40,8 +40,73 @@
   background: #4C5B69;  
 }
 
+.ant-menu-item .anticon, .ant-menu-submenu-title .anticon {
+  font-size: 18px;
+}
+
+.ant-layout {
+  background: white;
+}
+
+.ant-menu-item.menu-item {
+  padding-left: 36px!important;
+  background: #4C5B69;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  color: white;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.ant-menu-item.dash-menu-item {
+  padding: 0px!important;
+}
+
+.ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
+  border-right: 1px solid #4C5B69; /* default has white bar on right */
+}
+
+.menu-item:hover {
+  background: #8c9bd1;
+  color: white!important;
+}
+
+.ant-menu-submenu-arrow::before, .ant-menu-submenu-arrow::after {
+  background: white!important;
+}
+
+.ant-menu-submenu-title:hover {
+  color: white!important; /* hovering on section titles */
+}
+
+.ant-menu-submenu-active { 
+  color: white!important; /* helps look more normal when expanding from collapsed */
+}
+
+.ant-menu-vertical .ant-menu-item:not(:last-child), .ant-menu-vertical-left .ant-menu-item:not(:last-child), .ant-menu-vertical-right .ant-menu-item:not(:last-child), .ant-menu-inline .ant-menu-item:not(:last-child) {
+  margin-bottom: 0px;
+}
+
+.ant-menu-inline .ant-menu-submenu-title {
+  background: #4C5B69;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
 .add-modal:hover {
   background: #8c9bd1;
+}
+
+.ant-btn.delete-button:hover {
+  color: white;
+  border-color: white;
+}
+
+.ant-btn.delete-button:focus {
+  color: white;
+  border-color: white;
 }
 
 /* NAVBAR STYLING */
@@ -99,6 +164,10 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.ant-card-body {
+  padding: 20px 0px;
 }
 
 .profpage {
