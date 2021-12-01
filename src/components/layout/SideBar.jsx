@@ -14,6 +14,8 @@ const { Sider } = Layout;
 
 const SideBar = props => {
 	const { context, dispatch } = useContext(Context);
+	console.log("context")
+	console.log(context)
 	
 	const [winWidth, setWinWidth] = useState(window.innerWidth < 768);
 	let headStyles = winWidth ? {fontSize: '1.15em'} : {fontSize: '2vw'}
