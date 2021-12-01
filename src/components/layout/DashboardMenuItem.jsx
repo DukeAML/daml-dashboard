@@ -46,11 +46,7 @@ const DashboardMenuItem = props => {
 
     // Hit delete button
     const deleteDashboard = e => {
-
         setVisible(true);
-
-
-        //alert('Delete unimplemented')
         setHover(false);
         setButtonStyle(null);
     }
@@ -104,7 +100,7 @@ const DashboardMenuItem = props => {
                 onOk={handleOk}
                 onCancel={handleCancel}
                 okText="Ok"
-                width="50rem"
+                width="30rem"
 
                 className="modal-style"
                 bodyStyle={{
@@ -112,6 +108,7 @@ const DashboardMenuItem = props => {
                     padding: "2rem 3rem"
                 }}
             >
+                <p>Do you want to delete this dashboard?</p>
             </Modal>
         </span>
     )
