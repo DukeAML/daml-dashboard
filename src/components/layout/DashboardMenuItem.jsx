@@ -52,23 +52,16 @@ const DashboardMenuItem = props => {
     }
 
     const handleOk = async () => {
-        // Add dashboard with title
-
         await DeleteDashboard(localStorage.getItem('token'), props.dash._id)
             .then(res => {
-                var filtered = context.dashboards.filter(db => db._id != props.dash._id);
+                const filtered = context.dashboards.filter(db => db._id != props.dash._id);
                 dispatch({ type: 'CHANGE _', payload: { dashboards: filtered } });
             })
             .catch(err => {
                 console.log("Error creating dashboard", err);
             })
-        console.log("deleted successfully")
         setVisible(false);
-
-
     }
-
-
 
     const button = useRef(null);
     const backgroundColor = hover ? '#8c9bd1' : (props.selected ? '#798DE4' : '#4C5B69');
@@ -109,7 +102,7 @@ const DashboardMenuItem = props => {
                     padding: "2rem 3rem"
                 }}
             >
-                <p>Do you want to delete this dashboard?</p>
+                <p style={{textAlign: 'center'}}>Do you want to delete this dashboard?</p>
             </Modal>
         </span>
     )
