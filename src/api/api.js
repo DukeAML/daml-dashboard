@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const client = axios.create({
-	baseURL: "https://peagle-backend.herokuapp.com"
-	// baseURL: "http://localhost:5000"
+	// baseURL: "https://peagle-backend.herokuapp.com"
+	baseURL: "http://localhost:5000"
 });
 
 const printOutput = true;
@@ -163,6 +163,57 @@ export const GetCharts = async (token, id) => {
 
 export const DeleteChart = async (token, id) => {
 	const { data } = await client.delete(`/charts/${id}`, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+/* ---------- CATEGORIES ---------- */
+export const CreateCategory = async (token, title) => {
+	const { data } = await client.post("/categories", { name: title }, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+export const GetCategories = async (token) => {
+	const { data } = await client.get("/categories/me", {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+export const GetCategory = async (token, id) => {
+	const { data } = await client.get(`/category/${id}`, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+export const EditCategory = async (token, id, updates) => {
+	const { data } = await client.patch(`/categories/edit/${id}`, updates, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+export const DeleteCategory = async (token, id) => {
+	const { data } = await client.delete(`/categories/${id}`, {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		}

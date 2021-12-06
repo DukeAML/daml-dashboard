@@ -1,19 +1,22 @@
-import React, { useState } from "react";
-import { Modal, Menu, Upload, Button, Row, Col, Select } from "antd";
-import { PostData } from '../../api/api';
+import React, { useState, useContext } from "react";
+import { Modal, Menu, Upload, Button, Row, Col, Select, Input } from "antd";
+import { PostData, CreateCategory } from '../../api/api';
 import { withRouter } from 'react-router-dom';
 import { UploadOutlined, CloudUploadOutlined } from '@ant-design/icons';
 import * as XLSX from "xlsx";
 import './Layout.css';
+import { Context } from "../../context/Context";
+
 
 const { Option } = Select;
 
 const DataModal = props => {
+	const {context, dispatch} = useContext(Context);
 	const [visible, setVisible] = useState(false);
 	const [fileList, setFileList] = useState([]);
 	const [data, setData] = useState(null);
 	const [category, setCategory] = useState('Uncategorized');
-
+	const [newCategory, setNewCategory] = useState('New Category');
 	// Show modal
 	const showModal = () => {
 		setVisible(true);
@@ -65,6 +68,34 @@ const DataModal = props => {
 		setCategory(cat.children);
 	}
 
+	const handleNewCategory = () => {
+		setNewCategory('New Category :)');
+	}
+
+	const handleCategoryOk = async () => {
+		console.log('created ' + newCategory);
+		// Add dashboard with title
+		await CreateCategory(localStorage.getItem('token'), newCategory)
+			.then(res => {
+				
+				// Add dashboard to sidebar
+				dispatch({ type: 'CHANGE _', payload: { dashboards: context.categories.concat(res) } });
+				// Current route is just '/home'
+				if (context.key === '') {
+					props.history.push(`/home/${res._id}`);
+				}
+				// Current route is '/home/:id'
+				else {
+					props.history.push(res._id);
+				}
+			})
+			.catch(err => {
+				console.log("Error creating category", err);
+			})
+		setCategory('');
+		setVisible(false);
+	}
+
 	// Important for menu item context
 	const { staticContext, ...rest} = props;
 	return (
@@ -112,7 +143,13 @@ const DataModal = props => {
 							onChange={handleCategoryChange}
 						>
 							<Option value={null}>Uncategorized</Option>
+
 						</Select>
+						
+						<Input type="text" placeholder='New Category' name="category" onChange={handleNewCategory}/>
+							<Button onClick={handleCategoryOk} type="primary" htmlType="submit" size="medium" shape="round" className="submit-button">
+                                Create Category
+                        	</Button>
 					</Row>
 				</Col>
 			</Modal>
