@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Layout, Menu } from 'antd';
 import { UserOutlined, ProfileFilled, BlockOutlined } from '@ant-design/icons';
-import { GetDashboards } from '../../api/api';
+import { GetCategories, GetDashboards } from '../../api/api';
 import { Context } from "../../context/Context";
 import { withRouter } from 'react-router-dom';
 import AddModal from './AddModal';
@@ -23,6 +23,13 @@ const SideBar = props => {
 		const dashboards = await GetDashboards(localStorage.getItem('token'))
 			.catch(err => { console.log(err); return [] });
 		dispatch({ type: 'CHANGE _', payload: { dashboards: dashboards } });
+	}, [])
+
+	useEffect(async () => {
+		const categories = await GetCategories(localStorage.getItem('token'))
+			.catch(err => { console.log(err); return [] });
+		dispatch({ type: 'CHANGE _', payload: { categories: categories } });
+		console.log('cats ' + categories)
 	}, [])
 
 	// Clicking a dashboard
@@ -78,6 +85,11 @@ const SideBar = props => {
 					</span>
 				}
 				>
+					{
+						context.categories.map(cat => {
+							return <Menu.Item key={cat._id} className="menu-item" onClick={changePage} style={subStyles}>{cat.name}</Menu.Item>
+						})
+					}
 					<DataModal />
 				</SubMenu>
 			</Menu>

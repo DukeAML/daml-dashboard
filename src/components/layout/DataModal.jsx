@@ -68,16 +68,11 @@ const DataModal = props => {
 		setCategory(cat.children);
 	}
 
-	const handleNewCategory = () => {
-		setNewCategory('New Category :)');
-	}
-
 	const handleCategoryOk = async () => {
 		console.log('created ' + newCategory);
 		// Add dashboard with title
 		await CreateCategory(localStorage.getItem('token'), newCategory)
 			.then(res => {
-				
 				// Add dashboard to sidebar
 				dispatch({ type: 'CHANGE _', payload: { dashboards: context.categories.concat(res) } });
 				// Current route is just '/home'
@@ -92,7 +87,7 @@ const DataModal = props => {
 			.catch(err => {
 				console.log("Error creating category", err);
 			})
-		setCategory('');
+		setNewCategory('');
 		setVisible(false);
 	}
 
@@ -146,7 +141,7 @@ const DataModal = props => {
 
 						</Select>
 						
-						<Input type="text" placeholder='New Category' name="category" onChange={handleNewCategory}/>
+						<Input type="text" placeholder='New Category' name="category" onChange={e => setNewCategory(e.target.value)}/>
 							<Button onClick={handleCategoryOk} type="primary" htmlType="submit" size="medium" shape="round" className="submit-button">
                                 Create Category
                         	</Button>

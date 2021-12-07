@@ -178,6 +178,7 @@ export const CreateCategory = async (token, title) => {
 			'Authorization': `Bearer ${token}`
 		}
 	});
+	console.log("create " + title + " on api");
 	printOutput && console.log(data);
 	return data;
 }
