@@ -152,7 +152,7 @@ export const UpdateChart = async (token, id, chart) => {
 }
 
 export const GetCharts = async (token, id) => {
-	const { data } = await client.get(`/dashboards/${id}/charts`, {
+	const { data } = await client.get(`/charts/${id}`, {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		}
@@ -194,7 +194,7 @@ export const GetCategories = async (token) => {
 }
 
 export const GetCategory = async (token, id) => {
-	const { data } = await client.get(`/category/${id}`, {
+	const { data } = await client.get(`/categories/${id}`, {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		}

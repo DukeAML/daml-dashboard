@@ -2,16 +2,17 @@ import React, { useEffect, useContext, useState } from "react";
 import { Layout } from 'antd';
 import { withRouter, Redirect } from 'react-router-dom';
 import { Context } from "../../context/Context";
-import { GetDashboard } from '../../api/api';
+import { GetDashboard, GetCategory } from '../../api/api';
 import './Layout.css';
 import Dashboard from "../dashboards/Dashboard";
-
+import Category from "../layout/Category"
 const { Content } = Layout;
 
 function Homepage(props) {
 
 	const { context, dispatch } = useContext(Context);
 	const [dashboard, setDashboard] = useState(null);
+	const [category, setCategory] = useState(null);
 
 	useEffect(() => {
 		updateKey()
@@ -32,7 +33,22 @@ function Homepage(props) {
 				.catch(err => { return null })
 			// There is no dashboard with this id
 			if (!dashboard) {
-				props.history.push('/home');
+				//props.history.push('/home');
+
+				//attempt to get category
+				const category = await GetCategory(localStorage.getItem('token'), id)
+				.then(res => { return res })
+				.catch(err => { return null })
+				console.log('Homepage.jsx')
+				if(!category){
+					props.history.push('/home');
+				}
+				else {
+					// Add current dash id and title to context
+					dispatch({ type: 'CHANGE _', payload: { key: id } });
+					// Store dashboard to pass to dashboard component
+					setCategory(category)
+				}
 			}
 			else {
 				// Add current dash id and title to context
@@ -50,6 +66,17 @@ function Homepage(props) {
 				<div style={{ display: 'flex', justifyContent: 'center', width: '90%' }}>
 					<Dashboard 
 						dashboard={dashboard} 
+					/>
+				</div>
+			</Content>
+		);
+	}
+	else if (context.key && category){
+		return (
+			<Content className='content'>
+				<div style={{ display: 'flex', justifyContent: 'center', width: '90%' }}>
+					<Category 
+						// dashboard={dashboard} 
 					/>
 				</div>
 			</Content>
