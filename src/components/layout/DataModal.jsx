@@ -74,7 +74,7 @@ const DataModal = props => {
 		await CreateCategory(localStorage.getItem('token'), newCategory)
 			.then(res => {
 				// Add dashboard to sidebar
-				dispatch({ type: 'CHANGE _', payload: { dashboards: context.categories.concat(res) } });
+				dispatch({ type: 'CHANGE _', payload: { categories: context.categories.concat(res) } });
 				// Current route is just '/home'
 				if (context.key === '') {
 					props.history.push(`/home/${res._id}`);
@@ -138,6 +138,11 @@ const DataModal = props => {
 							onChange={handleCategoryChange}
 						>
 							<Option value={null}>Uncategorized</Option>
+							{
+							context.categories.map(cat => {
+								return <Option value={cat._id}>{cat.name}</Option>
+							})
+					}
 
 						</Select>
 						

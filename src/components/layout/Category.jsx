@@ -9,8 +9,9 @@ import { Context } from "../../context/Context";
 // import { GetCharts, CreateChart, UpdateChart, DeleteChart, GetDataIds, GetDataById } from '../../api/api';
 // import Grid from './Grid';
 // import './Dashboards.css';
+import DataView from "../data/DataView";
 
-const Dashboard = props => {
+const Category = props => {
     const {context, dispatch} = useContext(Context);
     // const [layout, setLayout] = useState([]);
     // const [newCounter, setNewCounter] = useState(0);
@@ -187,4 +188,4 @@ const Dashboard = props => {
     );
 }
 
-export default Dashboard;
+export default Category;
