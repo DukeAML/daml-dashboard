@@ -6,6 +6,7 @@ import { Context } from "../../context/Context";
 import { withRouter } from 'react-router-dom';
 import AddModal from './AddModal';
 import DataModal from './DataModal';
+import CategoryModal from "./CategoryModal";
 import './Layout.css';
 
 const { SubMenu } = Menu;
@@ -89,7 +90,7 @@ const SideBar = props => {
 							return <Menu.Item key={cat._id} className="menu-item" onClick={changePage} style={subStyles}>{cat.name}</Menu.Item>
 						})
 					}
-					<DataModal />
+					<CategoryModal />
 				</SubMenu>
 			</Menu>
 		</Sider>

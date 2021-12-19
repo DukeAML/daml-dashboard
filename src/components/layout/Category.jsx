@@ -6,10 +6,11 @@ import { Context } from "../../context/Context";
 // import ThemingModal from "./ThemingModal";
 // import ShareModal from "./ShareModal";
 // import WidgetModal from "../widgetSelection/WidgetModal";
-// import { GetCharts, CreateChart, UpdateChart, DeleteChart, GetDataIds, GetDataById } from '../../api/api';
+import { GetData, GetDataIds, GetDataById } from '../../api/api';
 // import Grid from './Grid';
 // import './Dashboards.css';
 import DataView from "../data/DataView";
+import DataModal from "./DataModal";
 
 const Category = props => {
     const {context, dispatch} = useContext(Context);
@@ -20,42 +21,48 @@ const Category = props => {
     // const [rem, setRem] = useState([]);
     // const [saving, setSaving] = useState(false);
 
-    // useEffect(() => {
-    //     setTitle(props.dashboard && props.dashboard.name);
-    //     loadDashboard();
-    //     updateDataIds();
+    useEffect(() => {
+        // setTitle(props.dashboard && props.dashboard.name);
+        loadCategory();
+        // updateDataIds();
     // }, [props.dashboard])
+    }, [])
 
-    // const loadDashboard = async () => {
-    //     // Retrieve all charts
-    //     const chartsWithoutData = await GetCharts(localStorage.getItem('token'), context.key)
-    //         .then(res => { return res })
-    //     // Convert chart to expected format
-    //     const charts = await Promise.all(chartsWithoutData.map(async i => {
-    //         // Load in data to this chart if it is connected to a data object
-    //         let data = undefined;
-    //         if (i.data) {
-    //             data = await GetDataById(localStorage.getItem('token'), i.data)
-    //                 .then(res => res.file_data);
-    //             const axes = Object.keys(data[0]);
-    //             data = { data: data };
-    //             axes.forEach(axis => data[axis] = axis);
-    //         }
-    //         return {
-    //             i: i._id.toString(),
-    //             x: i.grid[0] ? i.grid[0] : 0,
-    //             y: i.grid[1] ? i.grid[1] : 0,
-    //             w: i.grid[2] ? i.grid[2] : 0,
-    //             h: i.grid[3] ? i.grid[3] : 0,
-    //             widgetType: i.type,
-    //             data: i.data,
-    //             dataProps: data,
-    //             chartTitle: i.title
-    //         };
-    //     }))
-    //     setNewCounter(0);
-    //     setLayout(charts);
-    // }
+    const loadCategory = async () => {
+        // Retrieve all charts
+
+         const allData = await GetData(localStorage.getItem('token'))
+            .then(res => { return res })
+        console.log(allData)
+        console.log('category page')
+        // const chartsWithoutData = await GetCharts(localStorage.getItem('token'), context.key)
+        //     .then(res => { return res })
+        // // Convert chart to expected format
+        // const charts = await Promise.all(chartsWithoutData.map(async i => {
+        //     // Load in data to this chart if it is connected to a data object
+        //     let data = undefined;
+        //     if (i.data) {
+        //         data = await GetDataById(localStorage.getItem('token'), i.data)
+        //             .then(res => res.file_data);
+        //         const axes = Object.keys(data[0]);
+        //         data = { data: data };
+        //         axes.forEach(axis => data[axis] = axis);
+        //     }
+        //     return {
+        //         i: i._id.toString(),
+        //         x: i.grid[0] ? i.grid[0] : 0,
+        //         y: i.grid[1] ? i.grid[1] : 0,
+        //         w: i.grid[2] ? i.grid[2] : 0,
+        //         h: i.grid[3] ? i.grid[3] : 0,
+        //         widgetType: i.type,
+        //         data: i.data,
+        //         dataProps: data,
+        //         chartTitle: i.title
+        //     };
+        // }))
+        // setNewCounter(0);
+        // setLayout(charts);
+    }
 
     // const updateDataIds = () => {
     //     GetDataIds(localStorage.getItem('token'))
@@ -143,8 +150,11 @@ const Category = props => {
     // const viewOnly = props.dashboard.edit === 0;
     return (
         <div>
-            <h1>Category page 💕</h1>
+            <h1 onClick={loadCategory}>Category page 💕</h1>
+            <DataModal />
+            <DataView />
         </div>
+        
         // <div style={{ width: '100%', marginBottom: '5vh' }}>
         //     <center style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
         //         <Input className="page-title" value={title} onChange={changeTitle}>

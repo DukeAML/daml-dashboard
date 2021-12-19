@@ -16,7 +16,6 @@ const DataModal = props => {
 	const [fileList, setFileList] = useState([]);
 	const [data, setData] = useState(null);
 	const [category, setCategory] = useState('Uncategorized');
-	const [newCategory, setNewCategory] = useState('New Category');
 	// Show modal
 	const showModal = () => {
 		setVisible(true);
@@ -33,7 +32,8 @@ const DataModal = props => {
 	// Add data
 	const handleOk = async () => {
 		if(data) {
-			await PostData(localStorage.getItem('token'), { title: data.name, file_data: data.file_data })
+			console.log('Data assigned to ' + category)
+			await PostData(localStorage.getItem('token'), { title: data.name, file_data: data.file_data, category: category })
 				.then(alert(`Uploaded ${data.name}`))
 			setVisible(false);
 		}
@@ -64,43 +64,19 @@ const DataModal = props => {
 	}
 
 	const handleCategoryChange = (id, cat) => {
-		// Get label of category, not id
 		setCategory(cat.children);
-	}
-
-	const handleCategoryOk = async () => {
-		console.log('created ' + newCategory);
-		// Add dashboard with title
-		await CreateCategory(localStorage.getItem('token'), newCategory)
-			.then(res => {
-				// Add dashboard to sidebar
-				dispatch({ type: 'CHANGE _', payload: { categories: context.categories.concat(res) } });
-				// Current route is just '/home'
-				if (context.key === '') {
-					props.history.push(`/home/${res._id}`);
-				}
-				// Current route is '/home/:id'
-				else {
-					props.history.push(res._id);
-				}
-			})
-			.catch(err => {
-				console.log("Error creating category", err);
-			})
-		setNewCategory('');
-		setVisible(false);
 	}
 
 	// Important for menu item context
 	const { staticContext, ...rest} = props;
 	return (
 		<span>
-			<Menu.Item key="upload-data" className="menu-item" {...rest} onClick={showModal}>
+			<Button key="upload-data" className="menu-item" {...rest} onClick={showModal}>
 				<span style={{ display: 'flex', alignItems: 'center' }}>
 					<CloudUploadOutlined />
 					<span>Upload Data</span>
 				</span>
-			</Menu.Item>
+			</Button>
 			<Modal
 				title={"Upload Data"}
 				visible={visible}
@@ -146,10 +122,6 @@ const DataModal = props => {
 
 						</Select>
 						
-						<Input type="text" placeholder='New Category' name="category" onChange={e => setNewCategory(e.target.value)}/>
-							<Button onClick={handleCategoryOk} type="primary" htmlType="submit" size="medium" shape="round" className="submit-button">
-                                Create Category
-                        	</Button>
 					</Row>
 				</Col>
 			</Modal>
