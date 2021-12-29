@@ -10,7 +10,7 @@ import { Context } from "../../context/Context";
 
 const { Option } = Select;
 
-const DataModal = props => {
+const CategoryModal = props => {
 	const {context, dispatch} = useContext(Context);
 	const [visible, setVisible] = useState(false);
 	const [newCategory, setNewCategory] = useState('New Category');
@@ -34,7 +34,8 @@ const DataModal = props => {
 				dispatch({ type: 'CHANGE _', payload: { categories: context.categories.concat(res) } });
 				// Current route is just '/home'
 				if (context.key === '') {
-					props.history.push(`/home/${res._id}`);
+					console.log('new url dropped: ' + res._id)
+					props.history.push(`/category/${res._id}`);
 				}
 				// Current route is '/home/:id'
 				else {
@@ -52,10 +53,10 @@ const DataModal = props => {
 	const { staticContext, ...rest} = props;
 	return (
 		<span>
-			<Menu.Item key="create-category" className="menu-item" {...rest} onClick={showModal}>
-				<span style={{ display: 'flex', alignItems: 'center' }}>
-				<FileAddFilled style = {{margin: '0.5rem 0.5rem 0.5rem 0'}}/>
-					<span>Create Category</span>
+			<Menu.Item key="create-category" className="menu-item" onClick={showModal}>
+				<span style={{ display: 'flex', alignItems: 'center'}, props.style}>
+					<FileAddFilled style = {{margin: '0.5rem 0.5rem 0.5rem 0'}}/>
+					Create Category
 				</span>
 			</Menu.Item>
 			<Modal
@@ -82,4 +83,4 @@ const DataModal = props => {
 	);
 }
 
-export default withRouter(DataModal);
+export default withRouter(CategoryModal);

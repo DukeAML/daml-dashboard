@@ -256,6 +256,7 @@ export const GetDataIds = async (token) => {
 }
 
 export const GetDataById = async (token, id) => {
+	console.log('getting data with ' + id)
 	const { data } = await client.get(`/data/${id}`, {
 		headers: {
 			'Authorization': `Bearer ${token}`

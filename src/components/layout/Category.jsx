@@ -6,196 +6,88 @@ import { Context } from "../../context/Context";
 // import ThemingModal from "./ThemingModal";
 // import ShareModal from "./ShareModal";
 // import WidgetModal from "../widgetSelection/WidgetModal";
-import { GetData, GetDataIds, GetDataById } from '../../api/api';
+import { GetData, GetDataIds, GetDataById, GetCategory } from '../../api/api';
 // import Grid from './Grid';
 // import './Dashboards.css';
 import DataView from "../data/DataView";
 import DataModal from "./DataModal";
+import CategoryDataView from "../data/CategoryDataView";
+import { withRouter } from "react-router-dom";
 
 const Category = props => {
     const {context, dispatch} = useContext(Context);
-    // const [layout, setLayout] = useState([]);
-    // const [newCounter, setNewCounter] = useState(0);
-    // const [dataIds, setDataIds] = useState([]);
-    // const [title, setTitle] = useState('');
-    // const [rem, setRem] = useState([]);
-    // const [saving, setSaving] = useState(false);
-
+    const [category, setCategory] = useState({});
+    const [data, setData] = useState([]);
     useEffect(() => {
         // setTitle(props.dashboard && props.dashboard.name);
+        updateKey()
         loadCategory();
         // updateDataIds();
     // }, [props.dashboard])
-    }, [])
+    }, [props.match.params.id])
+
 
     const loadCategory = async () => {
-        // Retrieve all charts
 
-         const allData = await GetData(localStorage.getItem('token'))
+        // Retrieve all charts
+        dispatch({ type: 'CHANGE _', payload: { key: props.match.params.id } });
+
+        //const allData = await GetData(localStorage.getItem('token'))
+           // .then(res => { return res })
+        const category = await GetCategory(localStorage.getItem('token'), props.match.params.id)
             .then(res => { return res })
-        console.log(allData)
-        console.log('category page')
-        // const chartsWithoutData = await GetCharts(localStorage.getItem('token'), context.key)
-        //     .then(res => { return res })
-        // // Convert chart to expected format
-        // const charts = await Promise.all(chartsWithoutData.map(async i => {
-        //     // Load in data to this chart if it is connected to a data object
-        //     let data = undefined;
-        //     if (i.data) {
-        //         data = await GetDataById(localStorage.getItem('token'), i.data)
-        //             .then(res => res.file_data);
-        //         const axes = Object.keys(data[0]);
-        //         data = { data: data };
-        //         axes.forEach(axis => data[axis] = axis);
-        //     }
-        //     return {
-        //         i: i._id.toString(),
-        //         x: i.grid[0] ? i.grid[0] : 0,
-        //         y: i.grid[1] ? i.grid[1] : 0,
-        //         w: i.grid[2] ? i.grid[2] : 0,
-        //         h: i.grid[3] ? i.grid[3] : 0,
-        //         widgetType: i.type,
-        //         data: i.data,
-        //         dataProps: data,
-        //         chartTitle: i.title
-        //     };
-        // }))
-        // setNewCounter(0);
-        // setLayout(charts);
+            //getdatabycategory
+        setCategory(category)
+        //console.log(allData)
+        //console.log(category)
     }
 
-    // const updateDataIds = () => {
-    //     GetDataIds(localStorage.getItem('token'))
-    //         .then(res => setDataIds(res))
-    //         .catch(e => console.log(e));
-    // }
+    //DASHBOARD IS BEING GOTTEN DIFFERENTLY
+    const updateKey = async() =>{
+    }
 
-    // const handleAddWidget = (type, dataProps, chartTitle) => {
-    //     setLayout(layout.concat(
-    //         {
-    //             i: "n" + newCounter,
-    //             x: (layout.length * 2) % 12,
-    //             y: Infinity, // puts it at the bottom
-    //             w: 2,
-    //             h: 2,
-    //             widgetType: type,
-    //             dataProps: dataProps,
-    //             chartTitle: chartTitle
-    //         })
-    //     );
-    //     setNewCounter(newCounter + 1);
-    // };
-    
-    // const onLayoutChange = newLayout => {
-    //     const positions = newLayout.map(obj => _.pick(obj, ['x', 'y', 'w', 'h']));
-    //     // Update positions of elements without forcing rerender
-    //     layout.forEach((item, i) => Object.assign(item, positions[i]));
-    // };
+	// const updateKey = async () => {
+	// 	const id = props.catID;
+	// 	// If no id in url
+	// 	if (!id) {
+	// 		if (context.key) {
+	// 			dispatch({ type: 'CHANGE _', payload: { key: null } });
+	// 		}
+	// 	}
+	// 	else {
+	// 		// // Attempt to get dashboard by its id
+	// 		// const category = await GetDashboard(localStorage.getItem('token'), id)
+	// 		// // 	.then(res => { return res })
+	// 		// // 	.catch(err => { return null })
+	// 		// // // There is no dashboard with this id
+	// 		// if (!dashboard) {
+	// 		// 	// props.history.push('/home');
+	// 		// }
+	// 		// else {
+	// 			// Add current dash id and title to context
+	// 			// Store dashboard to pass to dashboard component
+	// 			// setDashboard(dashboard)
+	// 		// }
+	// 	}
+	// }
 
-    // // Remove chart with index i from dashboard
-    // const onRemoveItem = el => {
-    //     // Everything in rem will be deleted from db when save is clicked
-    //     if (el.i.charAt(0) !== 'n') {
-    //         setRem(rem.concat(el));
-    //     }
-    //     setLayout(_.reject(layout, { i: el.i }));
-    // };
 
-    // // Save current chart content and state to db
-    // const save = async () => {
-    //     setSaving(true);
-    //     await Promise.all(layout.map((chart, i) => {
-    //         // If this chart is newly added and does not exist on backend
-    //         if (chart.i.charAt(0) === 'n') {
-    //             return CreateChart(localStorage.getItem('token'), { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, dashboard: context.key, title: chart.chartTitle })
-    //                 .then(res => {
-    //                     // Give the newly created chart its id to replace n{number}
-    //                     layout[i].i = res._id;
-    //                 })
-    //         }
-    //         // Update this chart with current position, type, etc.
-    //         else {
-    //             return UpdateChart(localStorage.getItem('token'), chart.i, { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, title: chart.chartTitle, data: chart.data })
-    //                 .catch(err => console.log(err));
-    //         }
-    //     }))
-    //     // If charts have been removed
-    //     if (rem.length > 0) {
-    //         for (let el of rem) {
-    //             console.log("Deleting chart", el.i);
-    //             await DeleteChart(localStorage.getItem('token'), el.i)
-    //                 .catch(err => console.log(err))
-    //         }
-    //         setRem([])
-    //     }
-    //     setSaving(false);
-    // }
-
-    // // Update dashboard title in state
-    // const changeTitle = (e) => {
-    //     setTitle(e.target.value);
-    // }
-
-    // const updateChart = el => {
-    //     const layoutCopy = [...layout];
-    //     // Update this chart with info from EditModal
-    //     layoutCopy.forEach((old, i) => {
-    //         if (old.i === el.i) {
-    //             layoutCopy[i] = el;
-    //         }
-    //     });
-    //     setLayout(layoutCopy)
-    // }
-
-    // const viewOnly = props.dashboard.edit === 0;
     return (
         <div>
-            <h1 onClick={loadCategory}>Category page 💕</h1>
-            <DataModal />
-            <DataView />
+            <h1 onClick={loadCategory}>{category.name}</h1>
+            <DataModal category={category} catID={props.match.params.id}/>
+
+            { category.data &&
+                category.data.map(dat => {
+                    return <CategoryDataView data={dat} /> 
+                })
+            }
+            {/* <CategoryDataView data={category} />  */}
+            {/* <DataView /> */}
+           
         </div>
         
-        // <div style={{ width: '100%', marginBottom: '5vh' }}>
-        //     <center style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-        //         <Input className="page-title" value={title} onChange={changeTitle}>
-        //         </Input>
-        //         <div style={{ padding: "1rem 0" }} >
-        //             <Spin spinning = {saving} style={{ margin: '0.5rem' }}/>
-        //             {!viewOnly && 
-        //                 <WidgetModal
-        //                     onAddWidget={(type, dataProps, chartTitle) => {
-        //                         handleAddWidget(type, dataProps, chartTitle);
-        //                     }}
-        //                 />
-        //             }
-        //             <ThemingModal />
-        //             {!viewOnly && 
-        //                 <ShareModal 
-        //                     style={{ margin: '0.5rem 0 0.5rem 0.5rem' }}
-        //                     dashboard = {props.dashboard}
-        //                 />
-        //             }
-        //             {!viewOnly &&
-        //                 <Button style={{
-        //                     margin: '0.5rem 0 0.5rem 0.5rem',
-        //                     fontFamily: "Roboto, sans-serif",
-        //                     background: "#8bcece",
-        //                     border: "#59b59d"
-        //                 }} type='primary' onClick={save}>
-        //                     <SaveFilled />
-        //                 </Button>
-        //             }
-        //         </div>
-        //     </center>
-        //     <Grid 
-        //         viewOnly = {viewOnly}
-        //         layout={layout}
-        //         dataIds={dataIds}
-        //         onLayoutChange={onLayoutChange}
-        //         onRemoveItem={onRemoveItem}
-        //         updateChart={updateChart} />
-        // </div>
     );
 }
 
-export default Category;
+export default withRouter(Category);

@@ -7,15 +7,17 @@ import * as XLSX from "xlsx";
 import './Layout.css';
 import { Context } from "../../context/Context";
 
+//make data modal just have the category page
 
 const { Option } = Select;
 
 const DataModal = props => {
-	const {context, dispatch} = useContext(Context);
+	//const {context, dispatch} = useContext(Context);
 	const [visible, setVisible] = useState(false);
 	const [fileList, setFileList] = useState([]);
 	const [data, setData] = useState(null);
-	const [category, setCategory] = useState('Uncategorized');
+	console.log(props)
+	
 	// Show modal
 	const showModal = () => {
 		setVisible(true);
@@ -26,14 +28,12 @@ const DataModal = props => {
 		setVisible(false);
 		setFileList([]);
 		setData(null);
-		setCategory('Uncategorized');
 	}
 
 	// Add data
 	const handleOk = async () => {
 		if(data) {
-			console.log('Data assigned to ' + category)
-			await PostData(localStorage.getItem('token'), { title: data.name, file_data: data.file_data, category: category })
+			await PostData(localStorage.getItem('token'), { title: data.name, file_data: data.file_data, category: props.catID })
 				.then(alert(`Uploaded ${data.name}`))
 			setVisible(false);
 		}
@@ -61,10 +61,6 @@ const DataModal = props => {
 	const onFileChange = info => {
 		// Only allow one file
 		setFileList(info.fileList.slice(-1));
-	}
-
-	const handleCategoryChange = (id, cat) => {
-		setCategory(cat.children);
 	}
 
 	// Important for menu item context
@@ -108,21 +104,7 @@ const DataModal = props => {
 							</Button>
 						</Upload>
 					</Row>
-					<Row>
-						<Select defaultValue={null}
-							dropdownMatchSelectWidth={false}
-							onChange={handleCategoryChange}
-						>
-							<Option value={null}>Uncategorized</Option>
-							{
-							context.categories.map(cat => {
-								return <Option value={cat._id}>{cat.name}</Option>
-							})
-					}
-
-						</Select>
-						
-					</Row>
+					
 				</Col>
 			</Modal>
 		</span>

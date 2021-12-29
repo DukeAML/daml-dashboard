@@ -5,7 +5,6 @@ import { GetCategories, GetDashboards } from '../../api/api';
 import { Context } from "../../context/Context";
 import { withRouter } from 'react-router-dom';
 import AddModal from './AddModal';
-import DataModal from './DataModal';
 import CategoryModal from "./CategoryModal";
 import './Layout.css';
 
@@ -24,17 +23,22 @@ const SideBar = props => {
 		const dashboards = await GetDashboards(localStorage.getItem('token'))
 			.catch(err => { console.log(err); return [] });
 		dispatch({ type: 'CHANGE _', payload: { dashboards: dashboards } });
-	}, [])
-
-	useEffect(async () => {
 		const categories = await GetCategories(localStorage.getItem('token'))
 			.catch(err => { console.log(err); return [] });
 		dispatch({ type: 'CHANGE _', payload: { categories: categories } });
 	}, [])
 
+	// useEffect(async () => {
+		
+	// }, [])
+
 	// Clicking a dashboard
 	const changePage = e => {
 		props.history.push(`/home/${e.key}`)
+	};
+
+	const changeCategoryPage = e => {
+		props.history.push(`/category/${e.key}`)
 	};
 
 	// If somehow sidebar is loaded without being authenticated
@@ -77,7 +81,6 @@ const SideBar = props => {
 					<AddModal style={addStyles} />
 				</SubMenu>
 
-
 				<SubMenu key="data" className="main-menu" title={
 					<span style={{ display: 'flex', alignItems: 'center' }}>
 						<ProfileFilled />
@@ -87,11 +90,12 @@ const SideBar = props => {
 				>
 					{
 						context.categories.map(cat => {
-							return <Menu.Item key={cat._id} className="menu-item" onClick={changePage} style={subStyles}>{cat.name}</Menu.Item>
+							return <Menu.Item key={cat._id} className="menu-item" onClick={changeCategoryPage} style={subStyles}>{cat.name}</Menu.Item>
 						})
 					}
-					<CategoryModal />
+				<CategoryModal style={addStyles}/>
 				</SubMenu>
+				
 			</Menu>
 		</Sider>
 	);
