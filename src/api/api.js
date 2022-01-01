@@ -266,8 +266,18 @@ export const GetDataById = async (token, id) => {
 	return data;
 }
 
+export const GetDataByCategoryId = async (token, id) => {
+	const { data } = await client.get(`/categories/${id}/data`, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
 export default { Register, Login, Logout, LogoutAll, ReadUser, EditUser, 
 	CreateDashboard, GetDashboards, GetDashboard, DeleteDashboard, 
 	CreateChart, UpdateChart, GetCharts, DeleteChart, 
-	GetData, PostData, GetDataIds, GetDataById
+	GetData, PostData, GetDataIds, GetDataById, GetDataByCategoryId
 };

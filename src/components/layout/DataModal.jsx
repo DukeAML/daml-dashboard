@@ -66,7 +66,7 @@ const DataModal = props => {
 	// Important for menu item context
 	const { staticContext, ...rest} = props;
 	return (
-		<span>
+		<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}> 
 			<Button key="upload-data" className="menu-item" {...rest} onClick={showModal}>
 				<span style={{ display: 'flex', alignItems: 'center' }}>
 					<CloudUploadOutlined />

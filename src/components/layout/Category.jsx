@@ -6,7 +6,7 @@ import { Context } from "../../context/Context";
 // import ThemingModal from "./ThemingModal";
 // import ShareModal from "./ShareModal";
 // import WidgetModal from "../widgetSelection/WidgetModal";
-import { GetData, GetDataIds, GetDataById, GetCategory } from '../../api/api';
+import { GetData, GetDataIds, GetDataById, GetCategory, GetDataByCategoryId } from '../../api/api';
 // import Grid from './Grid';
 // import './Dashboards.css';
 import DataView from "../data/DataView";
@@ -40,6 +40,9 @@ const Category = props => {
         setCategory(category)
         //console.log(allData)
         //console.log(category)
+        await GetDataByCategoryId(localStorage.getItem('token'), props.match.params.id)
+        .then(res => setData(res))
+    
     }
 
     //DASHBOARD IS BEING GOTTEN DIFFERENTLY
@@ -73,14 +76,12 @@ const Category = props => {
 
 
     return (
-        <div>
-            <h1 onClick={loadCategory}>{category.name}</h1>
+        <div style={{display: 'block', justifyContent: 'center', alignItems: 'center', margin: 'auto'}}>
+            <h1 style={{ fontSize: '2rem', textAlign: 'center' }} onClick={loadCategory}>{category.name}</h1>
             <DataModal category={category} catID={props.match.params.id}/>
 
             { category.data &&
-                category.data.map(dat => {
-                    return <CategoryDataView data={dat} /> 
-                })
+                    <CategoryDataView data={data} /> 
             }
             {/* <CategoryDataView data={category} />  */}
             {/* <DataView /> */}
