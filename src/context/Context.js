@@ -14,6 +14,7 @@ const initialState =
   submenu: ['dashboards'],
   dashboards: [],
   categories: ['Uncategorized'],
+  datas: [],
   widgetBackgroundColor: "#ffffff",
   gridBackGroundColor: "#D9E0EC",
   selectedWidgetBackgroundColor: "#D9E0EC",

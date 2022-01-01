@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 import { Layout, Table } from 'antd';
-import { GetData, GetDataById, GetDataByCategoryId } from '../../api/api';
-import { Context } from "../../context/Context";
 
 const { Content } = Layout;
 

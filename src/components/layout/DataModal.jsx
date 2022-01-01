@@ -12,7 +12,7 @@ import { Context } from "../../context/Context";
 const { Option } = Select;
 
 const DataModal = props => {
-	//const {context, dispatch} = useContext(Context);
+	const {context, dispatch} = useContext(Context);
 	const [visible, setVisible] = useState(false);
 	const [fileList, setFileList] = useState([]);
 	const [data, setData] = useState(null);
@@ -34,8 +34,12 @@ const DataModal = props => {
 	const handleOk = async () => {
 		if(data) {
 			await PostData(localStorage.getItem('token'), { title: data.name, file_data: data.file_data, category: props.catID })
-				.then(alert(`Uploaded ${data.name}`))
+				.then(res => {
+					alert(`Uploaded ${data.name}`);
+					dispatch({ type: 'CHANGE _', payload: { datas: context.datas.concat(data) } })
+				})
 			setVisible(false);
+			
 		}
 		else {
 			alert('No data input found');
