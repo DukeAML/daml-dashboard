@@ -14,18 +14,28 @@ const Category = props => {
         loadCategory()
     }, [props.match.params.id])
 
+    useEffect(() => {
+        loadData()
+    }, [category])
+
 
     const loadCategory = async () => {
-
+        console.log('loading...')
         dispatch({ type: 'CHANGE _', payload: { key: props.match.params.id } });
         await GetCategory(localStorage.getItem('token'), props.match.params.id)
-            .then(res => { setCategory(res) })
+            .then(res => { 
+                console.log('setting category')
+                setCategory(res) })
+    }
+
+    const loadData = async () => {
         await GetDataByCategoryId(localStorage.getItem('token'), props.match.params.id)
         .then(res => {
+            console.log('dispatching')
             setData(res)
             dispatch({ type: 'CHANGE _', payload: { datas: data } });
+            console.log(context.datas)
         })
-    
     }
 
     return (
