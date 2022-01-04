@@ -10,6 +10,7 @@ const Category = props => {
     const {context, dispatch} = useContext(Context);
     const [category, setCategory] = useState({});
     const [data, setData] = useState([]);
+
     useEffect(() => {
         loadCategory()
         loadData()
@@ -41,8 +42,8 @@ const Category = props => {
             <h1 style={{ fontSize: '2rem', textAlign: 'center' }} onClick={loadCategory}>{category.name}</h1>
             <DataModal category={category} catID={props.match.params.id}/>
 
-            { category.data &&
-                    <CategoryDataView data={context.datas} /> 
+            { data &&
+                    <CategoryDataView data={data} /> 
             }
            
         </div>

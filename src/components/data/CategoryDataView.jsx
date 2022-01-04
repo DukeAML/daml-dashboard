@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Table } from 'antd';
+import { Layout, Table, Divider } from 'antd';
 import "./Category.css";
 import { withRouter } from 'react-router-dom';
 
@@ -30,8 +30,8 @@ const CategoryDataView = props => {
 								{d.file_data.length} rows x {cols.length} columns
 								</p>
 								<p>{cols.join(', ')}</p>
-								
-								<Table columns={columns} dataSource={d.file_data} />
+								<Divider/>
+								{/* <Table columns={columns} dataSource={d.file_data} /> */}
 							</div>
 						)
 					})}
