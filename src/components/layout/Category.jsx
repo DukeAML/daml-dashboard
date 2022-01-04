@@ -12,11 +12,8 @@ const Category = props => {
     const [data, setData] = useState([]);
     useEffect(() => {
         loadCategory()
-    }, [props.match.params.id])
-
-    useEffect(() => {
         loadData()
-    }, [category])
+    }, [props.match.params.id])
 
 
     const loadCategory = async () => {
@@ -36,6 +33,7 @@ const Category = props => {
             dispatch({ type: 'CHANGE _', payload: { datas: data } });
             console.log(context.datas)
         })
+
     }
 
     return (

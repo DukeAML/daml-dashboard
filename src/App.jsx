@@ -70,6 +70,7 @@ function Main() {
               <ProtectedRoute exact path="/home/:id" component={Homepage} />
               <ProtectedRoute exact path="/settings" component={AccountSettings} />
               <ProtectedRoute exact path="/data" component={DataView} />
+              <ProtectedRoute exact path="/data/:id" component={DataView} />
               <ProtectedRoute exact path="/category/:id" component={Category} />
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/signup" component={SignUpPage} />

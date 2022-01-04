@@ -1,12 +1,14 @@
 import React from "react";
 import { Layout, Table } from 'antd';
 import "./Category.css";
+import { withRouter } from 'react-router-dom';
+
 const { Content } = Layout;
 
 const CategoryDataView = props => {
 
-	const showData = {
-
+	const showData = e => {
+		props.history.push(`/data/${e.target.id}`)
 	}
 
 	return (
@@ -16,14 +18,14 @@ const CategoryDataView = props => {
 					{props.data && props.data.map(d => {
 						const cols = Object.keys(d.file_data[0])
 						const columns = cols.map((v, i) => { 
-							
 							return { title: v, dataIndex: v, key: i } });
 						d.file_data.forEach((row, i) => {
 							row.key = i;
 						});
 						return (
 							<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '2vh' }} key={d.title} >
-								<h2 className="dataTitle" onClick={showData}>{d.title}</h2>
+
+								<h2 className="dataTitle" id={d._id} onClick={showData}>{d.title}</h2>
 								<p>
 								{d.file_data.length} rows x {cols.length} columns
 								</p>
@@ -40,4 +42,4 @@ const CategoryDataView = props => {
 	)
 }
 
-export default CategoryDataView;
+export default withRouter(CategoryDataView);

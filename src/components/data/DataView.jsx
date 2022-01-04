@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Layout, Table } from 'antd';
-import { GetData } from '../../api/api';
+import { GetData, GetDataById } from '../../api/api';
 
 const { Content } = Layout;
 
@@ -9,8 +9,18 @@ const DataView = props => {
 
 	// Load data
 	useEffect(async () => {
+		console.log(props)
+
+		if(props.match){
+			console.log(props.match)
+			//await GetDataById(localStorage.getItem('token'), props.match.params.id)
+			//	.then(res => setData(og => {og.push(res)}))
+		}
+		else{
 		await GetData(localStorage.getItem('token'))
 			.then(res => setData(res))
+
+		}
 	}, [])
 
 	return (
