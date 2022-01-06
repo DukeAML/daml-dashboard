@@ -1,18 +1,14 @@
 import React, { useState, useContext } from "react";
-import { Modal, Menu, Upload, Button, Row, Col, Select, Input } from "antd";
-import { PostData, CreateCategory } from '../../api/api';
+import { Modal, Upload, Button, Row, Col, Select } from "antd";
+import { PostData } from '../../api/api';
 import { withRouter } from 'react-router-dom';
 import { UploadOutlined, CloudUploadOutlined } from '@ant-design/icons';
 import * as XLSX from "xlsx";
 import './Layout.css';
-import { Context } from "../../context/Context";
-
-//make data modal just have the category page
 
 const { Option } = Select;
 
 const DataModal = props => {
-	const {context, dispatch} = useContext(Context);
 	const [visible, setVisible] = useState(false);
 	const [fileList, setFileList] = useState([]);
 	const [data, setData] = useState(null);
@@ -33,13 +29,14 @@ const DataModal = props => {
 	// Add data
 	const handleOk = async () => {
 		if(data) {
-			await PostData(localStorage.getItem('token'), { title: data.name, file_data: data.file_data, category: props.catID })
+			await PostData(localStorage.getItem('token'), { title: data.title, file_data: data.file_data, category: props.catID })
 				.then(res => {
-					alert(`Uploaded ${data.name}`);
-					dispatch({ type: 'CHANGE _', payload: { datas: context.datas.concat(data) } })
+					alert(`Uploaded ${data.title}`);
+					//update data state in Category.jsx
+					props.addData(data)
 				})
 			setVisible(false);
-			
+			props.history.push(`/category/${props.catID}`)
 		}
 		else {
 			alert('No data input found');
@@ -48,7 +45,7 @@ const DataModal = props => {
 
 	// Convert sheet to data and add it to state
 	const onAddFile = ({ file, onSuccess }) => {
-		let name = file.name;
+		let title = file.name;
 		const reader = new FileReader();
 		reader.onload = (evt) => {
 			const bstr = evt.target.result;
@@ -56,7 +53,7 @@ const DataModal = props => {
 			const wsname = wb.SheetNames[0];
 			const ws = wb.Sheets[wsname];
 			const data = XLSX.utils.sheet_to_json(ws, { defval: 0 });
-			setData({file_data: data, name: name});
+			setData({file_data: data, title: title});
 			onSuccess("done", file);
 		};
 		reader.readAsBinaryString(file);

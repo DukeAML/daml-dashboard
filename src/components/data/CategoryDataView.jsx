@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Table, Divider } from 'antd';
+import { Layout, Divider } from 'antd';
 import "./Category.css";
 import { withRouter } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ const { Content } = Layout;
 const CategoryDataView = props => {
 
 	const showData = e => {
+		//go to data page
 		props.history.push(`/data/${e.target.id}`)
 	}
 
@@ -17,11 +18,14 @@ const CategoryDataView = props => {
 				<div style={{ display: 'flex', flexDirection: 'column', marginTop: '2vh' }}>
 					{props.data && props.data.map(d => {
 						const cols = Object.keys(d.file_data[0])
-						const columns = cols.map((v, i) => { 
-							return { title: v, dataIndex: v, key: i } });
-						d.file_data.forEach((row, i) => {
-							row.key = i;
-						});
+						console.log(d)
+						// const columns = cols.map((v, i) => { 
+						// 	return { title: v, dataIndex: v, key: i } });
+						// d.file_data.forEach((row, i) => {
+						// 	row.key = i;
+						// });
+
+						//limit columns with ...
 						return (
 							<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '2vh' }} key={d.title} >
 
@@ -29,7 +33,9 @@ const CategoryDataView = props => {
 								<p>
 								{d.file_data.length} rows x {cols.length} columns
 								</p>
-								<p>{cols.join(', ')}</p>
+								<p></p>
+								<p>{cols.join(', ')}</p> 
+								do ... for too many column
 								<Divider/>
 								{/* <Table columns={columns} dataSource={d.file_data} /> */}
 							</div>
