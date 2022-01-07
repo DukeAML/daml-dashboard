@@ -26,6 +26,7 @@ const SideBar = props => {
 		const categories = await GetCategories(localStorage.getItem('token'))
 			.catch(err => { console.log(err); return [] });
 		dispatch({ type: 'CHANGE _', payload: { categories: categories } });
+		console.log(categories)
 	}, [])
 
 	// Clicking a dashboard

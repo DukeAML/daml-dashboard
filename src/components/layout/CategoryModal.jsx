@@ -24,23 +24,15 @@ const CategoryModal = props => {
 		setVisible(false);
 	}
 
-	// Add data
+	// Add category
 	const handleCategoryOk = async () => {
-		console.log('created ' + newCategory);
-		// Add dashboard with title
+		// Add category with title
 		await CreateCategory(localStorage.getItem('token'), newCategory)
 			.then(res => {
-				// Add dashboard to sidebar
+				// Add category to sidebar
 				dispatch({ type: 'CHANGE _', payload: { categories: context.categories.concat(res) } });
-				// Current route is just '/home'
-				if (context.key === '') {
-					console.log('new url dropped: ' + res._id)
-					props.history.push(`/category/${res._id}`);
-				}
-				// Current route is '/home/:id'
-				else {
-					props.history.push(res._id);
-				}
+				//Switch to category page
+				props.history.push(`/category/${res._id}`);
 			})
 			.catch(err => {
 				console.log("Error creating category", err);

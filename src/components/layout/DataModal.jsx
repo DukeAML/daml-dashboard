@@ -10,7 +10,6 @@ const DataModal = props => {
 	const [visible, setVisible] = useState(false);
 	const [fileList, setFileList] = useState([]);
 	const [data, setData] = useState(null);
-	console.log(props)
 	
 	// Show modal
 	const showModal = () => {
@@ -31,7 +30,7 @@ const DataModal = props => {
 				.then(res => {
 					alert(`Uploaded ${data.title}`);
 					//update data state in Category.jsx
-					props.addData(data)
+					props.addData(res)
 				})
 			setVisible(false);
 			props.history.push(`/category/${props.catID}`)

@@ -173,18 +173,17 @@ export const DeleteChart = async (token, id) => {
 
 /* ---------- CATEGORIES ---------- */
 export const CreateCategory = async (token, title) => {
-	const { data } = await client.post("/categories", { name: title }, {
+	const { data } = await client.post("/category", { name: title }, {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		}
 	});
-	console.log("create " + title + " on api");
 	printOutput && console.log(data);
 	return data;
 }
 
 export const GetCategories = async (token) => {
-	const { data } = await client.get("/categories/me", {
+	const { data } = await client.get("/category/me", {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		}
@@ -194,7 +193,7 @@ export const GetCategories = async (token) => {
 }
 
 export const GetCategory = async (token, id) => {
-	const { data } = await client.get(`/categories/${id}`, {
+	const { data } = await client.get(`/category/${id}`, {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		}
@@ -204,7 +203,7 @@ export const GetCategory = async (token, id) => {
 }
 
 export const EditCategory = async (token, id, updates) => {
-	const { data } = await client.patch(`/categories/edit/${id}`, updates, {
+	const { data } = await client.patch(`/category/edit/${id}`, updates, {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		}
@@ -214,7 +213,7 @@ export const EditCategory = async (token, id, updates) => {
 }
 
 export const DeleteCategory = async (token, id) => {
-	const { data } = await client.delete(`/categories/${id}`, {
+	const { data } = await client.delete(`/category/${id}`, {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		}
@@ -256,7 +255,6 @@ export const GetDataIds = async (token) => {
 }
 
 export const GetDataById = async (token, id) => {
-	console.log('getting data with ' + id)
 	const { data } = await client.get(`/data/${id}`, {
 		headers: {
 			'Authorization': `Bearer ${token}`
@@ -267,7 +265,7 @@ export const GetDataById = async (token, id) => {
 }
 
 export const GetDataByCategoryId = async (token, id) => {
-	const { data } = await client.get(`/categories/${id}/data`, {
+	const { data } = await client.get(`/category/${id}/data`, {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		}
