@@ -6,8 +6,6 @@ import { UploadOutlined, CloudUploadOutlined } from '@ant-design/icons';
 import * as XLSX from "xlsx";
 import './Layout.css';
 
-const { Option } = Select;
-
 const DataModal = props => {
 	const [visible, setVisible] = useState(false);
 	const [fileList, setFileList] = useState([]);

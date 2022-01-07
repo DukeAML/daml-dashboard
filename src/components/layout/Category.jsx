@@ -18,14 +18,14 @@ const Category = props => {
 
 
     const loadCategory = async () => {
+        //get category from :id
         dispatch({ type: 'CHANGE _', payload: { key: props.match.params.id } });
         await GetCategory(localStorage.getItem('token'), props.match.params.id)
-            .then(res => { 
-                console.log('setting category')
-                setCategory(res) })
+            .then(res => { setCategory(res) })
     }
 
     const loadData = async () => {
+        //get data ids from category
         await GetDataByCategoryId(localStorage.getItem('token'), props.match.params.id)
         .then(res => {
             setData(res)
@@ -34,15 +34,8 @@ const Category = props => {
     }
 
     const addData = dataObj => {
-      
         setData((og) => ([...og, dataObj]))
-        //stuff for update
-        //change data state there
     }
-    //function that takes data object & adds it to data state
-    //add data to that array
-    //pass it as props to data modal
-    //props.addData and add that
 
     return (
         <div style={{display: 'block', justifyContent: 'center', alignItems: 'center', margin: 'auto'}}>

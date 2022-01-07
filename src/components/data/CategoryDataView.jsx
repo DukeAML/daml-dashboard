@@ -17,27 +17,23 @@ const CategoryDataView = props => {
 			<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
 				<div style={{ display: 'flex', flexDirection: 'column', marginTop: '2vh' }}>
 					{props.data && props.data.map(d => {
+						//get column information
 						const cols = Object.keys(d.file_data[0])
-						console.log(d)
-						// const columns = cols.map((v, i) => { 
-						// 	return { title: v, dataIndex: v, key: i } });
-						// d.file_data.forEach((row, i) => {
-						// 	row.key = i;
-						// });
+						const len = cols.length
 
-						//limit columns with ...
+						//limited # of column names displayed
+						const colText = len > 5 ? cols.slice(0, 5).join(', ') + "..." : cols.slice(0, len).join(', ')
+						
 						return (
 							<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '2vh' }} key={d.title} >
 
 								<h2 className="dataTitle" id={d._id} onClick={showData}>{d.title}</h2>
 								<p>
-								{d.file_data.length} rows x {cols.length} columns
+								{d.file_data.length} rows x {len} columns
 								</p>
 								<p></p>
-								<p>{cols.join(', ')}</p> 
-								do ... for too many column
+								<p>{colText}</p> 
 								<Divider/>
-								{/* <Table columns={columns} dataSource={d.file_data} /> */}
 							</div>
 						)
 					})}

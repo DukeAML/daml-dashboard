@@ -28,10 +28,6 @@ const SideBar = props => {
 		dispatch({ type: 'CHANGE _', payload: { categories: categories } });
 	}, [])
 
-	// useEffect(async () => {
-		
-	// }, [])
-
 	// Clicking a dashboard
 	const changePage = e => {
 		props.history.push(`/home/${e.key}`)
@@ -45,6 +41,7 @@ const SideBar = props => {
 	//github size, add dashboard weird
 	return (
 		<Sider
+
 			breakpoint="md"
 			collapsible
 			collapsedWidth={0}

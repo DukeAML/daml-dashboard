@@ -1,3 +1,17 @@
 .dataTitle:hover{
     cursor: pointer;
 }
+
+.ant-table-container{
+    max-width: 75vw;   
+}
+
+@media (min-width: 768px) {
+    .ant-table-container{
+        max-width: 65vw !important;
+    }
+}
+
+.ant-table-pagination{
+    justify-content: center !important;
+}
