@@ -38,7 +38,7 @@ function Homepage(props) {
 				// Add current dash id and title to context
 				dispatch({ type: 'CHANGE _', payload: { key: id } });
 				// Store dashboard to pass to dashboard component
-				setDashboard(dashboard)
+				setDashboard(dashboard);
 			}
 		}
 	}
@@ -49,7 +49,7 @@ function Homepage(props) {
 			<Content className='content'>
 				<div style={{ display: 'flex', justifyContent: 'center', width: '90%' }}>
 					<Dashboard 
-						dashboard={dashboard} 
+						dashboard={dashboard}
 					/>
 				</div>
 			</Content>

@@ -45,11 +45,11 @@ const AddModal = props => {
 
 	return (
 		<span>
-			<Menu.Item key="4" className="menu-item" onClick={showModal}>
-				<span style={{ display: 'flex', alignItems: 'center'}, props.style}>
+			<Menu.Item key="4" className="menu-item add-modal dash-menu-item" onClick={showModal}>
+				<div style={{ display: 'flex', alignItems: 'center', padding: '0px 24px 0px 36px', ...props.style}}>
 					<FileAddFilled style = {{margin: '0.5rem 0.5rem 0.5rem 0'}}/>
 					Add Dashboard
-				</span>
+				</div>
 			</Menu.Item>
 			<Modal
 				title={"Add Dashboard"}
