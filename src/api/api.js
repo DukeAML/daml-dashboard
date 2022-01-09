@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const client = axios.create({
 	baseURL: "https://peagle-backend.herokuapp.com"
-	//baseURL: "http://localhost:5000"
+	// baseURL: "http://localhost:5000"
 });
 
 const printOutput = true;
@@ -61,10 +61,12 @@ export const ReadUser = async (token) => {
 };
 
 // Edit credentials
-export const EditUser = async (token, email) => {
+export const EditUser = async (token, email, fname, lname) => {
 	const { data } = await client.patch("/users/me",
 		{
 			email: email,
+			fname: fname,
+			lname: lname
 		},
 		{
 			headers: {
