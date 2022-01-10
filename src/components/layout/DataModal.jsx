@@ -78,7 +78,6 @@ const DataModal = props => {
 				onCancel={handleCancel}
 				okText="Ok"
 				width="50rem"
-
 				className="modal-style"
 				bodyStyle={{
 					overflowY: "scroll",
