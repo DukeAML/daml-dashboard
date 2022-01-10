@@ -23,6 +23,7 @@ import DataView from "./components/data/DataView";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 import { Layout } from 'antd';
 import { ReadUser } from './api/api';
+import Category from "./components/layout/Category";
 
 function App() {
   return (
@@ -58,17 +59,19 @@ function Main() {
      <Router>
         <Layout>
           <Route
-            path={['/home', '/settings', '/data']}
+            path={['/home', '/settings', '/data', '/category']}
             component={() => <NavBar title="Peagle" user="DAML" />}
           />
           <Layout>
-            <ProtectedRoute path={['/home', '/settings', '/data']} component={SideBar} />
+            <ProtectedRoute path={['/home', '/settings', '/data', '/category']} component={SideBar} />
             <Switch>
               <Redirect exact from = '/' to = '/home'/>
               <ProtectedRoute exact path="/home" component={Homepage} />
               <ProtectedRoute exact path="/home/:id" component={Homepage} />
               <ProtectedRoute exact path="/settings" component={AccountSettings} />
               <ProtectedRoute exact path="/data" component={DataView} />
+              <ProtectedRoute exact path="/data/:id" component={DataView} />
+              <ProtectedRoute exact path="/category/:id" component={Category} />
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/signup" component={SignUpPage} />
               <Route exact path="/reset-password" component={FPPage} />

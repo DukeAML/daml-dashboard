@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const client = axios.create({
-	baseURL: "https://peagle-backend.herokuapp.com"
-	// baseURL: "http://localhost:5000"
+	// baseURL: "https://peagle-backend.herokuapp.com"
+	baseURL: "http://localhost:5000"
 });
 
 const printOutput = true;
@@ -152,7 +152,7 @@ export const UpdateChart = async (token, id, chart) => {
 }
 
 export const GetCharts = async (token, id) => {
-	const { data } = await client.get(`/dashboards/${id}/charts`, {
+	const { data } = await client.get(`/charts/${id}`, {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		}
@@ -163,6 +163,57 @@ export const GetCharts = async (token, id) => {
 
 export const DeleteChart = async (token, id) => {
 	const { data } = await client.delete(`/charts/${id}`, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+/* ---------- CATEGORIES ---------- */
+export const CreateCategory = async (token, title) => {
+	const { data } = await client.post("/category", { name: title }, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+export const GetCategories = async (token) => {
+	const { data } = await client.get("/category/me", {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+export const GetCategory = async (token, id) => {
+	const { data } = await client.get(`/category/${id}`, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+export const EditCategory = async (token, id, updates) => {
+	const { data } = await client.patch(`/category/edit/${id}`, updates, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+export const DeleteCategory = async (token, id) => {
+	const { data } = await client.delete(`/category/${id}`, {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		}
@@ -213,8 +264,18 @@ export const GetDataById = async (token, id) => {
 	return data;
 }
 
+export const GetDataByCategoryId = async (token, id) => {
+	const { data } = await client.get(`/category/${id}/data`, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
 export default { Register, Login, Logout, LogoutAll, ReadUser, EditUser, 
 	CreateDashboard, GetDashboards, GetDashboard, DeleteDashboard, 
 	CreateChart, UpdateChart, GetCharts, DeleteChart, 
-	GetData, PostData, GetDataIds, GetDataById
+	GetData, PostData, GetDataIds, GetDataById, GetDataByCategoryId
 };
