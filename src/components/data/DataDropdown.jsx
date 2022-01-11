@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import 'antd/dist/antd.css';
 import { TreeSelect } from 'antd';
-import { GetCategories, GetDataByCategoryId } from '../../api/api';
+import { GetCategories, GetData, GetDataByCategoryId } from '../../api/api';
 
 const DataDropdown = props => {
 
@@ -12,6 +12,7 @@ const DataDropdown = props => {
 
   useEffect(async () => {
     loadCategories()
+    loadData()
   }, [])
 
   const loadCategories = async () => {
@@ -23,12 +24,37 @@ const DataDropdown = props => {
           const myTree = res.map( c => {
             return{
               id: c._id,
-              title: c.name
+              title: c.name,
+              isLeaf: false
             }
           })
           setTree(myTree)
         })
   }
+
+  const loadData = () => {
+    categories.forEach(cat => {
+      getData(cat)
+    })
+  }
+
+  const getData = async(cat) => {
+  await GetDataByCategoryId(localStorage.getItem('token'), cat._id)
+      .then(res => {
+        res.forEach(dat => {
+          const myDat = {
+            id: dat._id,
+            pId: cat._id,
+            title: dat.title,
+            isLeaf: true
+          }
+          setTree( t => {
+            t.concat(myDat)
+          });
+        });  
+    })
+  }
+    
 
   // const loadData = async (id) => {
   //   //get data ids from category
@@ -66,33 +92,43 @@ const DataDropdown = props => {
     };
   };
 
-  const loadData = id => {
-    console.log('the id is ' + id);
-    setDataId(id);
-    onLoadData();
-  }
+  // const loadData = node => {
+  //   onLoadData(node.id)
+  // }
 
-  const onLoadData = async() =>{
-    await GetDataByCategoryId(localStorage.getItem('token'), dataId).
-    then(res => {
-      const myDat = {
-        id: res._id,
-        pId: dataId,
-        title: res.title,
-        isLeaf: true
-      }
-      setTree( t => {
-        t.concat(myDat)
-      }
-    );
-    })
+  // const onLoadData = async(id) => {
+  //   new Promise((resolve) => { 
+  //     console.log('category id is ' + id)
+  //     GetDataByCategoryId(localStorage.getItem('token'), id)
+  //       .then(res => {
+  //         console.log('then')
+  //         console.log(res)
+  //         res.forEach(dat => {
+  //           // const myDat = {
+  //           //   id: dat._id,
+  //           //   pId: id,
+  //           //   title: dat.title,
+  //           //   isLeaf: true
+  //           // }
+  //           // setTree( t => {
+  //           //   t.concat(myDat)
+  //           // }
+  //         // );
+  //         });
+  //       })
+  //    })
+    
+  //   // await GetDataByCategoryId(localStorage.getItem('token'), id).then(res => {
+      
+      
+  //   // })
    
-  }  
+  // }  
 
     //set to selected data id
   const onChange = val => {
-    console.log(val);
-    setValue(val);
+    // console.log(val);
+    // setValue(val);
   };
 
     return (
@@ -103,7 +139,7 @@ const DataDropdown = props => {
         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
         placeholder="Please select"
         onChange={onChange}
-        loadData={loadData}
+        // loadData={loadData}
         treeData={tree}
       />
     );
