@@ -1,11 +1,12 @@
 import React from "react";
-import { Dropdown, Row, Col, Upload, Button, Menu, Input } from "antd";
+import { Dropdown, Row, Col, Upload, Button, Menu, Input, TreeSelect } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { DownOutlined } from "@ant-design/icons";
 import { Context } from "../../context/Context";
 import widgets from '../dashboards/Constants';
 import * as XLSX from "xlsx";
 import './WidgetSelection.css';
+import DataDropdown from "../data/DataDropdown";
 
 class WidgetDataEntry extends React.PureComponent {
 
@@ -20,6 +21,17 @@ class WidgetDataEntry extends React.PureComponent {
 
 	static contextType = Context;
 
+	// useEffect(async () => {
+	// 	const dashboards = await GetDashboards(localStorage.getItem('token'))
+	// 		.catch(err => { console.log(err); return [] });
+	// 	dispatch({ type: 'CHANGE _', payload: { dashboards: dashboards } });
+	// 	const categories = await GetCategories(localStorage.getItem('token'))
+	// 		.catch(err => { console.log(err); return [] });
+	// 	dispatch({ type: 'CHANGE _', payload: { categories: categories } });
+	// 	console.log(categories)
+	// }, [])
+
+	
 	handleFileChange = info => {
 		this.setState({
 			fileList: info.fileList.slice(-1) // only allow upload of one file
@@ -154,6 +166,9 @@ class WidgetDataEntry extends React.PureComponent {
 					</Col>
 					<Col span={24}>
 						<div className="widget-header"> Upload your .XLSX or your .CSV file here.</div>
+
+						<DataDropdown />
+
 						<div style={{ margin: "1rem" }}>
 							<Upload
 								accept=".csv, .xlsx"
