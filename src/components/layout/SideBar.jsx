@@ -6,6 +6,7 @@ import { Context } from "../../context/Context";
 import { withRouter } from 'react-router-dom';
 import AddModal from './AddModal';
 import CategoryModal from "./CategoryModal";
+import DashboardMenuItem from "./DashboardMenuItem";
 import './Layout.css';
 
 const { SubMenu } = Menu;
@@ -13,11 +14,12 @@ const { Sider } = Layout;
 
 const SideBar = props => {
 	const { context, dispatch } = useContext(Context);
+	console.log("context")
+	console.log(context)
 	
 	const [winWidth, setWinWidth] = useState(window.innerWidth < 768);
-	const headStyles = winWidth ? {fontSize: '1.15em'} : {fontSize: '2vw'}
-	const subStyles = winWidth ? {fontSize: '1.5em'} : {fontSize: '1.75vw'}
-	const addStyles = winWidth ? {fontSize: '1.15em'} : {fontSize: '2vw'}
+	const headStyles = winWidth ? {fontSize: '1.15em'} : {fontSize: '1.4vw'}
+	const subStyles = winWidth ? {fontSize: '1.5em'} : {fontSize: '1.2vw'}
 
 	useEffect(async () => {
 		const dashboards = await GetDashboards(localStorage.getItem('token'))
@@ -27,15 +29,10 @@ const SideBar = props => {
 		dispatch({ type: 'CHANGE _', payload: { categories: categories, dashboards: dashboards } });
 	}, [])
 
-	// Clicking a dashboard
-	const changePage = e => {
-		props.history.push(`/home/${e.key}`)
-	};
-
 	const changeCategoryPage = e => {
-		props.history.push(`/category/${e.key}`)
+	  props.history.push(`/category/${e.key}`)
 	};
-
+  
 	// If somehow sidebar is loaded without being authenticated
 	//github size, add dashboard weird
 	return (
@@ -47,7 +44,7 @@ const SideBar = props => {
 			collapsed={context.collapsed}
 			trigger={null}
 			className="site-layout-background"
-			width={winWidth ? '100vw': '25vw'}
+			width={winWidth ? '100vw': '20vw'}
 			onBreakpoint = {(broken) => {
 				if(broken) setWinWidth(true)
 				else setWinWidth(false)
@@ -58,6 +55,7 @@ const SideBar = props => {
 				mode="inline"
 				style={{ background: '#4C5B69' }}
 				className="menu-layout-background"
+				// Selection is being managed manually in menu-item component
 				selectedKeys={[context.key]}
 				defaultOpenKeys={context.submenu}
 			>
@@ -70,11 +68,11 @@ const SideBar = props => {
 						</span>
 					}>
 					{
-						context.dashboards.map(dash => {
-							return <Menu.Item key={dash._id} className="menu-item" onClick={changePage} style={subStyles}>{dash.name}</Menu.Item>
-						})
+						context.dashboards.map(dash => (
+							<DashboardMenuItem key={dash._id} dash={dash} style={subStyles} selected={dash._id===context.key}/>
+						))
 					}
-					<AddModal style={addStyles} />
+					<AddModal style={subStyles} />
 				</SubMenu>
 
 				<SubMenu key="data" className="main-menu" title={
@@ -89,7 +87,7 @@ const SideBar = props => {
 							return <Menu.Item key={cat._id} className="menu-item" onClick={changeCategoryPage} style={subStyles}>{cat.name}</Menu.Item>
 						})
 					}
-					<CategoryModal style={addStyles}/>
+					<CategoryModal style={subStyles}/>
 				</SubMenu>
 			</Menu>
 		</Sider>
