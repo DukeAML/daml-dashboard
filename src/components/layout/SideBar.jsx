@@ -22,11 +22,9 @@ const SideBar = props => {
 	useEffect(async () => {
 		const dashboards = await GetDashboards(localStorage.getItem('token'))
 			.catch(err => { console.log(err); return [] });
-		dispatch({ type: 'CHANGE _', payload: { dashboards: dashboards } });
 		const categories = await GetCategories(localStorage.getItem('token'))
 			.catch(err => { console.log(err); return [] });
-		dispatch({ type: 'CHANGE _', payload: { categories: categories } });
-		console.log(categories)
+		dispatch({ type: 'CHANGE _', payload: { categories: categories, dashboards: dashboards } });
 	}, [])
 
 	// Clicking a dashboard
@@ -91,9 +89,8 @@ const SideBar = props => {
 							return <Menu.Item key={cat._id} className="menu-item" onClick={changeCategoryPage} style={subStyles}>{cat.name}</Menu.Item>
 						})
 					}
-				<CategoryModal style={addStyles}/>
+					<CategoryModal style={addStyles}/>
 				</SubMenu>
-				
 			</Menu>
 		</Sider>
 	);

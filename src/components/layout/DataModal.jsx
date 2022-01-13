@@ -33,7 +33,6 @@ const DataModal = props => {
 					props.addData(res)
 				})
 			setVisible(false);
-			props.history.push(`/category/${props.catID}`)
 		}
 		else {
 			alert('No data input found');
@@ -42,7 +41,7 @@ const DataModal = props => {
 
 	// Convert sheet to data and add it to state
 	const onAddFile = ({ file, onSuccess }) => {
-		let title = file.name;
+		const title = file.name;
 		const reader = new FileReader();
 		reader.onload = (evt) => {
 			const bstr = evt.target.result;

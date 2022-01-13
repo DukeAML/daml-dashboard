@@ -36,7 +36,7 @@ const Category = props => {
 
     return (
         <div style={{display: 'block', justifyContent: 'center', alignItems: 'center', margin: 'auto'}}>
-            <h1 style={{ fontSize: '2rem', textAlign: 'center' }} onClick={loadCategory}>{category.name}</h1>
+            <h1 style={{ fontSize: '2rem', textAlign: 'center' }}>{category.name}</h1>
             <DataModal addData={addData} category={category} catID={props.match.params.id}/>
 
             { data &&
