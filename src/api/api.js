@@ -171,6 +171,57 @@ export const DeleteChart = async (token, id) => {
 	return data;
 }
 
+/* ---------- CATEGORIES ---------- */
+export const CreateCategory = async (token, title) => {
+	const { data } = await client.post("/category", { name: title }, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+export const GetCategories = async (token) => {
+	const { data } = await client.get("/category/me", {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+export const GetCategory = async (token, id) => {
+	const { data } = await client.get(`/category/${id}`, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+export const EditCategory = async (token, id, updates) => {
+	const { data } = await client.patch(`/category/edit/${id}`, updates, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
+export const DeleteCategory = async (token, id) => {
+	const { data } = await client.delete(`/category/${id}`, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
 /* ---------- DATA ---------- */
 export const GetData = async (token) => {
 	const { data } = await client.get(`/data/me`, {
@@ -213,8 +264,19 @@ export const GetDataById = async (token, id) => {
 	return data;
 }
 
+export const GetDataByCategoryId = async (token, id) => {
+	const { data } = await client.get(`/category/${id}/data`, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	});
+	printOutput && console.log(data);
+	return data;
+}
+
 export default { Register, Login, Logout, LogoutAll, ReadUser, EditUser, 
 	CreateDashboard, GetDashboards, GetDashboard, DeleteDashboard, 
 	CreateChart, UpdateChart, GetCharts, DeleteChart, 
-	GetData, PostData, GetDataIds, GetDataById
+	GetData, PostData, GetDataIds, GetDataById, 
+	CreateCategory, GetCategories, GetCategory, EditCategory, DeleteCategory, GetDataByCategoryId
 };
