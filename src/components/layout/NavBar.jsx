@@ -18,7 +18,7 @@ const NavBar = props => {
 		function handleOutsideClick(event) {
 			//if user clicks outside navbar, hide navbar 
 		  if (box.current && !box.current.contains(event.target)) {
-			setShowProf(false);
+			  setShowProf(false);
 		  }
 		}
 		document.addEventListener("click", handleOutsideClick);

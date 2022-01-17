@@ -277,5 +277,6 @@ export const GetDataByCategoryId = async (token, id) => {
 export default { Register, Login, Logout, LogoutAll, ReadUser, EditUser, 
 	CreateDashboard, GetDashboards, GetDashboard, DeleteDashboard, 
 	CreateChart, UpdateChart, GetCharts, DeleteChart, 
-	GetData, PostData, GetDataIds, GetDataById, GetDataByCategoryId
+	GetData, PostData, GetDataIds, GetDataById, 
+	CreateCategory, GetCategories, GetCategory, EditCategory, DeleteCategory, GetDataByCategoryId
 };

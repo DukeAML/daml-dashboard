@@ -42,7 +42,7 @@ const DataModal = props => {
 
 	// Convert sheet to data and add it to state
 	const onAddFile = ({ file, onSuccess }) => {
-		let title = file.name;
+		const title = file.name;
 		const reader = new FileReader();
 		reader.onload = (evt) => {
 			const bstr = evt.target.result;
@@ -78,7 +78,6 @@ const DataModal = props => {
 				onCancel={handleCancel}
 				okText="Ok"
 				width="50rem"
-
 				className="modal-style"
 				bodyStyle={{
 					overflowY: "scroll",
