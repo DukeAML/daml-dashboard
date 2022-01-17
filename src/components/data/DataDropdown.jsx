@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import 'antd/dist/antd.css';
 import { TreeSelect } from 'antd';
-import { GetCategories, GetData, GetDataByCategoryId } from '../../api/api';
+import { GetCategories, GetDataByCategoryId } from '../../api/api';
 
 const DataDropdown = props => {
 
