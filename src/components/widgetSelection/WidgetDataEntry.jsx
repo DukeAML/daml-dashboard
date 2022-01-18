@@ -139,6 +139,8 @@ class WidgetDataEntry extends React.PureComponent {
 
 
 		const dataProps = content ? { data: content, ...this.state.axes } : {};
+		console.log("check!")
+		console.log(dataProps)
 
 		return (
 			<div>
@@ -150,7 +152,7 @@ class WidgetDataEntry extends React.PureComponent {
 				<center className="widget-header"> {selectedWidget.value} </center>
 				<Row>
 					<Col style={{ height: "20rem" }} span={24}>
-						<WidgetRender {...dataProps} />
+						<WidgetRender setTitle={this.props.setTitle} updateChart={this.props.updateChart} {...dataProps} {...(selectedWidget.value === "Text Box" ? {el: {chartTitle : this.props.title}} : {})}/>
 					</Col>
 					<Col span={24}>
 						<div className="widget-header"> Upload your .XLSX or your .CSV file here.</div>

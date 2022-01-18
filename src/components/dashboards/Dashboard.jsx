@@ -49,7 +49,10 @@ const Dashboard = props => {
                 widgetType: i.type,
                 data: i.data,
                 dataProps: data,
-                chartTitle: i.title
+                chartTitle: i.title,
+                
+                //newly added
+                font: i.font
             };
         }))
         setNewCounter(0);
@@ -72,7 +75,9 @@ const Dashboard = props => {
                 h: 2,
                 widgetType: type,
                 dataProps: dataProps,
-                chartTitle: chartTitle
+                chartTitle: chartTitle,
+                // newly added
+                font: 20
             })
         );
         setNewCounter(newCounter + 1);
@@ -92,14 +97,14 @@ const Dashboard = props => {
         }
         setLayout(_.reject(layout, { i: el.i }));
     };
-
     // Save current chart content and state to db
     const save = async () => {
         setSaving(true);
         await Promise.all(layout.map((chart, i) => {
             // If this chart is newly added and does not exist on backend
             if (chart.i.charAt(0) === 'n') {
-                return CreateChart(localStorage.getItem('token'), { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, dashboard: context.key, title: chart.chartTitle })
+                //changed on Jan 12
+                return CreateChart(localStorage.getItem('token'), { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, dashboard: context.key, title: chart.chartTitle, font: chart.font})
                     .then(res => {
                         // Give the newly created chart its id to replace n{number}
                         layout[i].i = res._id;
@@ -107,7 +112,8 @@ const Dashboard = props => {
             }
             // Update this chart with current position, type, etc.
             else {
-                return UpdateChart(localStorage.getItem('token'), chart.i, { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, title: chart.chartTitle, data: chart.data })
+                //changed on Jan 12
+                return UpdateChart(localStorage.getItem('token'), chart.i, { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, title: chart.chartTitle, data: chart.data, font: chart.font})
                     .catch(err => console.log(err));
             }
         }))
@@ -149,6 +155,7 @@ const Dashboard = props => {
                     <Spin spinning = {saving} style={{ margin: '0.5rem' }}/>
                     {!viewOnly && 
                         <WidgetModal
+                            updateChart={updateChart}
                             onAddWidget={(type, dataProps, chartTitle) => {
                                 handleAddWidget(type, dataProps, chartTitle);
                             }}
