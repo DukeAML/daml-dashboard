@@ -7,6 +7,7 @@ import widgets from '../dashboards/Constants';
 import * as XLSX from "xlsx";
 import './WidgetSelection.css';
 import DataDropdown from "../data/DataDropdown";
+import {GetDataById} from "../../api/api";
 
 class WidgetDataEntry extends React.PureComponent {
 
@@ -16,21 +17,11 @@ class WidgetDataEntry extends React.PureComponent {
 		processedFile: { contents: "", headers: [] },
 		axes: {},
 		chartTitle: "",
-		rerenderWidget: false
+		rerenderWidget: false,
+		dataId: ""
 	};
 
 	static contextType = Context;
-
-	// useEffect(async () => {
-	// 	const dashboards = await GetDashboards(localStorage.getItem('token'))
-	// 		.catch(err => { console.log(err); return [] });
-	// 	dispatch({ type: 'CHANGE _', payload: { dashboards: dashboards } });
-	// 	const categories = await GetCategories(localStorage.getItem('token'))
-	// 		.catch(err => { console.log(err); return [] });
-	// 	dispatch({ type: 'CHANGE _', payload: { categories: categories } });
-	// 	console.log(categories)
-	// }, [])
-
 	
 	handleFileChange = info => {
 		this.setState({
@@ -54,10 +45,18 @@ class WidgetDataEntry extends React.PureComponent {
 				return initial;
 			}, {});
 
+
+			//if data is selected, load HERE
+
+
 			// Only gets data for first workbook for now
 			let content = Object.values(jsonContentData)[0];
 			// Only gets headers for first workbook for now (we can get headers simply from the content at any time)
 			let headers = Object.keys(content[0]);
+
+			GetDataById(localStorage.getItem('token'), this.state.dataId)
+				.then(res => content = Object.values(res)[0]);
+			headers = Object.keys(content[0]);
 
 			this.setState({
 				processedFile: { content, headers },
@@ -71,6 +70,22 @@ class WidgetDataEntry extends React.PureComponent {
 		}
 		reader.readAsBinaryString(file);
 	}
+
+	onFileSubmit(fileId) {
+		console.log(fileId);
+	};
+
+	onSelectData(id){
+		console.log(id)
+		this.setId(id)
+	}
+
+	setId(id){
+		this.setState({
+			dataId: id
+		});
+	}
+
 
 	handleAxesConfigChange = (axis, { key }) => {
 		const { content, headers } = this.state.processedFile;
@@ -167,7 +182,7 @@ class WidgetDataEntry extends React.PureComponent {
 					<Col span={24}>
 						<div className="widget-header"> Upload your .XLSX or your .CSV file here.</div>
 
-						<DataDropdown />
+						<DataDropdown onSelectData={this.onSelectData}/>
 
 						<div style={{ margin: "1rem" }}>
 							<Upload

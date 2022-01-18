@@ -40,7 +40,6 @@ const DataDropdown = props => {
   }
 
   const getData = async(id) => {
-    console.log('here')
     await GetDataByCategoryId(localStorage.getItem('token'), id)
       .then(res => {
         const treeData = res.map(dat => {
@@ -60,6 +59,7 @@ const DataDropdown = props => {
 
   const onChange = val => {
     setValue(val);
+    props.onSelectData(val);
   };
 
     return (

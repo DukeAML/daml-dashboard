@@ -33,6 +33,7 @@ const WidgetModal = props => {
 			props.onAddWidget(widget, dataProps, title || undefined);
 			setVisible(false);
 			resetState();
+			//where is on addwidget
 		} else {
 			// Continue to next step
 			if (step === 0 && !widget) {
@@ -61,6 +62,7 @@ const WidgetModal = props => {
 		setTitle(chartTitle);
 	}
 
+	//maybe move data dropdown here???
 	const CurrentView = widgetSteps[step];
 	const okText = step === 1 ? "Add Widget" : "Next";
 	return (
