@@ -1,19 +1,16 @@
-import React, { useState } from "react";
-import { Modal, Menu, Upload, Button, Row, Col, Select } from "antd";
+import React, { useState, useContext } from "react";
+import { Modal, Upload, Button, Row, Col, Select } from "antd";
 import { PostData } from '../../api/api';
 import { withRouter } from 'react-router-dom';
 import { UploadOutlined, CloudUploadOutlined } from '@ant-design/icons';
 import * as XLSX from "xlsx";
 import './Layout.css';
 
-const { Option } = Select;
-
 const DataModal = props => {
 	const [visible, setVisible] = useState(false);
 	const [fileList, setFileList] = useState([]);
 	const [data, setData] = useState(null);
-	const [category, setCategory] = useState('Uncategorized');
-
+	
 	// Show modal
 	const showModal = () => {
 		setVisible(true);
@@ -24,14 +21,17 @@ const DataModal = props => {
 		setVisible(false);
 		setFileList([]);
 		setData(null);
-		setCategory('Uncategorized');
 	}
 
 	// Add data
 	const handleOk = async () => {
 		if(data) {
-			await PostData(localStorage.getItem('token'), { title: data.name, file_data: data.file_data })
-				.then(alert(`Uploaded ${data.name}`))
+			await PostData(localStorage.getItem('token'), { title: data.title, file_data: data.file_data, category: props.catID })
+				.then(res => {
+					alert(`Uploaded ${data.title}`);
+					//update data state in Category.jsx
+					props.addData(res)
+				})
 			setVisible(false);
 		}
 		else {
@@ -41,7 +41,7 @@ const DataModal = props => {
 
 	// Convert sheet to data and add it to state
 	const onAddFile = ({ file, onSuccess }) => {
-		let name = file.name;
+		const title = file.name;
 		const reader = new FileReader();
 		reader.onload = (evt) => {
 			const bstr = evt.target.result;
@@ -49,7 +49,7 @@ const DataModal = props => {
 			const wsname = wb.SheetNames[0];
 			const ws = wb.Sheets[wsname];
 			const data = XLSX.utils.sheet_to_json(ws, { defval: 0 });
-			setData({file_data: data, name: name});
+			setData({file_data: data, title: title});
 			onSuccess("done", file);
 		};
 		reader.readAsBinaryString(file);
@@ -60,21 +60,16 @@ const DataModal = props => {
 		setFileList(info.fileList.slice(-1));
 	}
 
-	const handleCategoryChange = (id, cat) => {
-		// Get label of category, not id
-		setCategory(cat.children);
-	}
-
 	// Important for menu item context
 	const { staticContext, ...rest} = props;
 	return (
-		<span>
-			<Menu.Item key="upload-data" className="menu-item" {...rest} onClick={showModal}>
-				<span style={{ display: 'flex', alignItems: 'center', fontSize: '1.2vw' }}>
+		<span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}> 
+			<Button key="upload-data" className="menu-item" {...rest} onClick={showModal}>
+				<span style={{ display: 'flex', alignItems: 'center' }}>
 					<CloudUploadOutlined />
 					<span>Upload Data</span>
 				</span>
-			</Menu.Item>
+			</Button>
 			<Modal
 				title={"Upload Data"}
 				visible={visible}
@@ -105,14 +100,7 @@ const DataModal = props => {
 							</Button>
 						</Upload>
 					</Row>
-					<Row>
-						<Select defaultValue={null}
-							dropdownMatchSelectWidth={false}
-							onChange={handleCategoryChange}
-						>
-							<Option value={null}>Uncategorized</Option>
-						</Select>
-					</Row>
+					
 				</Col>
 			</Modal>
 		</span>

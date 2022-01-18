@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Layout, Menu } from 'antd';
 import { UserOutlined, ProfileFilled, BlockOutlined } from '@ant-design/icons';
-import { GetDashboards } from '../../api/api';
+import { GetCategories, GetDashboards } from '../../api/api';
 import { Context } from "../../context/Context";
 import { withRouter } from 'react-router-dom';
 import AddModal from './AddModal';
-import DataModal from './DataModal';
+import CategoryModal from "./CategoryModal";
 import DashboardMenuItem from "./DashboardMenuItem";
 import './Layout.css';
 
@@ -24,13 +24,20 @@ const SideBar = props => {
 	useEffect(async () => {
 		const dashboards = await GetDashboards(localStorage.getItem('token'))
 			.catch(err => { console.log(err); return [] });
-		dispatch({ type: 'CHANGE _', payload: { dashboards: dashboards } });
+		const categories = await GetCategories(localStorage.getItem('token'))
+			.catch(err => { console.log(err); return [] });
+		dispatch({ type: 'CHANGE _', payload: { categories: categories, dashboards: dashboards } });
 	}, [])
 
+	const changeCategoryPage = e => {
+	  props.history.push(`/category/${e.key}`)
+	};
+  
 	// If somehow sidebar is loaded without being authenticated
 	//github size, add dashboard weird
 	return (
 		<Sider
+
 			breakpoint="md"
 			collapsible
 			collapsedWidth={0}
@@ -68,7 +75,6 @@ const SideBar = props => {
 					<AddModal style={subStyles} />
 				</SubMenu>
 
-
 				<SubMenu key="data" className="main-menu" title={
 					<span style={{ display: 'flex', alignItems: 'center' }}>
 						<ProfileFilled />
@@ -76,7 +82,12 @@ const SideBar = props => {
 					</span>
 				}
 				>
-					<DataModal />
+					{
+						context.categories.map(cat => {
+							return <Menu.Item key={cat._id} className="menu-item" onClick={changeCategoryPage} style={subStyles}>{cat.name}</Menu.Item>
+						})
+					}
+					<CategoryModal style={subStyles}/>
 				</SubMenu>
 			</Menu>
 		</Sider>
