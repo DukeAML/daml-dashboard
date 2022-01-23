@@ -95,14 +95,18 @@ const Dashboard = props => {
 
     // Save current chart content and state to db
     const save = async () => {
+        console.log('saving')
         setSaving(true);
         await Promise.all(layout.map((chart, i) => {
             // If this chart is newly added and does not exist on backend
+            console.log(chart.i)
             if (chart.i.charAt(0) === 'n') {
+                console.log('n')
                 return CreateChart(localStorage.getItem('token'), { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, dashboard: context.key, title: chart.chartTitle })
                     .then(res => {
                         // Give the newly created chart its id to replace n{number}
                         layout[i].i = res._id;
+                        console.log('saved successfully')
                     })
             }
             // Update this chart with current position, type, etc.

@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const client = axios.create({
-	baseURL: "https://peagle-backend.herokuapp.com"
-	// baseURL: "http://localhost:5000"
+	// baseURL: "https://peagle-backend.herokuapp.com"
+	baseURL: "http://localhost:5000"
 });
 
 const printOutput = true;
@@ -152,7 +152,7 @@ export const UpdateChart = async (token, id, chart) => {
 }
 
 export const GetCharts = async (token, id) => {
-	const { data } = await client.get(`/charts/${id}`, {
+	const { data } = await client.get(`dashboards/${id}/charts`, {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		}
