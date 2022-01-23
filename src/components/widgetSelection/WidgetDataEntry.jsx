@@ -11,6 +11,9 @@ import {GetDataById} from "../../api/api";
 
 class WidgetDataEntry extends React.PureComponent {
 
+	constructor(props){
+		super(props)
+	}
 	state = {
 		selected: "",
 		fileList: [],
@@ -45,39 +48,34 @@ class WidgetDataEntry extends React.PureComponent {
 				return initial;
 			}, {});
 
-
-			//if data is selected, load HERE
-
-
 			// Only gets data for first workbook for now
-			let content = Object.values(jsonContentData)[0];
-			// Only gets headers for first workbook for now (we can get headers simply from the content at any time)
-			let headers = Object.keys(content[0]);
+			const content = Object.values(jsonContentData)[0];
+			this.processData(content)
 
-			GetDataById(localStorage.getItem('token'), this.state.dataId)
-				.then(res => content = Object.values(res)[0]);
-			headers = Object.keys(content[0]);
-
-			this.setState({
-				processedFile: { content, headers },
-				axes: { x: headers[0], y: headers[1] || headers[0] },
-				chartTitle: ""
-			});
-			const dataProps = { data: content, ...this.state.axes };
-			this.props.onReceiveDataProps(dataProps);
 			// Mark file finished reading
 			onSuccess("Done", file);
 		}
 		reader.readAsBinaryString(file);
 	}
 
-	onFileSubmit(fileId) {
-		console.log(fileId);
-	};
+	processData = data => {
+		// Only gets headers for first workbook for now (we can get headers simply from the content at any time)
+		let headers = Object.keys(data[0]);
+		this.setState({
+			processedFile: { data, headers },
+			axes: { x: headers[0], y: headers[1] || headers[0] },
+			chartTitle: ""
+		});
+		const dataProps = { data: data, ...this.state.axes };
+		this.props.onReceiveDataProps(dataProps);
+	}
 
-	onSelectData(id){
-		console.log(id)
-		this.setId(id)
+	onSelectData = id =>{
+		GetDataById(localStorage.getItem('token'), id)
+				.then(res => {
+					const content = Object.values(res.file_data);
+					this.processData(content)
+				});
 	}
 
 	setId(id){

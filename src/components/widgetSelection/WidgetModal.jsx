@@ -15,8 +15,11 @@ const WidgetModal = props => {
 	const [step, setStep] = useState(0);
 	const [errorMessage, setErrorMessage] = useState('');
 	const [dataProps, setDataProps] = useState(undefined);
+	//storing data within modal grid
+	//takes stuff into state and adds widget
 	const [title, setTitle] = useState(undefined);
-
+	//save to a new chart
+	
 	const showModal = () => {
 		setVisible(true);
 	};
