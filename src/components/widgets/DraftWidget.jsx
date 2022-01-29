@@ -19,7 +19,7 @@ const DraftWidget = props => {
     }
     props.updateChart(elCopy);
   }
-  return <textarea style={{padding: 5, width: '100%', height: '100%', fontSize: props.el.font || 15}} onChange={onTitleChange} defaultValue={props.el.chartTitle}/>
+  return <textarea style={{padding: 5, width: '100%', height: '100%', fontSize: props.el.font || 15, textAlign: props.el.align || "left", fontWeight: props.el.bold || "normal"}} onChange={onTitleChange} defaultValue={props.el.chartTitle}/>
 }
 export default DraftWidget;
 

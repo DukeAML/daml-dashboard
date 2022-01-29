@@ -50,9 +50,9 @@ const Dashboard = props => {
                 data: i.data,
                 dataProps: data,
                 chartTitle: i.title,
-                
-                //newly added
-                font: i.font
+                font: i.font,
+                align: i.align,
+                bold: i.bold
             };
         }))
         setNewCounter(0);
@@ -76,8 +76,9 @@ const Dashboard = props => {
                 widgetType: type,
                 dataProps: dataProps,
                 chartTitle: chartTitle,
-                // newly added
-                font: 20
+                font: 15,
+                align: 'left',
+                bold: 'normal'
             })
         );
         setNewCounter(newCounter + 1);
@@ -104,7 +105,7 @@ const Dashboard = props => {
             // If this chart is newly added and does not exist on backend
             if (chart.i.charAt(0) === 'n') {
                 //changed on Jan 12
-                return CreateChart(localStorage.getItem('token'), { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, dashboard: context.key, title: chart.chartTitle, font: chart.font})
+                return CreateChart(localStorage.getItem('token'), { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, dashboard: context.key, title: chart.chartTitle, font: chart.font, align: chart.align, bold: chart.bold})
                     .then(res => {
                         // Give the newly created chart its id to replace n{number}
                         layout[i].i = res._id;
@@ -113,7 +114,7 @@ const Dashboard = props => {
             // Update this chart with current position, type, etc.
             else {
                 //changed on Jan 12
-                return UpdateChart(localStorage.getItem('token'), chart.i, { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, title: chart.chartTitle, data: chart.data, font: chart.font})
+                return UpdateChart(localStorage.getItem('token'), chart.i, { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, title: chart.chartTitle, data: chart.data, font: chart.font, align: chart.align, bold: chart.bold})
                     .catch(err => console.log(err));
             }
         }))

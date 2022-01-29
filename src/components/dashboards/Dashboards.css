@@ -52,3 +52,13 @@
   font-weight: bold;
   word-break: break-word;
 }
+.icon:hover {
+  background-color: #D3D3D3;
+}
+.icon:focus {
+  background-color: #A9A9A9;
+}
+.icon {
+  font-size: 250%;
+  margin: 5px;
+}
