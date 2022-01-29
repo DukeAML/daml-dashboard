@@ -11,33 +11,31 @@ const Chart = props => {
         : widgets[0];
 
     const [visible, setVisible] = useState(false);
-    //newly added
-    const [visibleDraft, setVisibleDraft] = useState(false);
 
     return (
         <span>
-            <EditModal visible={visible}
-                setVisible={setVisible}
-                el={props.el}
-                updateChart={props.updateChart}
-                onClose = {props.toggleDrag}
-                dataIds = {props.dataIds}
-            />
-            {/* //newly added */}
-            <DraftWidgetModal visible={visibleDraft}
-                setVisible={setVisibleDraft}
-                el={props.el}
-                updateChart={props.updateChart}
-            />
+            {
+                props.el.widgetType === "Text Box" ?
+                    <DraftWidgetModal visible={visible}
+                        setVisible={setVisible}
+                        el={props.el}
+                        onClose = {props.toggleDrag}
+                        updateChart={props.updateChart}
+                    />
+                    :
+                    <EditModal visible={visible}
+                        setVisible={setVisible}
+                        el={props.el}
+                        updateChart={props.updateChart}
+                        onClose = {props.toggleDrag}
+                        dataIds = {props.dataIds}
+                    />
+            }
             <span onDoubleClick={() => {
-                    if (props.el.widgetType !== "Text Box") {
-                        props.toggleDrag()
-                        setVisible(true)
-                    } else {
-                        setVisibleDraft(true)
-                    }
+                    props.toggleDrag();
+                    setVisible(true);
                 }}>
-                
+
                 {props.el.widgetType !== "Text Box" && <div className="chart-title"> {props.el.chartTitle}</div>}
                 
                 <WidgetRender {...props.el.dataProps} el={props.el} updateChart={props.updateChart}/>
