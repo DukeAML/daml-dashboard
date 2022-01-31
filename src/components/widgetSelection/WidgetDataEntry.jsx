@@ -65,14 +65,15 @@ class WidgetDataEntry extends React.PureComponent {
 			processedFile: { data, headers },
 			axes: { x: headers[0], y: headers[1] || headers[0] },
 			chartTitle: ""
-		});
-		const dataProps = { data: data, ...this.state.axes };
+		}); 
+		const dataProps = { data: data, ...this.state.axes, id: this.state.dataId };
 		this.props.onReceiveDataProps(dataProps);
 	}
 
 	onSelectData = id =>{
 		GetDataById(localStorage.getItem('token'), id)
 				.then(res => {
+					this.setId(id)
 					const content = Object.values(res.file_data);
 					this.processData(content)
 				});
@@ -86,10 +87,9 @@ class WidgetDataEntry extends React.PureComponent {
 
 
 	handleAxesConfigChange = (axis, { key }) => {
-		const { content, headers } = this.state.processedFile;
-		// Update axes in dataProps
-		this.setState({ axes: { ...this.state.axes, [axis]: headers[key] } }, () => {
-			this.props.onReceiveDataProps({ data: content, ...this.state.axes });
+		//const { content, headers } = this.state.processedFile;
+		this.setState({ axes: { ...this.state.axes, [axis]: this.state.processedFile.headers[key] } }, () => {
+			this.props.onReceiveDataProps({ data: this.state.processedFile.data, ...this.state.axes, id: this.state.dataId });
 		});
 	};
 

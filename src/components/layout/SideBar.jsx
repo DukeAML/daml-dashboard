@@ -13,10 +13,8 @@ const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 const SideBar = props => {
-	const { context, dispatch } = useContext(Context);
-	console.log("context")
-	console.log(context)
 	
+	const { context, dispatch } = useContext(Context);	
 	const [winWidth, setWinWidth] = useState(window.innerWidth < 768);
 	const headStyles = winWidth ? {fontSize: '1.15em'} : {fontSize: '1.4vw'}
 	const subStyles = winWidth ? {fontSize: '1.5em'} : {fontSize: '1.2vw'}

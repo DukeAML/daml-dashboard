@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import { Modal, Col, Input, Select } from 'antd';
+import { Modal, Col, Input, Select,
+    Dropdown, Row, Upload, Button, Menu, TreeSelect } from 'antd';
+import { UploadOutlined } from "@ant-design/icons";
+import { DownOutlined } from "@ant-design/icons";
+
 import { widgetDict } from './Constants';
 import { GetDataById } from '../../api/api';
 import './Dashboards.css';
+import DataDropdown from "../data/DataDropdown";
 
 const EditModal = props => {
     const [title, setTitle] = useState(props.el.chartTitle);
@@ -28,6 +33,7 @@ const EditModal = props => {
             .then(res => {
                 const axes = Object.keys(res.file_data[0]);
                 const newData = { data: res.file_data };
+                //axis needs to be selectable by user..
                 axes.forEach(axis => newData[axis] = axis);
                 setDataProps(newData)
                 setDataId(e)
@@ -40,6 +46,45 @@ const EditModal = props => {
 
     const selectedWidget = widgetDict[props.el.widgetType];
     const WidgetRender = selectedWidget || <div/>;
+
+    const headers = ['h1', 'h2', 'h3']
+    const axesConfig =
+			headers.length !== 0 ? (
+				<React.Fragment>
+					<div className="widget-header">
+						Configure the axes of your widget.
+          			</div>
+					<div style={{ margin: "1rem" }}>
+						<Row gutter={48}>
+							{["x", "y"].map((axis, index) => (
+								<React.Fragment key={index}>
+									<Col span={4} key={index}>
+										{axis}-axis
+                    					<br />
+										<Dropdown
+											overlay={
+												<Menu
+													// onClick={key =>
+													// 	this.handleAxesConfigChange(axis, key)
+													// }
+												>
+													{}
+												</Menu>
+											}
+										>
+											<Button>
+												{/* {this.state.axes[axis]}  */}
+                                                <DownOutlined />
+											</Button>
+										</Dropdown>
+									</Col>
+									<Col span={2} />
+								</React.Fragment>
+							))}
+						</Row>
+					</div>
+				</React.Fragment>
+			) : "";
 
     return (
         <Modal
@@ -66,20 +111,9 @@ const EditModal = props => {
                 <div>
                     Select data
                 </div>
-                <Select style={{ width: 120 }} onChange={updateDataProps} defaultValue={dataId}>
-                    <Select.Option 
-                        key={undefined} 
-                        value={undefined}>
-                            None
-                    </Select.Option>
-                    {props.dataIds.map(data => {
-                        return(
-                            <Select.Option key={data._id} value={data._id}>
-                                {data.title}
-                            </Select.Option>
-                        )
-                    })}
-                </Select>
+                <DataDropdown onSelectData={updateDataProps}/>
+                {axesConfig}
+                
             </Col>
             <Col span={24}>
                 <div className="widget-header">
