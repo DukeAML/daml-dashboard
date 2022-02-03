@@ -26,7 +26,6 @@ class WidgetDataEntry extends React.PureComponent {
 		});
 	};
 
-
 	// Adding file from file explorer
 	onFileChange({ file, onSuccess }) {
 		const reader = new FileReader();
@@ -90,14 +89,14 @@ class WidgetDataEntry extends React.PureComponent {
 				<React.Fragment>
 					<div className="widget-header">
 						Configure the axes of your widget.
-          			</div>
+					</div>
 					<div style={{ margin: "1rem" }}>
 						<Row gutter={48}>
 							{["x", "y"].map((axis, index) => (
 								<React.Fragment key={index}>
 									<Col span={4} key={index}>
 										{axis}-axis
-                    					<br />
+										<br />
 										<Dropdown
 											overlay={
 												<Menu
@@ -127,7 +126,7 @@ class WidgetDataEntry extends React.PureComponent {
 			<React.Fragment>
 				<div className="widget-header">
 					Insert your chart name here (50 character limit).
-        		</div>
+				</div>
 				<div style={{ margin: "1rem" }}>
 					<Input
 						maxLength={50}
@@ -152,9 +151,9 @@ class WidgetDataEntry extends React.PureComponent {
 				<center className="widget-header"> {selectedWidget.value} </center>
 				<Row>
 					<Col style={{ height: "20rem" }} span={24}>
-						<WidgetRender setTitle={this.props.setTitle} updateChart={this.props.updateChart} {...dataProps} {...(selectedWidget.value === "Text Box" ? {el: {chartTitle : this.props.title}} : {})}/>
+						<WidgetRender setTitle={this.props.setTitle} updateChart={this.props.updateChart} {...dataProps} {...(selectedWidget.value === "Text Box" ? { el: { chartTitle: this.props.title } } : {})} />
 					</Col>
-					<Col span={24}>
+					{this.props.widget !== "Text Box" && <div><Col span={24}>
 						<div className="widget-header"> Upload your .XLSX or your .CSV file here.</div>
 						<div style={{ margin: "1rem" }}>
 							<Upload
@@ -168,13 +167,16 @@ class WidgetDataEntry extends React.PureComponent {
 							>
 								<Button>
 									<UploadOutlined /> Upload Data
-                				</Button>
+								</Button>
 							</Upload>
 						</div>
 					</Col>
-					<Col span={24}>{axesConfig}</Col>
-					<Col span={24}>{inputTitle}</Col>
+						<Col span={24}>{axesConfig}</Col>
+						<Col span={24}>{inputTitle}</Col>
+					</div>
+					}
 				</Row>
+
 			</div>
 		);
 	}
