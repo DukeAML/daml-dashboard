@@ -5,16 +5,11 @@ import './Dashboards.css';
 
 const Chart = props => {
 
-    console.log(props)
-
     const WidgetRender = props.el.widgetType
         ? widgetDict[props.el.widgetType]
         : widgets[0];
     const [visible, setVisible] = useState(false);
 
-    const dp = props.el.dataProps;
-    if(!dp['id']) dp['id'] = props.el.data;
-    
     return (
         <span>
             <EditModal visible={visible}

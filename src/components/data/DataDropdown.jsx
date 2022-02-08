@@ -10,9 +10,10 @@ const DataDropdown = props => {
 
   useEffect(async () => {
     loadCategories()
+    if (props.currentData){
+      setValue(props.currentData);
+    }
   }, [])
-
- 
 
   const loadCategories = async () => {
     await GetCategories(localStorage.getItem('token'))
@@ -34,9 +35,7 @@ const DataDropdown = props => {
     return new Promise(resolve => {
       getData(id)
       resolve()
-    })
-
-    
+    })    
   }
 
   const getData = async(id) => {

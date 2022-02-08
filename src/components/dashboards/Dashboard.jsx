@@ -34,14 +34,14 @@ const Dashboard = props => {
             // Load in data to this chart if it is connected to a data object
             let data = undefined;
             if (i.data) {
-                //const my_id = i.data ? i.data : i._id
-                data = await GetDataById(localStorage.getItem('token'), i.data)
-                    .then(res => res.file_data);
-                const axes = Object.keys(data[0]);
-                data = { data: data };
-
-                data['x'] = axes[0]
-                data['y'] = axes[1]
+                const dataObj = await GetDataById(localStorage.getItem('token'), i.data)
+                    .catch(err => {
+                        return {data: []}
+                    })
+                data = {data: dataObj.file_data}
+                data['dataTitle'] = dataObj.title
+                if(i.x) data['x'] = i.x;
+                if(i.y) data['y'] = i.y;
             }
             return {
                 i: i._id.toString(),
@@ -60,7 +60,6 @@ const Dashboard = props => {
     }
 
     const handleAddWidget = (type, dataProps, chartTitle) => {
-        console.log(dataProps)
         setLayout(layout.concat(
             {
                 i: "n" + newCounter,

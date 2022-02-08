@@ -87,7 +87,6 @@ class WidgetDataEntry extends React.PureComponent {
 
 
 	handleAxesConfigChange = (axis, { key }) => {
-		//const { content, headers } = this.state.processedFile;
 		this.setState({ axes: { ...this.state.axes, [axis]: this.state.processedFile.headers[key] } }, () => {
 			this.props.onReceiveDataProps({ data: this.state.processedFile.data, ...this.state.axes, id: this.state.dataId });
 		});

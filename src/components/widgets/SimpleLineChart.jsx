@@ -22,12 +22,14 @@ const data = [
 ];
 
 class SimpleLineChart extends React.Component {
+	
+
 	static contextType = Context;
 
 	render() {
 		const { context } = this.context;
 		const { secondary } = context;
-
+		
 		return (
 			<ResponsiveContainer width="95%" height="90%">
 				<LineChart data={this.props.data || data}>

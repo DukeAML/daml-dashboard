@@ -8,11 +8,14 @@ import { widgetDict } from './Constants';
 import { GetDataById } from '../../api/api';
 import './Dashboards.css';
 import DataDropdown from "../data/DataDropdown";
+import { useEffect } from 'react';
 
 const EditModal = props => {
+    
     const [title, setTitle] = useState(props.el.chartTitle);
     const [dataProps, setDataProps] = useState(props.el.dataProps || {});
     const [dataId, setDataId] = useState(props.el.data);
+    const [headerMenu, setHeaderMenu] = useState([]);
 
     const handleOk = () => {
         // Send this chart with its updated properties to main grid to apply updates
@@ -44,6 +47,30 @@ const EditModal = props => {
             })
     }
 
+    useEffect(() => {
+        updateMenu()
+    },[dataProps]) 
+    
+    //get axes labels for dropdown
+    const updateMenu = () => {
+        const menu =  Object.keys(dataProps.data[0]).map((header, index) => (
+            <Menu.Item key={index}>{header}</Menu.Item>
+        ));
+        setHeaderMenu(menu)
+    }
+    
+
+    const handleAxesConfigChange = (axis, { key }) => {
+        //update dataProps with new axis selection
+        setDataProps(d => {
+            d[axis] = Object.keys(dataProps.data[0])[key];
+            return d;
+        })
+        //update input
+        updateMenu()
+	};
+
+
     const selectedWidget = widgetDict[props.el.widgetType];
     const WidgetRender = selectedWidget || <div/>;
 
@@ -64,16 +91,16 @@ const EditModal = props => {
 										<Dropdown
 											overlay={
 												<Menu
-													// onClick={key =>
-													// 	this.handleAxesConfigChange(axis, key)
-													// }
+													onClick={key =>
+														handleAxesConfigChange(axis, key)
+													}
 												>
-													{}
+													{headerMenu}
 												</Menu>
 											}
 										>
 											<Button>
-												{/* {this.state.axes[axis]}  */}
+												{dataProps[axis]}
                                                 <DownOutlined />
 											</Button>
 										</Dropdown>
@@ -111,7 +138,7 @@ const EditModal = props => {
                 <div>
                     Select data
                 </div>
-                <DataDropdown onSelectData={updateDataProps}/>
+                <DataDropdown onSelectData={updateDataProps} currentData={props.el.dataProps.dataTitle}/>
                 {axesConfig}
                 
             </Col>
