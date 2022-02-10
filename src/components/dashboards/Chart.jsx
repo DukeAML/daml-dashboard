@@ -49,6 +49,7 @@ const Chart = props => {
                     }}
                     onClick={() => props.onRemoveItem(props.el)}
                 >
+                x
                     
             </div>
             </span>

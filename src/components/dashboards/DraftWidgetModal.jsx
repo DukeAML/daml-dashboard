@@ -9,8 +9,6 @@ const DraftWidgetModal = props => {
     const [align, setAlign] = useState(props.el.align);
     const [bold, setBold] = useState(props.el.bold);
 
-    console.log(font, align, bold)
-
     const handleOk = () => {
         let elCopy = Object.assign({}, props.el);
         elCopy.font = parseInt(font);
