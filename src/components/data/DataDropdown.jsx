@@ -23,7 +23,8 @@ const DataDropdown = props => {
               id: c._id,
               title: c.name,
               value: c._id,
-              isLeaf: false
+              isLeaf: false,
+              selectable: false
             }
           })
           setTree(myTree)

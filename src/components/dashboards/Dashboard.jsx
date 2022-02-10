@@ -104,7 +104,7 @@ const Dashboard = props => {
             }
             // Update this chart with current position, type, etc.
             else {
-                return UpdateChart(localStorage.getItem('token'), chart.i, { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, title: chart.chartTitle, data: chart.data })
+                return UpdateChart(localStorage.getItem('token'), chart.i, { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, title: chart.chartTitle, data: chart.data, x: chart.dataProps.x, y: chart.dataProps.y })
                     .catch(err => console.log(err));
             }
         }))

@@ -66,7 +66,6 @@ const WidgetModal = props => {
 		setTitle(chartTitle);
 	}
 
-	//maybe move data dropdown here???
 	const CurrentView = widgetSteps[step];
 	const okText = step === 1 ? "Add Widget" : "Next";
 	return (
