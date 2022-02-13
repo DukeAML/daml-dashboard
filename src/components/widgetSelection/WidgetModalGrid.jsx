@@ -14,6 +14,10 @@ class WidgetModalGrid extends React.PureComponent {
 	};
 
 	render() {
+
+		console.log('widget grid')
+		console.log(this.props)
+
 		const { context } = this.context;
 		const { selectedWidgetBackgroundColor, widgetBackgroundColor } = context;
 

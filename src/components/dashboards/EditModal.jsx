@@ -11,6 +11,8 @@ import DataDropdown from "../data/DataDropdown";
 import { useEffect } from 'react';
 
 const EditModal = props => {
+
+    console.log(props.el)
     
     const [title, setTitle] = useState(props.el.chartTitle);
     const [dataProps, setDataProps] = useState(props.el.dataProps || {});
@@ -53,10 +55,13 @@ const EditModal = props => {
     
     //get axes labels for dropdown
     const updateMenu = () => {
-        const menu =  Object.keys(dataProps.data[0]).map((header, index) => (
-            <Menu.Item key={index}>{header}</Menu.Item>
-        ));
-        setHeaderMenu(menu)
+        if(dataProps.data){
+            const menu =  Object.keys(dataProps.data[0]).map((header, index) => (
+                <Menu.Item key={index}>{header}</Menu.Item>
+            ));
+            setHeaderMenu(menu)
+        }
+       
     }
     
 

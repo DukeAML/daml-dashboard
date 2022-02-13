@@ -4,6 +4,8 @@ import EditModal from './EditModal';
 import './Dashboards.css';
 
 const Chart = props => {
+    
+    console.log(props.el)
 
     const WidgetRender = props.el.widgetType
         ? widgetDict[props.el.widgetType]
