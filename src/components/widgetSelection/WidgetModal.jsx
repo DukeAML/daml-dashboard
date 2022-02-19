@@ -15,7 +15,7 @@ const WidgetModal = props => {
 	const [step, setStep] = useState(0);
 	const [errorMessage, setErrorMessage] = useState('');
 	const [dataProps, setDataProps] = useState(undefined);
-	const [title, setTitle] = useState(undefined);
+	const [title, setTitle] = useState("Edit your title");
 
 	const showModal = () => {
 		setVisible(true);
@@ -94,6 +94,9 @@ const WidgetModal = props => {
 					""
 				)}
 				<CurrentView
+					title={title}
+					setTitle={setTitle}
+					updateChart={props.updateChart}
 					widget={widget}
 					onSelectWidget={type => handleSelectWidget(type)}
 					onReceiveDataProps={handleReceiveDataProps}

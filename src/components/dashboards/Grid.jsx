@@ -39,7 +39,7 @@ const Grid = props => {
                         h: el.h
                     }}
                     style={{
-                        padding: "1rem",
+                        padding: el.widgetType !== 'Text Box' ? "1rem" : 0,
                         backgroundColor: context.widgetBackgroundColor
                     }}
                 >
