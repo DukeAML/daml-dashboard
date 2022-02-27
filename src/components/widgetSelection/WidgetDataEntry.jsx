@@ -32,7 +32,6 @@ class WidgetDataEntry extends React.PureComponent {
 		});
 	};
 
-
 	// Adding file from file explorer
 	onFileChange({ file, onSuccess }) {
 		const reader = new FileReader();
@@ -58,37 +57,39 @@ class WidgetDataEntry extends React.PureComponent {
 		reader.readAsBinaryString(file);
 	}
 
-	processData = data => {
+	processData = content => {
 		// Only gets headers for first workbook for now (we can get headers simply from the content at any time)
-		let headers = Object.keys(data[0]);
+		let headers = Object.keys(content[0]);
 		this.setState({
-			processedFile: { data, headers },
+			processedFile: { content, headers },
 			axes: { x: headers[0], y: headers[1] || headers[0] },
 			chartTitle: ""
 		}); 
-		const dataProps = { data: data, ...this.state.axes, id: this.state.dataId };
+		const dataProps = { data: content, ...this.state.axes, id: this.state.dataId };
 		this.props.onReceiveDataProps(dataProps);
 	}
 
+	//User chooses data from dropdown
 	onSelectData = id =>{
 		GetDataById(localStorage.getItem('token'), id)
-				.then(res => {
-					this.setId(id)
-					const content = Object.values(res.file_data);
-					this.processData(content)
-				});
+			.then(res => {
+				this.setId(id)
+				const content = Object.values(res.file_data);
+				this.processData(content)
+			});
 	}
 
+	//Set data id
 	setId(id){
 		this.setState({
 			dataId: id
 		});
 	}
 
-
 	handleAxesConfigChange = (axis, { key }) => {
-		this.setState({ axes: { ...this.state.axes, [axis]: this.state.processedFile.headers[key] } }, () => {
-			this.props.onReceiveDataProps({ data: this.state.processedFile.data, ...this.state.axes, id: this.state.dataId });
+		const { content, headers } = this.state.processedFile;
+		this.setState({ axes: { ...this.state.axes, [axis]: headers[key] } }, () => {
+			this.props.onReceiveDataProps({ data: content, ...this.state.axes, id: this.state.dataId });
 		});
 	};
 

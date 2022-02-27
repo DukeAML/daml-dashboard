@@ -7,8 +7,7 @@ import {
 	CartesianGrid,
 	Tooltip,
 	Legend,
-	ResponsiveContainer,
-	Label
+	ResponsiveContainer
 } from "recharts";
 import { Context } from "../../context/Context";
 
@@ -23,26 +22,17 @@ const data = [
 ];
 
 class SimpleLineChart extends React.Component {
-	
-
 	static contextType = Context;
 
 	render() {
 		const { context } = this.context;
 		const { secondary } = context;
-		
+
 		return (
 			<ResponsiveContainer width="95%" height="90%">
-				<LineChart data={this.props.data || data} 
-					margin={{
-						top: 20,
-						right: 20,
-						bottom: 20,
-						left: 20,
-					}}
-				>
-					<XAxis label={{ value: `${this.props.x || "name"}`, position: 'bottom', offset:25}} />
-					<YAxis label={{ value: `${this.props.y || "name"}`, angle: -90, position: 'left'}} />
+				<LineChart data={this.props.data || data}>
+					<XAxis dataKey={this.props.x || "name"} />
+					<YAxis />
 					<CartesianGrid strokeDasharray="3 3" />
 					<Tooltip />
 					<Legend />

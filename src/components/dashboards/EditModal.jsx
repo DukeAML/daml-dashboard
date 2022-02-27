@@ -11,8 +11,6 @@ import DataDropdown from "../data/DataDropdown";
 import { useEffect } from 'react';
 
 const EditModal = props => {
-
-    console.log(props.el)
     
     const [title, setTitle] = useState(props.el.chartTitle);
     const [dataProps, setDataProps] = useState(props.el.dataProps || {});
@@ -38,7 +36,6 @@ const EditModal = props => {
             .then(res => {
                 const axes = Object.keys(res.file_data[0]);
                 const newData = { data: res.file_data };
-                //axis needs to be selectable by user..
                 axes.forEach(axis => newData[axis] = axis);
                 setDataProps(newData)
                 setDataId(e)
@@ -61,10 +58,8 @@ const EditModal = props => {
             ));
             setHeaderMenu(menu)
         }
-       
     }
     
-
     const handleAxesConfigChange = (axis, { key }) => {
         //update dataProps with new axis selection
         setDataProps(d => {
