@@ -72,7 +72,7 @@ const EditModal = props => {
 
 
     const selectedWidget = widgetDict[props.el.widgetType];
-    const WidgetRender = selectedWidget || <div/>;
+    const WidgetRender = selectedWidget || <div />;
 
     const headers = ['h1', 'h2', 'h3']
     const axesConfig =
@@ -128,8 +128,8 @@ const EditModal = props => {
                 padding: "2rem 3rem"
             }}
         >
-            <center className="widget-header"> 
-                {selectedWidget.value} 
+            <center className="widget-header">
+                {selectedWidget.value}
             </center>
             <Col style={{ height: "14rem" }} span={24}>
                 <WidgetRender {...dataProps} />
@@ -140,18 +140,27 @@ const EditModal = props => {
                 </div>
                 <DataDropdown onSelectData={updateDataProps} currentData={props.el.dataProps.dataTitle}/>
                 {axesConfig}
-                
             </Col>
-            <Col span={24}>
-                <div className="widget-header">
-                    Insert your chart name here (50 character limit).
-        		</div>
-                <Input
-                    maxLength={50}
-                    value={title}
-                    onChange={onTitleChange} 
-                />
-            </Col>
+            {
+                props.el.widgetType !== "Text Box" &&
+
+                <Col span={24}>
+                    <div className="widget-header">
+                        Insert your chart name here (50 character limit).
+                    </div>
+                    <Input
+                        maxLength={50}
+                        value={title}
+                        onChange={onTitleChange}
+                    />
+                </Col>
+            }
+
+
+
+
+
+
         </Modal>
 
     )
