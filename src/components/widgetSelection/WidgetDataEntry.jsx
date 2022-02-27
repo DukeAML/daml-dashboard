@@ -50,21 +50,23 @@ class WidgetDataEntry extends React.PureComponent {
 
 			// Only gets data for first workbook for now
 			const content = Object.values(jsonContentData)[0];
-		    this.processData(content)
+			this.processData(content)
 
+			// Mark file finished reading
 			onSuccess("Done", file);
 		}
 		reader.readAsBinaryString(file);
 	}
 
-	processData = content => {
-		let headers = Object.keys(content[0]);
+	processData = data => {
+		// Only gets headers for first workbook for now (we can get headers simply from the content at any time)
+		let headers = Object.keys(data[0]);
 		this.setState({
-			processedFile: { content, headers },
+			processedFile: { data, headers },
 			axes: { x: headers[0], y: headers[1] || headers[0] },
 			chartTitle: ""
 		}); 
-		const dataProps = { data: content, ...this.state.axes, id: this.state.dataId };
+		const dataProps = { data: data, ...this.state.axes, id: this.state.dataId };
 		this.props.onReceiveDataProps(dataProps);
 	}
 
@@ -73,7 +75,7 @@ class WidgetDataEntry extends React.PureComponent {
 				.then(res => {
 					this.setId(id)
 					const content = Object.values(res.file_data);
-					this.processData(content)	
+					this.processData(content)
 				});
 	}
 
@@ -85,11 +87,9 @@ class WidgetDataEntry extends React.PureComponent {
 
 
 	handleAxesConfigChange = (axis, { key }) => {
-		const { content, headers } = this.state.processedFile;
-		this.setState({ axes: { ...this.state.axes, [axis]: headers[key] } }, () => {
-			this.props.onReceiveDataProps({ data: content, ...this.state.axes, id: this.state.dataId });
+		this.setState({ axes: { ...this.state.axes, [axis]: this.state.processedFile.headers[key] } }, () => {
+			this.props.onReceiveDataProps({ data: this.state.processedFile.data, ...this.state.axes, id: this.state.dataId });
 		});
-
 	};
 
 	handleChartTitleChange = e => {
