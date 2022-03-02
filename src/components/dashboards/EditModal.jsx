@@ -11,8 +11,6 @@ import DataDropdown from "../data/DataDropdown";
 import { useEffect } from 'react';
 
 const EditModal = props => {
-
-    console.log(props.el)
     
     const [title, setTitle] = useState(props.el.chartTitle);
     const [dataProps, setDataProps] = useState(props.el.dataProps || {});
@@ -79,6 +77,8 @@ const EditModal = props => {
     const selectedWidget = widgetDict[props.el.widgetType];
     const WidgetRender = selectedWidget || <div/>;
 
+    const singleAxis = ['Bubble chart', 'Simple pie chart', 'Active shape pie chart', 'Simple radial bar chart', 'Tree map']
+    const axisMap = singleAxis.includes(props.el.widgetType) ? ['y'] : ['x', 'y']
     const headers = ['h1', 'h2', 'h3']
     const axesConfig =
 			headers.length !== 0 ? (
@@ -88,7 +88,7 @@ const EditModal = props => {
           			</div>
 					<div style={{ margin: "1rem" }}>
 						<Row gutter={48}>
-							{["x", "y"].map((axis, index) => (
+							{axisMap.map((axis, index) => (
 								<React.Fragment key={index}>
 									<Col span={4} key={index}>
 										{axis}-axis

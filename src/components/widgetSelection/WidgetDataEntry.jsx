@@ -109,6 +109,8 @@ class WidgetDataEntry extends React.PureComponent {
 			<Menu.Item key={index}>{header}</Menu.Item>
 		));
 
+		const singleAxis = ['Bubble chart', 'Simple pie chart', 'Active shape pie chart', 'Simple radial bar chart', 'Tree map']
+		const axisMap = singleAxis.includes(this.props.widget) ? ['y'] : ['x', 'y']
 		const axesConfig =
 			headers.length !== 0 ? (
 				<React.Fragment>
@@ -117,7 +119,7 @@ class WidgetDataEntry extends React.PureComponent {
           			</div>
 					<div style={{ margin: "1rem" }}>
 						<Row gutter={48}>
-							{["x", "y"].map((axis, index) => (
+							{axisMap.map((axis, index) => (
 								<React.Fragment key={index}>
 									<Col span={4} key={index}>
 										{axis}-axis
