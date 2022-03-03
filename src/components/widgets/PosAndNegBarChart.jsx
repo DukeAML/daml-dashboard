@@ -39,8 +39,8 @@ export default class PosAndNegBarChart extends PureComponent {
 					data={this.props.data || data}
 				>
 					<CartesianGrid strokeDasharray="3 3" />
-					<XAxis dataKey={this.props.x || "name"} />
-					<YAxis />
+					<XAxis  dataKey={this.props.x || "name"} label={{ value: `${this.props.x || "name"}`, position: 'bottom', offset:25}} />
+					<YAxis label={{ value: `${this.props.y || "name"}`, angle: -90, position: 'left'}} />
 					<Tooltip />
 					<Legend />
 					<ReferenceLine y={0} stroke="#000" />
