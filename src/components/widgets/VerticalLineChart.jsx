@@ -35,7 +35,7 @@ export default class VerticalLineChart extends PureComponent {
 		const { context } = this.context;
 		const { secondary } = context;
 		return (
-			<ResponsiveContainer width="95%" height="90%">
+			<ResponsiveContainer width="100%" height="100%">
 				<LineChart
 					layout="vertical"
 					data={this.props.data || data}

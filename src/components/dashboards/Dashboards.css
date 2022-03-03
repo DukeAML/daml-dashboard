@@ -50,7 +50,8 @@
   color: black;
   text-align: center;
   font-weight: bold;
-  word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .icon:hover {

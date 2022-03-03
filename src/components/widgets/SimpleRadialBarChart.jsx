@@ -20,12 +20,6 @@ const data = [
 	}
 ];
 
-// const style = {
-// 	top: 0,
-// 	left: 350,
-// 	lineHeight: '24px',
-// };
-
 
 export default class SimpleRadialBarChart extends PureComponent {
 	static contextType = Context;
@@ -34,7 +28,7 @@ export default class SimpleRadialBarChart extends PureComponent {
 		const { context } = this.context;
 		const { primary } = context;
 		return (
-			<ResponsiveContainer width="95%" height="100%">
+			<ResponsiveContainer width="100%" height="100%">
 				<RadialBarChart data={this.props.data || data}>
 					<RadialBar minAngle={15} label={{ position: 'insideStart', fill: '#fff' }} background clockWise dataKey={this.props.x || "uv"} fill={primary} />
 				</RadialBarChart>

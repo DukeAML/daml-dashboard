@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {widgets, widgetDict} from './Constants';
 import EditModal from './EditModal';
+import { ResponsiveContainer } from 'recharts';
 import './Dashboards.css';
 import DraftWidgetModal from './DraftWidgetModal';
 
@@ -31,14 +32,27 @@ const Chart = props => {
                         dataIds = {props.dataIds}
                     />
             }
-            <span onDoubleClick={() => {
+            <div onDoubleClick={() => {
                     props.toggleDrag();
                     setVisible(true);
-                }}>
+                }}
+                style={{height: '100%', width: '100%'}}
+            >
 
-                {props.el.widgetType !== "Text Box" && <div className="chart-title"> {props.el.chartTitle}</div>}
+                {props.el.widgetType !== "Text Box" && 
+                    <div className="chart-title"> 
+                        {props.el.chartTitle}
+                    </div>
+                }
                 
-                <WidgetRender {...props.el.dataProps} el={props.el} updateChart={props.updateChart}/>
+                <div style={{width: '100%', height: props.el.widgetType !== "Text Box" && props.el.chartTitle 
+                                                ? 'calc(100% - 25px)' : '100%'
+                            }}
+                >
+                    <WidgetRender 
+                        {...props.el.dataProps} el={props.el} updateChart={props.updateChart}
+                    />
+                </div>
                 <div
                     className="remove"
                     style={{
@@ -49,10 +63,9 @@ const Chart = props => {
                     }}
                     onClick={() => props.onRemoveItem(props.el)}
                 >
-                x
-                    
+                    x
+                </div>
             </div>
-            </span>
         </span>
     )
 }

@@ -29,8 +29,11 @@ class SimpleLineChart extends React.Component {
 		const { secondary } = context;
 
 		return (
-			<ResponsiveContainer width="95%" height="90%">
-				<LineChart data={this.props.data || data}>
+			<ResponsiveContainer width="100%" height="100%">
+				<LineChart 
+					data={this.props.data || data}
+					margin={{top: 5, right: 5, bottom: 5, left: -5 }}
+				>
 					<XAxis dataKey={this.props.x || "name"} />
 					<YAxis />
 					<CartesianGrid strokeDasharray="3 3" />
