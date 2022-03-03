@@ -75,7 +75,7 @@ export default class ActiveShapePieChart extends PureComponent {
 		const { context } = this.context;
 		const { primary, extendedColors } = context;
 		return (
-			<ResponsiveContainer width="95%" height="90%">
+			<ResponsiveContainer width="100%" height="100%">
 				<PieChart>
 					<Pie
 						activeIndex={this.state.activeIndex}

@@ -75,7 +75,7 @@ const EditModal = props => {
 
 
     const selectedWidget = widgetDict[props.el.widgetType];
-    const WidgetRender = selectedWidget || <div/>;
+    const WidgetRender = selectedWidget || <div />;
 
     const singleAxis = ['Bubble chart', 'Simple pie chart', 'Active shape pie chart', 'Simple radial bar chart', 'Tree map']
     const axisMap = singleAxis.includes(props.el.widgetType) ? ['y'] : ['x', 'y']
@@ -133,8 +133,8 @@ const EditModal = props => {
                 padding: "2rem 3rem"
             }}
         >
-            <center className="widget-header"> 
-                {selectedWidget.value} 
+            <center className="widget-header">
+                {selectedWidget.value}
             </center>
             <Col style={{ height: "14rem" }} span={24}>
                 <WidgetRender {...dataProps} />
@@ -147,16 +147,26 @@ const EditModal = props => {
                 {axesConfig}
                 
             </Col>
-            <Col span={24}>
-                <div className="widget-header">
-                    Insert your chart name here (50 character limit).
-        		</div>
-                <Input
-                    maxLength={50}
-                    value={title}
-                    onChange={onTitleChange} 
-                />
-            </Col>
+            {
+                props.el.widgetType !== "Text Box" &&
+
+                <Col span={24}>
+                    <div className="widget-header">
+                        Insert your chart name here (50 character limit).
+                    </div>
+                    <Input
+                        maxLength={50}
+                        value={title}
+                        onChange={onTitleChange}
+                    />
+                </Col>
+            }
+
+
+
+
+
+
         </Modal>
 
     )

@@ -45,7 +45,7 @@ class WidgetModalGrid extends React.PureComponent {
 								<center>{w.value}</center>
 							</div>
 							<br />
-							<w.widget/>
+							<w.widget setTitle={this.props.setTitle} updateChart={this.props.updateChart} {...(w.value === "Text Box" ? {el: {chartTitle : this.props.title}} : {})}/>
 						</div>
 					</Col>
 				))}

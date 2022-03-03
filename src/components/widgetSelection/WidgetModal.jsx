@@ -15,11 +15,16 @@ const WidgetModal = props => {
 	const [step, setStep] = useState(0);
 	const [errorMessage, setErrorMessage] = useState('');
 	const [dataProps, setDataProps] = useState(undefined);
+<<<<<<< HEAD
 	//storing data within modal grid
 	//takes stuff into state and adds widget
 	const [title, setTitle] = useState(undefined);
 	//save to a new chart
 	
+=======
+	const [title, setTitle] = useState("Edit your title");
+
+>>>>>>> 5f8ff13471e98d31de7fb8564f7500aa73bc0451
 	const showModal = () => {
 		setVisible(true);
 	};
@@ -99,6 +104,9 @@ const WidgetModal = props => {
 					""
 				)}
 				<CurrentView
+					title={title}
+					setTitle={setTitle}
+					updateChart={props.updateChart}
 					widget={widget}
 					onSelectWidget={type => handleSelectWidget(type)}
 					onReceiveDataProps={handleReceiveDataProps}

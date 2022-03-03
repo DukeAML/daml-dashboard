@@ -40,7 +40,7 @@ class TreeMap extends React.Component {
 		const { context } = this.context;
 		const { primary, secondary } = context;
 		return (
-			<ResponsiveContainer width="95%" height="90%">
+			<ResponsiveContainer width="100%" height="100%">
 				<Treemap
 					width={400}
 					height={200}

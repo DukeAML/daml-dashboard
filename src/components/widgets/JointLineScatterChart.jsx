@@ -16,7 +16,7 @@ export default class Example extends PureComponent {
 		const { context } = this.context;
 		const { primary } = context;
 		return (
-			<ResponsiveContainer>
+			<ResponsiveContainer width='100%' height='100%'>
 				<ScatterChart
 					width={500}
 					height={400}

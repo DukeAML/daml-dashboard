@@ -1,8 +1,13 @@
 import axios from 'axios';
 
 const client = axios.create({
+<<<<<<< HEAD
 	// baseURL: "https://peagle-backend.herokuapp.com"
 	baseURL: "http://localhost:5000"
+=======
+	baseURL: "https://peagle-backend.herokuapp.com"
+	//baseURL: "http://localhost:5000"
+>>>>>>> 5f8ff13471e98d31de7fb8564f7500aa73bc0451
 });
 
 const printOutput = true;
