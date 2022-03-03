@@ -26,7 +26,7 @@ class SimpleScatterChart extends React.Component {
 		const { context } = this.context;
 		const { primary } = context;
 		return (
-			<ResponsiveContainer width="95%" height="100%">
+			<ResponsiveContainer width="100%" height="100%">
 				<ScatterChart>
 					<CartesianGrid />
 					<XAxis
