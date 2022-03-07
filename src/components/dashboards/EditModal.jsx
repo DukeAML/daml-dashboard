@@ -91,7 +91,7 @@ const EditModal = props => {
 							{axisMap.map((axis, index) => (
 								<React.Fragment key={index}>
 									<Col span={4} key={index}>
-										{axis}-axis
+										{singleAxis.includes(props.el.widgetType) ? 'column': `${axis}-axis`}
                     					<br />
 										<Dropdown
 											overlay={

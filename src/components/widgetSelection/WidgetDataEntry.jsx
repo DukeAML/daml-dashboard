@@ -121,7 +121,7 @@ class WidgetDataEntry extends React.PureComponent {
 							{axisMap.map((axis, index) => (
 								<React.Fragment key={index}>
 									<Col span={4} key={index}>
-										{axis}-axis
+									{singleAxis.includes(this.props.widget) ? 'column': `${axis}-axis`}
 										<br />
 										<Dropdown
 											overlay={
