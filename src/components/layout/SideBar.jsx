@@ -82,7 +82,8 @@ const SideBar = props => {
 				>
 					{
 						context.categories.map(cat => {
-							return <Menu.Item key={cat._id} className="menu-item" onClick={changeCategoryPage} style={subStyles}>{cat.name}</Menu.Item>
+							return <Menu.Item key={cat._id} className="menu-item" onClick={changeCategoryPage} style={subStyles} >{cat.name}</Menu.Item>
+							// return <Menu.Item key={cat._id} className="menu-item" onClick={changeCategoryPage} style={{subStyles, background: cat._id === context.key ? '#798DE4' : '#4C5B69'}} >{cat.name}</Menu.Item>
 						})
 					}
 					<CategoryModal style={subStyles}/>
