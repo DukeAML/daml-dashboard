@@ -26,14 +26,10 @@ export default class Example extends PureComponent {
 					<XAxis dataKey={this.props.x || "x"}
 						type="number"
 						label={{ value: `${this.props.x || "name"}`, position: 'bottom', offset:25}}
-						// name={this.props.xName || "stature"}
-						// unit={this.props.xUnit || "cm"} 
 						/>
 					<YAxis dataKey={this.props.y || "y"}
 						type="number"
 						label={{ value: `${this.props.y || "name"}`, angle: -90, position: 'left'}}
-						// name={this.props.yName || "weight"}
-						// unit={this.props.yUnit || "kg"} 
 						/>
 					<ZAxis type="number" range={[100]} />
 					<Tooltip cursor={{ strokeDasharray: '3 3' }} />

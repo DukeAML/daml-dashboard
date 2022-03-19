@@ -33,15 +33,11 @@ class SimpleScatterChart extends React.Component {
 					<XAxis
 						dataKey={this.props.x || "x"}
 						type="number"
-						// name={this.props.xName || "stature"}
-						// unit={this.props.xUnit || "cm"}
 						label={{ value: `${this.props.x || "name"}`, position: 'bottom', offset:25}}
 					/>
 					<YAxis
 						dataKey={this.props.y || "y"}
 						type="number"
-						// name={this.props.yName || "weight"}
-						// unit={this.props.yUnit || "kg"}
 						label={{ value: `${this.props.y || "name"}`, angle: -90, position: 'left'}}
 					/>
 					<Scatter
