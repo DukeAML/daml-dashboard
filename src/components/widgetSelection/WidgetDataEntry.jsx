@@ -121,7 +121,7 @@ class WidgetDataEntry extends React.PureComponent {
 							{axisMap.map((axis, index) => (
 								<React.Fragment key={index}>
 									<Col span={4} key={index}>
-									{singleAxis.includes(this.props.widget) ? 'column': `${axis}-axis`}
+									{singleAxis.includes(this.props.widget) ? 'Column': `${axis}-axis`}
 										<br />
 										<Dropdown
 											overlay={
@@ -177,7 +177,7 @@ class WidgetDataEntry extends React.PureComponent {
 					<Col style={{ height: "20rem" }} span={24}>
 						<WidgetRender setTitle={this.props.setTitle} updateChart={this.props.updateChart} {...dataProps} {...(selectedWidget.value === "Text Box" ? { el: { chartTitle: this.props.title } } : {})} />
 					</Col>
-					{this.props.widget !== "Text Box" && <div><Col span={24}>
+					{this.props.widget !== "Text Box" && <div style={{width: '100%'}}><Col span={24}>
 						<div className="widget-header"> Upload your .XLSX or your .CSV file here.</div>
 
 						<DataDropdown onSelectData={this.onSelectData}/>

@@ -1,5 +1,5 @@
 import React from "react";
-import { PieChart, Pie, Cell, ResponsiveContainer, YAxis } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
 import { Context } from "../../context/Context";
 
 const data = [
@@ -46,6 +46,7 @@ class SimplePieChart extends React.Component {
 		return (
 			<ResponsiveContainer width="100%" height="100%">
 				<PieChart>
+					<Legend verticalAlign="top" height={36}/>
 					<Pie
 						data={this.props.data || data}
 						labelLine={false}
