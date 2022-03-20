@@ -19,6 +19,7 @@ const DashboardMenuItem = props => {
     // Clicking a dashboard
     const changePage = e => {
         if (!button.current.contains(e.domEvent.target)) {
+            props.onClick();
             props.history.push(`/home/${props.dash._id}`);
         }
     };

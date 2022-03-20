@@ -65,7 +65,7 @@ const SideBar = props => {
 					}>
 					{
 						context.dashboards.map(dash => (
-							<DashboardMenuItem key={dash._id} dash={dash} style={subStyles} selected={dash._id===context.key && !catSelected} onClick={() => setSelected(false)}/>
+							<DashboardMenuItem key={dash._id} dash={dash} style={subStyles} selected={dash._id===context.key && !catSelected} onClick={()=>setSelected(false)}/>
 						))
 					}
 					<AddModal style={subStyles} />
@@ -80,7 +80,7 @@ const SideBar = props => {
 				>
 					{
 						context.categories.map(cat => (
-							<CategoryMenuItem key={cat._id} cat={cat} style={subStyles} selected={cat._id===context.key && catSelected} onClick={() => setSelected(true)}/>
+							<CategoryMenuItem key={cat._id} cat={cat} style={subStyles} selected={cat._id===context.key && catSelected} onClick={() => setSelected(true)} />
 						))
 					}
 					<CategoryModal style={subStyles}/>
