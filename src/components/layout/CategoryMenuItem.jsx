@@ -3,12 +3,12 @@ import { DeleteOutlined } from '@ant-design/icons';
 import { withRouter } from 'react-router-dom';
 import { useRef, useState, useContext } from 'react';
 import { Modal, Input } from "antd";
-import { DeleteDashboard } from '../../api/api';
+import { DeleteCategory } from '../../api/api';
 import { Context } from "../../context/Context";
 
 const buttonHover = { color: 'black', borderColor: 'black' };
 
-const DashboardMenuItem = props => {
+const CategoryMenuItem = props => {
 
     const [hover, setHover] = useState(false);
     const [buttonStyle, setButtonStyle] = useState(null);
@@ -19,7 +19,7 @@ const DashboardMenuItem = props => {
     // Clicking a dashboard
     const changePage = e => {
         if (!button.current.contains(e.domEvent.target)) {
-            props.history.push(`/home/${props.dash._id}`);
+            props.history.push(`/category/${props.cat._id}`);
         }
     };
 
@@ -44,21 +44,21 @@ const DashboardMenuItem = props => {
     }
 
     // Hit delete button
-    const deleteDashboard = e => {
+    const deleteCategory = e => {
         setVisible(true);
         setHover(false);
         setButtonStyle(null);
     }
 
     const handleOk = async () => {
-        await DeleteDashboard(localStorage.getItem('token'), props.dash._id)
+        await DeleteCategory(localStorage.getItem('token'), props.cat._id)
             .then(res => {
-                const filtered = context.dashboards.filter(db => db._id != props.dash._id);
-                dispatch({ type: 'CHANGE _', payload: { dashboards: filtered } });
+                const filtered = context.categories.filter(c => c._id != props.cat._id);
+                dispatch({ type: 'CHANGE _', payload: { categories: filtered } });
                 props.history.push('/home');
             })
             .catch(err => {
-                console.log("Error creating dashboard", err);
+                console.log("Error deleting category", err);
             })
         setVisible(false);
     }
@@ -78,18 +78,18 @@ const DashboardMenuItem = props => {
                 }}
                 >
                     <div style={{ maxWidth: '80%', textOverflow: 'ellipsis', overflow: 'hidden' }}>
-                        {props.dash.name}
+                        {props.cat.name}
                     </div>
                     <Button size='small' ghost
                         className='delete-button'
                         style={{ marginLeft: 'auto', ...buttonStyle }} icon={<DeleteOutlined style={{ fontSize: '1rem' }} />}
                         ref={button}
-                        onClick={deleteDashboard}
+                        onClick={deleteCategory}
                     />
                 </div>
             </Menu.Item>
             <Modal
-                title={"Delete Dashboard"}
+                title={"Delete Category"}
                 visible={visible}
                 onOk={handleOk}
                 onCancel={handleCancel}
@@ -102,10 +102,10 @@ const DashboardMenuItem = props => {
                     padding: "2rem 3rem"
                 }}
             >
-                <p style={{textAlign: 'center'}}>Do you want to delete this dashboard?</p>
+                <p style={{textAlign: 'center'}}>Do you want to delete this category?</p>
             </Modal>
         </span>
     )
 }
 
-export default withRouter(DashboardMenuItem);
+export default withRouter(CategoryMenuItem);

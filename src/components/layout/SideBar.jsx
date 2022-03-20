@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 import AddModal from './AddModal';
 import CategoryModal from "./CategoryModal";
 import DashboardMenuItem from "./DashboardMenuItem";
+import CategoryMenuItem from "./CategoryMenuItem";
 import './Layout.css';
 
 const { SubMenu } = Menu;
@@ -18,6 +19,7 @@ const SideBar = props => {
 	const [winWidth, setWinWidth] = useState(window.innerWidth < 768);
 	const headStyles = winWidth ? {fontSize: '1.15em'} : {fontSize: '1.4vw'}
 	const subStyles = winWidth ? {fontSize: '1.5em'} : {fontSize: '1.2vw'}
+	const [catSelected, setSelected] = useState(false);
 
 	useEffect(async () => {
 		const dashboards = await GetDashboards(localStorage.getItem('token'))
@@ -26,10 +28,6 @@ const SideBar = props => {
 			.catch(err => { console.log(err); return [] });
 		dispatch({ type: 'CHANGE _', payload: { categories: categories, dashboards: dashboards } });
 	}, [])
-
-	const changeCategoryPage = e => {
-	  props.history.push(`/category/${e.key}`)
-	};
   
 	// If somehow sidebar is loaded without being authenticated
 	//github size, add dashboard weird
@@ -67,7 +65,7 @@ const SideBar = props => {
 					}>
 					{
 						context.dashboards.map(dash => (
-							<DashboardMenuItem key={dash._id} dash={dash} style={subStyles} selected={dash._id===context.key}/>
+							<DashboardMenuItem key={dash._id} dash={dash} style={subStyles} selected={dash._id===context.key && !catSelected} onClick={() => setSelected(false)}/>
 						))
 					}
 					<AddModal style={subStyles} />
@@ -81,9 +79,9 @@ const SideBar = props => {
 				}
 				>
 					{
-						context.categories.map(cat => {
-							return <Menu.Item key={cat._id} className="menu-item" onClick={changeCategoryPage} style={subStyles} >{cat.name}</Menu.Item>
-						})
+						context.categories.map(cat => (
+							<CategoryMenuItem key={cat._id} cat={cat} style={subStyles} selected={cat._id===context.key && catSelected} onClick={() => setSelected(true)}/>
+						))
 					}
 					<CategoryModal style={subStyles}/>
 				</SubMenu>
