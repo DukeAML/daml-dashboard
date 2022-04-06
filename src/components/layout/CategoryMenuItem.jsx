@@ -21,6 +21,7 @@ const CategoryMenuItem = props => {
         if (!button.current.contains(e.domEvent.target)) {
             props.onClick();
             props.history.push(`/category/${props.cat._id}`);
+            dispatch({ type: 'CHANGE _', payload: { key: props.cat._id } });
         }
     };
 
