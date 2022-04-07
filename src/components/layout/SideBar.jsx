@@ -13,10 +13,8 @@ const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 const SideBar = props => {
-	const { context, dispatch } = useContext(Context);
-	console.log("context")
-	console.log(context)
 	
+	const { context, dispatch } = useContext(Context);	
 	const [winWidth, setWinWidth] = useState(window.innerWidth < 768);
 	const headStyles = winWidth ? {fontSize: '1.15em'} : {fontSize: '1.4vw'}
 	const subStyles = winWidth ? {fontSize: '1.5em'} : {fontSize: '1.2vw'}
@@ -50,10 +48,9 @@ const SideBar = props => {
 				else setWinWidth(false)
 			}}
 		>
-			<div className="logo"><UserOutlined /><div>DAML</div></div>
 			<Menu
 				mode="inline"
-				style={{ background: '#4C5B69' }}
+				style={{ background: '#4C5B69', marginTop: '2em' }}
 				className="menu-layout-background"
 				// Selection is being managed manually in menu-item component
 				selectedKeys={[context.key]}
@@ -89,6 +86,7 @@ const SideBar = props => {
 					}
 					<CategoryModal style={subStyles}/>
 				</SubMenu>
+				
 			</Menu>
 		</Sider>
 	);

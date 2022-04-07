@@ -31,8 +31,10 @@ const WidgetModal = props => {
 		if (step === 1) {
 			// Last step, ready to add the widget
 			props.onAddWidget(widget, dataProps, title || undefined);
+			//dataProps.id is the data id
 			setVisible(false);
 			resetState();
+			//where is on addwidget
 		} else {
 			// Continue to next step
 			if (step === 0 && !widget) {

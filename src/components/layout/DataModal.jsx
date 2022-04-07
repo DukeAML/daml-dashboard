@@ -33,6 +33,7 @@ const DataModal = props => {
 					props.addData(res)
 				})
 			setVisible(false);
+			props.history.push(`/category/${props.catID}`)
 		}
 		else {
 			alert('No data input found');

@@ -3,7 +3,6 @@ import { Table } from 'antd';
 import { GetData, GetDataById } from '../../api/api';
 import { withRouter } from 'react-router-dom';
 import "./Category.css";
-import { Content } from "antd/lib/layout/layout";
 
 const DataView = props => {
 	const [data, setData] = useState([]);

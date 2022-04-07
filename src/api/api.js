@@ -152,7 +152,7 @@ export const UpdateChart = async (token, id, chart) => {
 }
 
 export const GetCharts = async (token, id) => {
-	const { data } = await client.get(`/dashboards/${id}/charts`, {
+	const { data } = await client.get(`dashboards/${id}/charts`, {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		}

@@ -6,11 +6,10 @@ import './Dashboards.css';
 import DraftWidgetModal from './DraftWidgetModal';
 
 const Chart = props => {
-
+    
     const WidgetRender = props.el.widgetType
         ? widgetDict[props.el.widgetType]
         : widgets[0];
-
     const [visible, setVisible] = useState(false);
 
     return (
@@ -29,7 +28,6 @@ const Chart = props => {
                         el={props.el}
                         updateChart={props.updateChart}
                         onClose = {props.toggleDrag}
-                        dataIds = {props.dataIds}
                     />
             }
             <div onDoubleClick={() => {
