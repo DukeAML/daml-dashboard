@@ -46,10 +46,9 @@ const SideBar = props => {
 				else setWinWidth(false)
 			}}
 		>
-			<div className="logo"><UserOutlined /><div>DAML</div></div>
 			<Menu
 				mode="inline"
-				style={{ background: '#4C5B69' }}
+				style={{ background: '#4C5B69', marginTop: '2em' }}
 				className="menu-layout-background"
 				// Selection is being managed manually in menu-item component
 				selectedKeys={[context.key]}

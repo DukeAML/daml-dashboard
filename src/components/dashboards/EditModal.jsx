@@ -59,7 +59,6 @@ const EditModal = props => {
             ));
             setHeaderMenu(menu)
         }
-       
     }
     
 
@@ -143,9 +142,8 @@ const EditModal = props => {
                 <div>
                     Select data
                 </div>
-                <DataDropdown onSelectData={updateDataProps} currentData={props.el.dataProps.dataTitle}/>
+                <DataDropdown onSelectData={updateDataProps} currentData={props.el.dataProps ? props.el.dataProps.dataTitle: null}/>
                 {axesConfig}
-                
             </Col>
             {
                 props.el.widgetType !== "Text Box" &&

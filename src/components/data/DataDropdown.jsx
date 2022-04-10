@@ -31,7 +31,7 @@ const DataDropdown = props => {
         })
   }
 
-
+  //load data when category is clicked
   const loadById = ({id}) => {
     return new Promise(resolve => {
       getData(id)
@@ -39,41 +39,41 @@ const DataDropdown = props => {
     })    
   }
 
+  //get data for category and update tree
   const getData = async(id) => {
-    await GetDataByCategoryId(localStorage.getItem('token'), id)
-      .then(res => {
-        const treeData = res.map(dat => {
-
-          return {
-            id: dat._id,
-            pId: id,
-            title: dat.title,
-            value: dat._id,
-            isLeaf: true
-          }
-
-        }); 
-        setTree( t => [...t, ...treeData]);
-    })
+  await GetDataByCategoryId(localStorage.getItem('token'), id)
+    .then(res => {
+      const treeData = res.map(dat => {
+        return {
+          id: dat._id,
+          pId: id,
+          title: dat.title,
+          value: dat._id,
+          isLeaf: true
+        }
+      }); 
+      setTree( t => [...t, ...treeData]);
+  })
   }
 
+  //set value of input to selected data
   const onChange = val => {
     setValue(val);
     props.onSelectData(val);
   };
 
-    return (
-      <TreeSelect
-        treeDataSimpleMode
-        style={{ width: '100%' }}
-        value={value}
-        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-        placeholder="Please select"
-        onChange={onChange}
-        loadData={loadById}
-        treeData={tree}
-      />
-    );
+  return (
+    <TreeSelect
+      treeDataSimpleMode
+      style={{ width: '100%' }}
+      value={value}
+      dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+      placeholder="Please select"
+      onChange={onChange}
+      loadData={loadById}
+      treeData={tree}
+    />
+  );
 }
 
 export default DataDropdown;

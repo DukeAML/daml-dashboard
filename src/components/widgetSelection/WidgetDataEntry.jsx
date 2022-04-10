@@ -49,14 +49,16 @@ class WidgetDataEntry extends React.PureComponent {
 
 			// Only gets data for first workbook for now
 			const content = Object.values(jsonContentData)[0];
-		    this.processData(content)
+			this.processData(content)
 
+			// Mark file finished reading
 			onSuccess("Done", file);
 		}
 		reader.readAsBinaryString(file);
 	}
 
 	processData = content => {
+		// Only gets headers for first workbook for now (we can get headers simply from the content at any time)
 		let headers = Object.keys(content[0]);
 		this.setState({
 			processedFile: { content, headers },
@@ -67,21 +69,22 @@ class WidgetDataEntry extends React.PureComponent {
 		this.props.onReceiveDataProps(dataProps);
 	}
 
+	//User chooses data from dropdown
 	onSelectData = id =>{
 		GetDataById(localStorage.getItem('token'), id)
-				.then(res => {
-					this.setId(id)
-					const content = Object.values(res.file_data);
-					this.processData(content)	
-				});
+			.then(res => {
+				this.setId(id)
+				const content = Object.values(res.file_data);
+				this.processData(content)
+			});
 	}
 
+	//Set data id
 	setId(id){
 		this.setState({
 			dataId: id
 		});
 	}
-
 
 	handleAxesConfigChange = (axis, { key }) => {
 		const { content, headers } = this.state.processedFile;

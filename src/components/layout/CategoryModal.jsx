@@ -30,7 +30,7 @@ const CategoryModal = props => {
 		await CreateCategory(localStorage.getItem('token'), newCategory)
 			.then(res => {
 				// Add category to sidebar
-				dispatch({ type: 'CHANGE _', payload: { categories: context.categories.concat(res) } });
+				dispatch({ type: 'CHANGE _', payload: { categories: context.categories.concat(res), key: res._id } });
 				//Switch to category page
 				props.history.push(`/category/${res._id}`);
 			})
