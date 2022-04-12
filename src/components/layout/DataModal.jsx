@@ -42,7 +42,11 @@ const DataModal = props => {
 
 	// Convert sheet to data and add it to state
 	const onAddFile = ({ file, onSuccess }) => {
+<<<<<<< HEAD
 		let title = file.name;
+=======
+		const title = file.name;
+>>>>>>> abeecc365a03e1ed521a799e6eed8c499d3b12f1
 		const reader = new FileReader();
 		reader.onload = (evt) => {
 			const bstr = evt.target.result;

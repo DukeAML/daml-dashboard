@@ -29,8 +29,11 @@ class SimpleBarChart extends React.Component {
 		const { context } = this.context;
 		const { primary, secondary } = context;
 		return (
-			<ResponsiveContainer width="95%" height="100%">
-				<BarChart data={this.props.data || data}>
+			<ResponsiveContainer width="100%" height="100%">
+				<BarChart 
+					data={this.props.data || data}
+					margin={{top: 5, right: 5, bottom: 5, left: -5 }}
+				>
 					<CartesianGrid strokeDasharray="3 3" />
 					<XAxis dataKey={this.props.x || "name"} />
 					<YAxis />

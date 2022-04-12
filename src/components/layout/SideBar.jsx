@@ -6,14 +6,22 @@ import { Context } from "../../context/Context";
 import { withRouter } from 'react-router-dom';
 import AddModal from './AddModal';
 import CategoryModal from "./CategoryModal";
+<<<<<<< HEAD
+=======
+import DashboardMenuItem from "./DashboardMenuItem";
+>>>>>>> abeecc365a03e1ed521a799e6eed8c499d3b12f1
 import './Layout.css';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 const SideBar = props => {
+<<<<<<< HEAD
 	const { context, dispatch } = useContext(Context);
+=======
+>>>>>>> abeecc365a03e1ed521a799e6eed8c499d3b12f1
 	
+	const { context, dispatch } = useContext(Context);	
 	const [winWidth, setWinWidth] = useState(window.innerWidth < 768);
 	const headStyles = winWidth ? {fontSize: '1.15em'} : {fontSize: '2vw'}
 	const subStyles = winWidth ? {fontSize: '1.5em'} : {fontSize: '1.75vw'}
@@ -22,6 +30,7 @@ const SideBar = props => {
 	useEffect(async () => {
 		const dashboards = await GetDashboards(localStorage.getItem('token'))
 			.catch(err => { console.log(err); return [] });
+<<<<<<< HEAD
 		dispatch({ type: 'CHANGE _', payload: { dashboards: dashboards } });
 		const categories = await GetCategories(localStorage.getItem('token'))
 			.catch(err => { console.log(err); return [] });
@@ -38,6 +47,17 @@ const SideBar = props => {
 		props.history.push(`/category/${e.key}`)
 	};
 
+=======
+		const categories = await GetCategories(localStorage.getItem('token'))
+			.catch(err => { console.log(err); return [] });
+		dispatch({ type: 'CHANGE _', payload: { categories: categories, dashboards: dashboards } });
+	}, [])
+
+	const changeCategoryPage = e => {
+	  props.history.push(`/category/${e.key}`)
+	};
+  
+>>>>>>> abeecc365a03e1ed521a799e6eed8c499d3b12f1
 	// If somehow sidebar is loaded without being authenticated
 	//github size, add dashboard weird
 	return (
@@ -55,10 +75,9 @@ const SideBar = props => {
 				else setWinWidth(false)
 			}}
 		>
-			<div className="logo"><UserOutlined /><div>DAML</div></div>
 			<Menu
 				mode="inline"
-				style={{ background: '#4C5B69' }}
+				style={{ background: '#4C5B69', marginTop: '2em' }}
 				className="menu-layout-background"
 				selectedKeys={[context.key]}
 				defaultOpenKeys={context.submenu}
@@ -91,7 +110,11 @@ const SideBar = props => {
 							return <Menu.Item key={cat._id} className="menu-item" onClick={changeCategoryPage} style={subStyles}>{cat.name}</Menu.Item>
 						})
 					}
+<<<<<<< HEAD
 				<CategoryModal style={addStyles}/>
+=======
+					<CategoryModal style={subStyles}/>
+>>>>>>> abeecc365a03e1ed521a799e6eed8c499d3b12f1
 				</SubMenu>
 				
 			</Menu>

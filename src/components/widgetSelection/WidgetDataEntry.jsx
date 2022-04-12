@@ -1,31 +1,36 @@
 import React from "react";
-import { Dropdown, Row, Col, Upload, Button, Menu, Input } from "antd";
+import { Dropdown, Row, Col, Upload, Button, Menu, Input, TreeSelect } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { DownOutlined } from "@ant-design/icons";
 import { Context } from "../../context/Context";
 import widgets from '../dashboards/Constants';
 import * as XLSX from "xlsx";
 import './WidgetSelection.css';
+import DataDropdown from "../data/DataDropdown";
+import {GetDataById} from "../../api/api";
 
 class WidgetDataEntry extends React.PureComponent {
 
+	constructor(props){
+		super(props)
+	}
 	state = {
 		selected: "",
 		fileList: [],
 		processedFile: { contents: "", headers: [] },
 		axes: {},
 		chartTitle: "",
-		rerenderWidget: false
+		rerenderWidget: false,
+		dataId: ""
 	};
 
 	static contextType = Context;
-
+	
 	handleFileChange = info => {
 		this.setState({
 			fileList: info.fileList.slice(-1) // only allow upload of one file
 		});
 	};
-
 
 	// Adding file from file explorer
 	onFileChange({ file, onSuccess }) {
@@ -43,28 +48,48 @@ class WidgetDataEntry extends React.PureComponent {
 			}, {});
 
 			// Only gets data for first workbook for now
-			let content = Object.values(jsonContentData)[0];
-			// Only gets headers for first workbook for now (we can get headers simply from the content at any time)
-			let headers = Object.keys(content[0]);
+			const content = Object.values(jsonContentData)[0];
+			this.processData(content)
 
-			this.setState({
-				processedFile: { content, headers },
-				axes: { x: headers[0], y: headers[1] || headers[0] },
-				chartTitle: ""
-			});
-			const dataProps = { data: content, ...this.state.axes };
-			this.props.onReceiveDataProps(dataProps);
 			// Mark file finished reading
 			onSuccess("Done", file);
 		}
 		reader.readAsBinaryString(file);
 	}
 
+	processData = content => {
+		// Only gets headers for first workbook for now (we can get headers simply from the content at any time)
+		let headers = Object.keys(content[0]);
+		this.setState({
+			processedFile: { content, headers },
+			axes: { x: headers[0], y: headers[1] || headers[0] },
+			chartTitle: ""
+		}); 
+		const dataProps = { data: content, ...this.state.axes, id: this.state.dataId };
+		this.props.onReceiveDataProps(dataProps);
+	}
+
+	//User chooses data from dropdown
+	onSelectData = id =>{
+		GetDataById(localStorage.getItem('token'), id)
+			.then(res => {
+				this.setId(id)
+				const content = Object.values(res.file_data);
+				this.processData(content)
+			});
+	}
+
+	//Set data id
+	setId(id){
+		this.setState({
+			dataId: id
+		});
+	}
+
 	handleAxesConfigChange = (axis, { key }) => {
 		const { content, headers } = this.state.processedFile;
-		// Update axes in dataProps
 		this.setState({ axes: { ...this.state.axes, [axis]: headers[key] } }, () => {
-			this.props.onReceiveDataProps({ data: content, ...this.state.axes });
+			this.props.onReceiveDataProps({ data: content, ...this.state.axes, id: this.state.dataId });
 		});
 	};
 
@@ -90,14 +115,14 @@ class WidgetDataEntry extends React.PureComponent {
 				<React.Fragment>
 					<div className="widget-header">
 						Configure the axes of your widget.
-          			</div>
+					</div>
 					<div style={{ margin: "1rem" }}>
 						<Row gutter={48}>
 							{["x", "y"].map((axis, index) => (
 								<React.Fragment key={index}>
 									<Col span={4} key={index}>
 										{axis}-axis
-                    					<br />
+										<br />
 										<Dropdown
 											overlay={
 												<Menu
@@ -127,7 +152,7 @@ class WidgetDataEntry extends React.PureComponent {
 			<React.Fragment>
 				<div className="widget-header">
 					Insert your chart name here (50 character limit).
-        		</div>
+				</div>
 				<div style={{ margin: "1rem" }}>
 					<Input
 						maxLength={50}
@@ -139,6 +164,7 @@ class WidgetDataEntry extends React.PureComponent {
 
 
 		const dataProps = content ? { data: content, ...this.state.axes } : {};
+		console.log(dataProps)
 
 		return (
 			<div>
@@ -150,10 +176,13 @@ class WidgetDataEntry extends React.PureComponent {
 				<center className="widget-header"> {selectedWidget.value} </center>
 				<Row>
 					<Col style={{ height: "20rem" }} span={24}>
-						<WidgetRender {...dataProps} />
+						<WidgetRender setTitle={this.props.setTitle} updateChart={this.props.updateChart} {...dataProps} {...(selectedWidget.value === "Text Box" ? { el: { chartTitle: this.props.title } } : {})} />
 					</Col>
-					<Col span={24}>
+					{this.props.widget !== "Text Box" && <div><Col span={24}>
 						<div className="widget-header"> Upload your .XLSX or your .CSV file here.</div>
+
+						<DataDropdown onSelectData={this.onSelectData}/>
+
 						<div style={{ margin: "1rem" }}>
 							<Upload
 								accept=".csv, .xlsx"
@@ -166,13 +195,16 @@ class WidgetDataEntry extends React.PureComponent {
 							>
 								<Button>
 									<UploadOutlined /> Upload Data
-                				</Button>
+								</Button>
 							</Upload>
 						</div>
 					</Col>
-					<Col span={24}>{axesConfig}</Col>
-					<Col span={24}>{inputTitle}</Col>
+						<Col span={24}>{axesConfig}</Col>
+						<Col span={24}>{inputTitle}</Col>
+					</div>
+					}
 				</Row>
+
 			</div>
 		);
 	}

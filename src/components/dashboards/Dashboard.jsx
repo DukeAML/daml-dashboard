@@ -6,7 +6,7 @@ import { Context } from "../../context/Context";
 import ThemingModal from "./ThemingModal";
 import ShareModal from "./ShareModal";
 import WidgetModal from "../widgetSelection/WidgetModal";
-import { GetCharts, CreateChart, UpdateChart, DeleteChart, GetDataIds, GetDataById } from '../../api/api';
+import { GetCharts, CreateChart, UpdateChart, DeleteChart, GetDataById } from '../../api/api';
 import Grid from './Grid';
 import './Dashboards.css';
 
@@ -14,7 +14,6 @@ const Dashboard = props => {
     const {context, dispatch} = useContext(Context);
     const [layout, setLayout] = useState([]);
     const [newCounter, setNewCounter] = useState(0);
-    const [dataIds, setDataIds] = useState([]);
     const [title, setTitle] = useState('');
     const [rem, setRem] = useState([]);
     const [saving, setSaving] = useState(false);
@@ -22,23 +21,27 @@ const Dashboard = props => {
     useEffect(() => {
         setTitle(props.dashboard && props.dashboard.name);
         loadDashboard();
-        updateDataIds();
     }, [props.dashboard])
 
     const loadDashboard = async () => {
+
         // Retrieve all charts
         const chartsWithoutData = await GetCharts(localStorage.getItem('token'), context.key)
             .then(res => { return res })
+        
         // Convert chart to expected format
         const charts = await Promise.all(chartsWithoutData.map(async i => {
             // Load in data to this chart if it is connected to a data object
             let data = undefined;
             if (i.data) {
-                data = await GetDataById(localStorage.getItem('token'), i.data)
-                    .then(res => res.file_data);
-                const axes = Object.keys(data[0]);
-                data = { data: data };
-                axes.forEach(axis => data[axis] = axis);
+                const dataObj = await GetDataById(localStorage.getItem('token'), i.data)
+                    .catch(err => {
+                        return {data: []}
+                    })
+                data = {data: dataObj.file_data}
+                data['dataTitle'] = dataObj.title
+                if(i.x) data['x'] = i.x;
+                if(i.y) data['y'] = i.y;
             }
             return {
                 i: i._id.toString(),
@@ -49,17 +52,14 @@ const Dashboard = props => {
                 widgetType: i.type,
                 data: i.data,
                 dataProps: data,
-                chartTitle: i.title
+                chartTitle: i.title,
+                font: i.font,
+                align: i.align,
+                bold: i.bold
             };
         }))
         setNewCounter(0);
         setLayout(charts);
-    }
-
-    const updateDataIds = () => {
-        GetDataIds(localStorage.getItem('token'))
-            .then(res => setDataIds(res))
-            .catch(e => console.log(e));
     }
 
     const handleAddWidget = (type, dataProps, chartTitle) => {
@@ -72,7 +72,10 @@ const Dashboard = props => {
                 h: 2,
                 widgetType: type,
                 dataProps: dataProps,
-                chartTitle: chartTitle
+                chartTitle: chartTitle,
+                font: 15,
+                align: 'left',
+                bold: 'normal'
             })
         );
         setNewCounter(newCounter + 1);
@@ -92,14 +95,13 @@ const Dashboard = props => {
         }
         setLayout(_.reject(layout, { i: el.i }));
     };
-
     // Save current chart content and state to db
     const save = async () => {
         setSaving(true);
         await Promise.all(layout.map((chart, i) => {
             // If this chart is newly added and does not exist on backend
             if (chart.i.charAt(0) === 'n') {
-                return CreateChart(localStorage.getItem('token'), { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, dashboard: context.key, title: chart.chartTitle })
+                return CreateChart(localStorage.getItem('token'), { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, dashboard: context.key, title: chart.chartTitle, data: chart.dataProps.id, x: chart.dataProps.x, y: chart.dataProps.y, font: chart.font, align: chart.align, bold: chart.bold })
                     .then(res => {
                         // Give the newly created chart its id to replace n{number}
                         layout[i].i = res._id;
@@ -107,14 +109,14 @@ const Dashboard = props => {
             }
             // Update this chart with current position, type, etc.
             else {
-                return UpdateChart(localStorage.getItem('token'), chart.i, { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, title: chart.chartTitle, data: chart.data })
+                const dp = chart.dataProps;
+                return UpdateChart(localStorage.getItem('token'), chart.i, { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, title: chart.chartTitle, data: chart.data, x: (dp ? dp.x: 'x'), y: (dp ? dp.y : 'y'), font: chart.font, align: chart.align, bold: chart.bold })
                     .catch(err => console.log(err));
             }
         }))
         // If charts have been removed
         if (rem.length > 0) {
             for (let el of rem) {
-                console.log("Deleting chart", el.i);
                 await DeleteChart(localStorage.getItem('token'), el.i)
                     .catch(err => console.log(err))
             }
@@ -149,6 +151,7 @@ const Dashboard = props => {
                     <Spin spinning = {saving} style={{ margin: '0.5rem' }}/>
                     {!viewOnly && 
                         <WidgetModal
+                            updateChart={updateChart}
                             onAddWidget={(type, dataProps, chartTitle) => {
                                 handleAddWidget(type, dataProps, chartTitle);
                             }}
@@ -176,7 +179,6 @@ const Dashboard = props => {
             <Grid 
                 viewOnly = {viewOnly}
                 layout={layout}
-                dataIds={dataIds}
                 onLayoutChange={onLayoutChange}
                 onRemoveItem={onRemoveItem}
                 updateChart={updateChart} />

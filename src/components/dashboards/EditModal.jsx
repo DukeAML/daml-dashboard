@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
-import { Modal, Col, Input, Select } from 'antd';
+import { Modal, Col, Input, Select,
+    Dropdown, Row, Upload, Button, Menu, TreeSelect } from 'antd';
+import { UploadOutlined } from "@ant-design/icons";
+import { DownOutlined } from "@ant-design/icons";
+
 import { widgetDict } from './Constants';
 import { GetDataById } from '../../api/api';
 import './Dashboards.css';
+import DataDropdown from "../data/DataDropdown";
+import { useEffect } from 'react';
 
 const EditModal = props => {
+    
     const [title, setTitle] = useState(props.el.chartTitle);
     const [dataProps, setDataProps] = useState(props.el.dataProps || {});
     const [dataId, setDataId] = useState(props.el.data);
+    const [headerMenu, setHeaderMenu] = useState([]);
 
     const handleOk = () => {
         // Send this chart with its updated properties to main grid to apply updates
@@ -38,8 +46,72 @@ const EditModal = props => {
             })
     }
 
+    useEffect(() => {
+        updateMenu()
+    },[dataProps]) 
+    
+    //get axes labels for dropdown
+    const updateMenu = () => {
+        if(dataProps.data){
+            const menu =  Object.keys(dataProps.data[0]).map((header, index) => (
+                <Menu.Item key={index}>{header}</Menu.Item>
+            ));
+            setHeaderMenu(menu)
+        }
+    }
+    
+    const handleAxesConfigChange = (axis, { key }) => {
+        //update dataProps with new axis selection
+        setDataProps(d => {
+            d[axis] = Object.keys(dataProps.data[0])[key];
+            return d;
+        })
+        //update input
+        updateMenu()
+	};
+
+
     const selectedWidget = widgetDict[props.el.widgetType];
-    const WidgetRender = selectedWidget || <div/>;
+    const WidgetRender = selectedWidget || <div />;
+
+    const headers = ['h1', 'h2', 'h3']
+    const axesConfig =
+			headers.length !== 0 ? (
+				<React.Fragment>
+					<div className="widget-header">
+						Configure the axes of your widget.
+          			</div>
+					<div style={{ margin: "1rem" }}>
+						<Row gutter={48}>
+							{["x", "y"].map((axis, index) => (
+								<React.Fragment key={index}>
+									<Col span={4} key={index}>
+										{axis}-axis
+                    					<br />
+										<Dropdown
+											overlay={
+												<Menu
+													onClick={key =>
+														handleAxesConfigChange(axis, key)
+													}
+												>
+													{headerMenu}
+												</Menu>
+											}
+										>
+											<Button>
+												{dataProps[axis]}
+                                                <DownOutlined />
+											</Button>
+										</Dropdown>
+									</Col>
+									<Col span={2} />
+								</React.Fragment>
+							))}
+						</Row>
+					</div>
+				</React.Fragment>
+			) : "";
 
     return (
         <Modal
@@ -56,8 +128,8 @@ const EditModal = props => {
                 padding: "2rem 3rem"
             }}
         >
-            <center className="widget-header"> 
-                {selectedWidget.value} 
+            <center className="widget-header">
+                {selectedWidget.value}
             </center>
             <Col style={{ height: "14rem" }} span={24}>
                 <WidgetRender {...dataProps} />
@@ -66,31 +138,29 @@ const EditModal = props => {
                 <div>
                     Select data
                 </div>
-                <Select style={{ width: 120 }} onChange={updateDataProps} defaultValue={dataId}>
-                    <Select.Option 
-                        key={undefined} 
-                        value={undefined}>
-                            None
-                    </Select.Option>
-                    {props.dataIds.map(data => {
-                        return(
-                            <Select.Option key={data._id} value={data._id}>
-                                {data.title}
-                            </Select.Option>
-                        )
-                    })}
-                </Select>
+                <DataDropdown onSelectData={updateDataProps} currentData={props.el.dataProps ? props.el.dataProps.dataTitle: null}/>
+                {axesConfig}
             </Col>
-            <Col span={24}>
-                <div className="widget-header">
-                    Insert your chart name here (50 character limit).
-        		</div>
-                <Input
-                    maxLength={50}
-                    value={title}
-                    onChange={onTitleChange} 
-                />
-            </Col>
+            {
+                props.el.widgetType !== "Text Box" &&
+
+                <Col span={24}>
+                    <div className="widget-header">
+                        Insert your chart name here (50 character limit).
+                    </div>
+                    <Input
+                        maxLength={50}
+                        value={title}
+                        onChange={onTitleChange}
+                    />
+                </Col>
+            }
+
+
+
+
+
+
         </Modal>
 
     )

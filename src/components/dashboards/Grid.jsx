@@ -15,7 +15,7 @@ const Grid = props => {
         setIsDraggable(drag => !drag);
     }
 
-    const { layout, onRemoveItem, onLayoutChange, updateChart, dataIds } = props;
+    const { layout, onRemoveItem, onLayoutChange, updateChart } = props;
     return (
         <ResponsiveReactGridLayout
             className="layout"
@@ -39,12 +39,11 @@ const Grid = props => {
                         h: el.h
                     }}
                     style={{
-                        padding: "1rem",
+                        padding: el.widgetType !== 'Text Box' ? "0.5rem 0.5rem 0px 0.5rem" : 0,
                         backgroundColor: context.widgetBackgroundColor
                     }}
                 >
                     <Chart
-                        dataIds={dataIds}
                         el={el}
                         onRemoveItem={onRemoveItem}
                         updateChart={updateChart}

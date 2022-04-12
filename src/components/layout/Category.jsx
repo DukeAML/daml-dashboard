@@ -35,8 +35,13 @@ const Category = props => {
     }
 
     return (
+<<<<<<< HEAD
         <div style={{display: 'block', justifyContent: 'center', alignItems: 'center', margin: 'auto', marginTop: '10vh'}}>
             <h1 style={{ fontSize: '2rem', textAlign: 'center' }} onClick={loadCategory}>{category.name}</h1>
+=======
+        <div style={{display: 'block', justifyContent: 'center', alignItems: 'center', margin: 'auto'}}>
+            <h1 style={{ fontSize: '2rem', textAlign: 'center' }}>{category.name}</h1>
+>>>>>>> abeecc365a03e1ed521a799e6eed8c499d3b12f1
             <DataModal addData={addData} category={category} catID={props.match.params.id}/>
 
             { data &&
