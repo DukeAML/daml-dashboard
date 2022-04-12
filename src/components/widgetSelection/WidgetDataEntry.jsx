@@ -20,12 +20,13 @@ class WidgetDataEntry extends React.PureComponent {
 		axes: {},
 		chartTitle: "",
 		rerenderWidget: false,
-		dataId: ""
+		dataId: "",
+		title: ""
 	};
 
 	static contextType = Context;
 	
-	processData = content => {
+	processData = (content, title) => {
 		// Only gets headers for first workbook for now (we can get headers simply from the content at any time)
 		let headers = Object.keys(content[0]);
 		this.setState({
@@ -33,7 +34,7 @@ class WidgetDataEntry extends React.PureComponent {
 			axes: { x: headers[0], y: headers[1] || headers[0] },
 			chartTitle: ""
 		}); 
-		const dataProps = { data: content, ...this.state.axes, id: this.state.dataId };
+		const dataProps = { data: content, ...this.state.axes, id: this.state.dataId, dataTitle: title };
 		this.props.onReceiveDataProps(dataProps);
 	}
 
@@ -43,7 +44,7 @@ class WidgetDataEntry extends React.PureComponent {
 			.then(res => {
 				this.setId(id)
 				const content = Object.values(res.file_data);
-				this.processData(content)
+				this.processData(content, res.title);
 			});
 	}
 
