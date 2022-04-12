@@ -11,7 +11,7 @@ import DataDropdown from "../data/DataDropdown";
 import { useEffect } from 'react';
 
 const EditModal = props => {
-    
+    console.log(props.el)
     const [title, setTitle] = useState(props.el.chartTitle);
     const [dataProps, setDataProps] = useState(props.el.dataProps || {});
     const [dataId, setDataId] = useState(props.el.data);
@@ -59,10 +59,8 @@ const EditModal = props => {
             ));
             setHeaderMenu(menu)
         }
-       
     }
     
-
     const handleAxesConfigChange = (axis, { key }) => {
         //update dataProps with new axis selection
         setDataProps(d => {
@@ -105,7 +103,7 @@ const EditModal = props => {
 											}
 										>
 											<Button>
-												{dataProps[axis]}
+												{dataProps[axis]? dataProps[axis]: axis}
                                                 <DownOutlined />
 											</Button>
 										</Dropdown>
@@ -143,9 +141,8 @@ const EditModal = props => {
                 <div>
                     Select data
                 </div>
-                <DataDropdown onSelectData={updateDataProps} currentData={props.el.dataProps.dataTitle}/>
+                <DataDropdown onSelectData={updateDataProps} currentData={dataProps ? dataProps.dataTitle: null}/>
                 {axesConfig}
-                
             </Col>
             {
                 props.el.widgetType !== "Text Box" &&
