@@ -100,7 +100,7 @@ const EditModal = props => {
 											}
 										>
 											<Button>
-												{dataProps[axis]}
+												{dataProps[axis] ? dataProps[axis] : axis}
                                                 <DownOutlined />
 											</Button>
 										</Dropdown>
