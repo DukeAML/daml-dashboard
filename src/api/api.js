@@ -152,11 +152,7 @@ export const UpdateChart = async (token, id, chart) => {
 }
 
 export const GetCharts = async (token, id) => {
-<<<<<<< HEAD
-	const { data } = await client.get(`/charts/${id}`, {
-=======
 	const { data } = await client.get(`dashboards/${id}/charts`, {
->>>>>>> abeecc365a03e1ed521a799e6eed8c499d3b12f1
 		headers: {
 			'Authorization': `Bearer ${token}`
 		}
@@ -281,10 +277,6 @@ export const GetDataByCategoryId = async (token, id) => {
 export default { Register, Login, Logout, LogoutAll, ReadUser, EditUser, 
 	CreateDashboard, GetDashboards, GetDashboard, DeleteDashboard, 
 	CreateChart, UpdateChart, GetCharts, DeleteChart, 
-<<<<<<< HEAD
-	GetData, PostData, GetDataIds, GetDataById, GetDataByCategoryId
-=======
 	GetData, PostData, GetDataIds, GetDataById, 
 	CreateCategory, GetCategories, GetCategory, EditCategory, DeleteCategory, GetDataByCategoryId
->>>>>>> abeecc365a03e1ed521a799e6eed8c499d3b12f1
 };
