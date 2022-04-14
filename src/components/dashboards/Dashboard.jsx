@@ -101,7 +101,7 @@ const Dashboard = props => {
         await Promise.all(layout.map((chart, i) => {
             // If this chart is newly added and does not exist on backend
             if (chart.i.charAt(0) === 'n') {
-                return CreateChart(localStorage.getItem('token'), { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, dashboard: context.key, title: chart.chartTitle, data: chart.dataProps.id, x: chart.dataProps.x, y: chart.dataProps.y, font: chart.font, align: chart.align, bold: chart.bold})
+                return CreateChart(localStorage.getItem('token'), { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, dashboard: context.key, title: chart.chartTitle, data: chart.dataProps.id, x: chart.dataProps.x, y: chart.dataProps.y, font: chart.font, align: chart.align, bold: chart.bold })
                     .then(res => {
                         // Give the newly created chart its id to replace n{number}
                         layout[i].i = res._id;
@@ -109,7 +109,8 @@ const Dashboard = props => {
             }
             // Update this chart with current position, type, etc.
             else {
-                return UpdateChart(localStorage.getItem('token'), chart.i, { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, title: chart.chartTitle, data: chart.data, x: chart.dataProps.x, y: chart.dataProps.y, font: chart.font, align: chart.align, bold: chart.bold})
+                const dp = chart.dataProps;
+                return UpdateChart(localStorage.getItem('token'), chart.i, { grid: [chart.x, chart.y, chart.w, chart.h], type: chart.widgetType, title: chart.chartTitle, data: chart.data, x: (dp ? dp.x: 'x'), y: (dp ? dp.y : 'y'), font: chart.font, align: chart.align, bold: chart.bold })
                     .catch(err => console.log(err));
             }
         }))

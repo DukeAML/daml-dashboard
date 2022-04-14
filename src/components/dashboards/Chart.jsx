@@ -27,7 +27,6 @@ const Chart = props => {
                         el={props.el}
                         updateChart={props.updateChart}
                         onClose = {props.toggleDrag}
-                        dataIds = {props.dataIds}
                     />
             }
             <div onDoubleClick={() => {
