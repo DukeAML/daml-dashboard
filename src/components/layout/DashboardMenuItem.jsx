@@ -67,7 +67,9 @@ const DashboardMenuItem = props => {
     const backgroundColor = hover ? '#8c9bd1' : (props.selected ? '#798DE4' : '#4C5B69');
 
     return (
-        <span>
+        <span onKeyPress={(event) => {
+			if (event.key === "Enter"  && visible) handleOk();
+			}}>
             <Menu.Item className="menu-item dash-menu-item" onClick={changePage}
                 onMouseOver={onEnter}
                 onMouseOut={onExit}

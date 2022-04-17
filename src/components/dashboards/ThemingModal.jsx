@@ -60,7 +60,9 @@ const ThemingModal = props => {
 	}
 
 	return (
-		<span>
+		<span onKeyPress={(event) => {
+			if (event.key === "Enter"  && visible) handleOk();
+			}}>
 			<Button
 				className="modal-button-theme"
 				type="primary"

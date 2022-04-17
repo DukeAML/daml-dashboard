@@ -114,6 +114,9 @@ const EditModal = props => {
 			) : "";
 
     return (
+        <span onKeyPress={(event) => {
+			if (event.key === "Enter"  && props.visible) handleOk();
+			}}>
         <Modal
             className="modal-style"
             title={props.el.chartTitle || 'Unnamed Chart'}
@@ -162,6 +165,7 @@ const EditModal = props => {
 
 
         </Modal>
+    </span>
 
     )
 }
