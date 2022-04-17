@@ -10,13 +10,11 @@ const DataDropdown = props => {
 
   useEffect(async () => {
     loadCategories()
-    //if dropdown is being loaded in editmodal
     if (props.currentData){
       setValue(props.currentData);
     }
   }, [])
 
-  //create tree from categories
   const loadCategories = async () => {
     await GetCategories(localStorage.getItem('token'))
         .then(res => { 

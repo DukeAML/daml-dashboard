@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {widgets, widgetDict} from './Constants';
 import EditModal from './EditModal';
-import { ResponsiveContainer } from 'recharts';
 import './Dashboards.css';
 import DraftWidgetModal from './DraftWidgetModal';
 

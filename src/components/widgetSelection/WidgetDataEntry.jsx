@@ -91,6 +91,7 @@ class WidgetDataEntry extends React.PureComponent {
 		this.setState({ axes: { ...this.state.axes, [axis]: headers[key] } }, () => {
 			this.props.onReceiveDataProps({ data: content, ...this.state.axes, id: this.state.dataId });
 		});
+
 	};
 
 	handleChartTitleChange = e => {
@@ -110,6 +111,8 @@ class WidgetDataEntry extends React.PureComponent {
 			<Menu.Item key={index}>{header}</Menu.Item>
 		));
 
+		const singleAxis = ['Bubble chart', 'Simple pie chart', 'Active shape pie chart', 'Simple radial bar chart', 'Tree map']
+		const axisMap = singleAxis.includes(this.props.widget) ? ['y'] : ['x', 'y']
 		const axesConfig =
 			headers.length !== 0 ? (
 				<React.Fragment>
@@ -118,10 +121,10 @@ class WidgetDataEntry extends React.PureComponent {
 					</div>
 					<div style={{ margin: "1rem" }}>
 						<Row gutter={48}>
-							{["x", "y"].map((axis, index) => (
+							{axisMap.map((axis, index) => (
 								<React.Fragment key={index}>
 									<Col span={4} key={index}>
-										{axis}-axis
+									{singleAxis.includes(this.props.widget) ? 'Column': `${axis}-axis`}
 										<br />
 										<Dropdown
 											overlay={
@@ -164,7 +167,6 @@ class WidgetDataEntry extends React.PureComponent {
 
 
 		const dataProps = content ? { data: content, ...this.state.axes } : {};
-		console.log(dataProps)
 
 		return (
 			<div>
@@ -178,7 +180,7 @@ class WidgetDataEntry extends React.PureComponent {
 					<Col style={{ height: "20rem" }} span={24}>
 						<WidgetRender setTitle={this.props.setTitle} updateChart={this.props.updateChart} {...dataProps} {...(selectedWidget.value === "Text Box" ? { el: { chartTitle: this.props.title } } : {})} />
 					</Col>
-					{this.props.widget !== "Text Box" && <div><Col span={24}>
+					{this.props.widget !== "Text Box" && <div style={{width: '100%'}}><Col span={24}>
 						<div className="widget-header"> Upload your .XLSX or your .CSV file here.</div>
 
 						<DataDropdown onSelectData={this.onSelectData}/>

@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { RadialBarChart, RadialBar, ResponsiveContainer } from 'recharts';
+import { RadialBarChart, RadialBar, ResponsiveContainer, Legend } from 'recharts';
 import { Context } from "../../context/Context";
 
 const data = [
@@ -30,7 +30,9 @@ export default class SimpleRadialBarChart extends PureComponent {
 		return (
 			<ResponsiveContainer width="100%" height="100%">
 				<RadialBarChart data={this.props.data || data}>
+					{/* <Legend verticalAlign="top" height={36}/> */}
 					<RadialBar minAngle={15} label={{ position: 'insideStart', fill: '#fff' }} background clockWise dataKey={this.props.x || "uv"} fill={primary} />
+					{/* <RadialBar minAngle={15} label={{ position: 'insideStart', fill: '#fff' }} background clockWise dataKey={this.props.x || "uv"}  /> */}
 				</RadialBarChart>
 			</ResponsiveContainer>
 		);
