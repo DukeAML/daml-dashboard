@@ -39,9 +39,12 @@ export default class VerticalLineChart extends PureComponent {
 				<LineChart
 					layout="vertical"
 					data={this.props.data || data}
+					margin={{top: 5, right: 5, bottom: 35, left: 15 }}
 				>
-					<XAxis type="number" domain={[0, 'dataMax']} />
-					<YAxis dataKey={this.props.y || "name"} type="category" />
+					<XAxis type="number" domain={[0, 'dataMax']} 
+					label={{ value: `${this.props.x || "name"}`, position: 'bottom', offset:25}} />
+					<YAxis dataKey={this.props.y || "name"} type="category" 
+					label={{ value: `${this.props.y || "name"}`, angle: -90, position: 'left'}} />
 					<CartesianGrid strokeDasharray="3 3" />
 					<Tooltip />
 					<Legend />

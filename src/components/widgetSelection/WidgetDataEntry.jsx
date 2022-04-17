@@ -16,7 +16,6 @@ class WidgetDataEntry extends React.PureComponent {
 	}
 	state = {
 		selected: "",
-		fileList: [],
 		processedFile: { contents: "", headers: [] },
 		axes: {},
 		chartTitle: "",
@@ -26,37 +25,6 @@ class WidgetDataEntry extends React.PureComponent {
 
 	static contextType = Context;
 	
-	handleFileChange = info => {
-		this.setState({
-			fileList: info.fileList.slice(-1) // only allow upload of one file
-		});
-	};
-
-	// Adding file from file explorer
-	onFileChange({ file, onSuccess }) {
-		const reader = new FileReader();
-		reader.onload = () => {
-			const workBook = reader.result;
-			const wb = XLSX.read(workBook, { type: "binary" });
-			const wsname = wb.SheetNames[0];
-			const ws = wb.Sheets[wsname];
-			const jsonContentData = wb.SheetNames.reduce((initial, name) => {
-				// Gets all data
-				// ex. initial[name] = [{x: 1, y: 10, __rowNum__: 1}, {x: 2, y: 1, __rowNum__: 2}, ...]
-				initial[name] = XLSX.utils.sheet_to_json(ws, { defval: null });
-				return initial;
-			}, {});
-
-			// Only gets data for first workbook for now
-			const content = Object.values(jsonContentData)[0];
-			this.processData(content)
-
-			// Mark file finished reading
-			onSuccess("Done", file);
-		}
-		reader.readAsBinaryString(file);
-	}
-
 	processData = content => {
 		// Only gets headers for first workbook for now (we can get headers simply from the content at any time)
 		let headers = Object.keys(content[0]);
@@ -91,6 +59,7 @@ class WidgetDataEntry extends React.PureComponent {
 		this.setState({ axes: { ...this.state.axes, [axis]: headers[key] } }, () => {
 			this.props.onReceiveDataProps({ data: content, ...this.state.axes, id: this.state.dataId });
 		});
+
 	};
 
 	handleChartTitleChange = e => {
@@ -110,6 +79,8 @@ class WidgetDataEntry extends React.PureComponent {
 			<Menu.Item key={index}>{header}</Menu.Item>
 		));
 
+		const singleAxis = ['Bubble chart', 'Simple pie chart', 'Active shape pie chart', 'Simple radial bar chart', 'Tree map']
+		const axisMap = singleAxis.includes(this.props.widget) ? ['y'] : ['x', 'y']
 		const axesConfig =
 			headers.length !== 0 ? (
 				<React.Fragment>
@@ -118,10 +89,10 @@ class WidgetDataEntry extends React.PureComponent {
 					</div>
 					<div style={{ margin: "1rem" }}>
 						<Row gutter={48}>
-							{["x", "y"].map((axis, index) => (
+							{axisMap.map((axis, index) => (
 								<React.Fragment key={index}>
 									<Col span={4} key={index}>
-										{axis}-axis
+									{singleAxis.includes(this.props.widget) ? 'Column': `${axis}-axis`}
 										<br />
 										<Dropdown
 											overlay={
@@ -164,7 +135,6 @@ class WidgetDataEntry extends React.PureComponent {
 
 
 		const dataProps = content ? { data: content, ...this.state.axes } : {};
-		console.log(dataProps)
 
 		return (
 			<div>
@@ -178,26 +148,11 @@ class WidgetDataEntry extends React.PureComponent {
 					<Col style={{ height: "20rem" }} span={24}>
 						<WidgetRender setTitle={this.props.setTitle} updateChart={this.props.updateChart} {...dataProps} {...(selectedWidget.value === "Text Box" ? { el: { chartTitle: this.props.title } } : {})} />
 					</Col>
-					{this.props.widget !== "Text Box" && <div><Col span={24}>
-						<div className="widget-header"> Upload your .XLSX or your .CSV file here.</div>
+					{this.props.widget !== "Text Box" && <div style={{width: '100%'}}><Col span={24}>
+						<div className="widget-header"> Select data for your chart.</div>
 
 						<DataDropdown onSelectData={this.onSelectData}/>
 
-						<div style={{ margin: "1rem" }}>
-							<Upload
-								accept=".csv, .xlsx"
-								multiple={false}
-								name="file"
-								fileList={this.state.fileList}
-								action="memory"
-								customRequest={this.onFileChange.bind(this)}
-								onChange={this.handleFileChange}
-							>
-								<Button>
-									<UploadOutlined /> Upload Data
-								</Button>
-							</Upload>
-						</div>
 					</Col>
 						<Col span={24}>{axesConfig}</Col>
 						<Col span={24}>{inputTitle}</Col>
