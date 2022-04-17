@@ -30,9 +30,10 @@ class SimpleLineChart extends React.Component {
 
 		return (
 			<ResponsiveContainer width="100%" height="100%">
-				<LineChart data={this.props.data || data}>
-					<XAxis dataKey={this.props.x || "name"} />
-					<YAxis />
+				<LineChart data={this.props.data || data}
+					margin={{top: 15, right: 35, bottom: 45, left: 25 }}>
+					<XAxis dataKey={this.props.x || "name"} label={{ value: `${this.props.x || "name"}`, position: 'bottom', offset:25}} />
+					<YAxis label={{ value: `${this.props.y || "name"}`, angle: -90, position: 'left'}} />
 					<CartesianGrid strokeDasharray="3 3" />
 					<Tooltip />
 					<Legend />

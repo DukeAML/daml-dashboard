@@ -20,19 +20,17 @@ export default class Example extends PureComponent {
 				<ScatterChart
 					width={500}
 					height={400}
-					margin={{
-						top: 20, right: 20, bottom: 20, left: 20,
-					}}
+					margin={{top: 15, right: 35, bottom: 45, left: 25 }}
 				>
 					<CartesianGrid />
 					<XAxis dataKey={this.props.x || "x"}
 						type="number"
-						name={this.props.xName || "stature"}
-						unit={this.props.xUnit || "cm"} />
+						label={{ value: `${this.props.x || "name"}`, position: 'bottom', offset:25}}
+						/>
 					<YAxis dataKey={this.props.y || "y"}
 						type="number"
-						name={this.props.yName || "weight"}
-						unit={this.props.yUnit || "kg"} />
+						label={{ value: `${this.props.y || "name"}`, angle: -90, position: 'left'}}
+						/>
 					<ZAxis type="number" range={[100]} />
 					<Tooltip cursor={{ strokeDasharray: '3 3' }} />
 					<Legend />

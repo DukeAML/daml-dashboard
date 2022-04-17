@@ -64,18 +64,18 @@ const DataDropdown = props => {
     props.onSelectData(val);
   };
 
-  return (
-    <TreeSelect
-      treeDataSimpleMode
-      style={{ width: '100%' }}
-      value={value}
-      dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-      placeholder="Please select"
-      onChange={onChange}
-      loadData={loadById}
-      treeData={tree}
-    />
-  );
+    return (
+      <TreeSelect
+        treeDataSimpleMode
+        style={{ width: '100%' }}
+        value={value}
+        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+        placeholder="Please select"
+        onChange={onChange}
+        loadData={loadById}
+        treeData={tree}
+      />
+    );
 }
 
 export default DataDropdown;
