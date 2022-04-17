@@ -39,7 +39,7 @@ export default class VerticalLineChart extends PureComponent {
 				<LineChart
 					layout="vertical"
 					data={this.props.data || data}
-					margin={{top: 5, right: 5, bottom: 35, left: 15 }}
+					margin={{top: 15, right: 35, bottom: 45, left: 25 }}
 				>
 					<XAxis type="number" domain={[0, 'dataMax']} 
 					label={{ value: `${this.props.x || "name"}`, position: 'bottom', offset:25}} />

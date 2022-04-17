@@ -28,7 +28,7 @@ class SimpleScatterChart extends React.Component {
 		return (
 			<ResponsiveContainer width="95%" height="100%">
 				<ScatterChart
-					margin={{top: 5, right: 5, bottom: 35, left: 15 }} >
+					margin={{top: 15, right: 35, bottom: 45, left: 25 }} >
 					<CartesianGrid />
 					<XAxis
 						dataKey={this.props.x || "x"}

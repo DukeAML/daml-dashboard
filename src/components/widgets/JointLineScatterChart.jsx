@@ -20,7 +20,7 @@ export default class Example extends PureComponent {
 				<ScatterChart
 					width={500}
 					height={400}
-					margin={{top: 5, right: 5, bottom: 35, left: 15 }}
+					margin={{top: 15, right: 35, bottom: 45, left: 25 }}
 				>
 					<CartesianGrid />
 					<XAxis dataKey={this.props.x || "x"}
