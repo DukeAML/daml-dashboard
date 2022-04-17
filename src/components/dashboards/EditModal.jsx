@@ -11,7 +11,7 @@ import DataDropdown from "../data/DataDropdown";
 import { useEffect } from 'react';
 
 const EditModal = props => {
-    
+    console.log(props)
     const [title, setTitle] = useState(props.el.chartTitle);
     const [dataProps, setDataProps] = useState(props.el.dataProps || {});
     const [dataId, setDataId] = useState(props.el.data);
@@ -36,7 +36,11 @@ const EditModal = props => {
             .then(res => {
                 const axes = Object.keys(res.file_data[0]);
                 const newData = { data: res.file_data };
-                axes.forEach(axis => newData[axis] = axis);
+                //axis needs to be selectable by user..
+                newData['dataTitle'] = res.title;
+                //axes.forEach(axis => newData[axis] = axis);
+                newData['x'] = (axes.length > 0) ? axes[0] : 'x';
+                newData['y'] = (axes.length > 1) ? axes[1] : 'y';
                 setDataProps(newData)
                 setDataId(e)
             })
@@ -74,6 +78,8 @@ const EditModal = props => {
     const selectedWidget = widgetDict[props.el.widgetType];
     const WidgetRender = selectedWidget || <div />;
 
+    const singleAxis = ['Bubble chart', 'Simple pie chart', 'Active shape pie chart', 'Simple radial bar chart', 'Tree map']
+    const axisMap = singleAxis.includes(props.el.widgetType) ? ['y'] : ['x', 'y']
     const headers = ['h1', 'h2', 'h3']
     const axesConfig =
 			headers.length !== 0 ? (
@@ -83,10 +89,10 @@ const EditModal = props => {
           			</div>
 					<div style={{ margin: "1rem" }}>
 						<Row gutter={48}>
-							{["x", "y"].map((axis, index) => (
+							{axisMap.map((axis, index) => (
 								<React.Fragment key={index}>
 									<Col span={4} key={index}>
-										{axis}-axis
+										{singleAxis.includes(props.el.widgetType) ? 'Column': `${axis}-axis`}
                     					<br />
 										<Dropdown
 											overlay={
@@ -100,7 +106,7 @@ const EditModal = props => {
 											}
 										>
 											<Button>
-												{dataProps[axis]}
+												{dataProps[axis]? dataProps[axis]: axis}
                                                 <DownOutlined />
 											</Button>
 										</Dropdown>
@@ -138,7 +144,7 @@ const EditModal = props => {
                 <div>
                     Select data
                 </div>
-                <DataDropdown onSelectData={updateDataProps} currentData={props.el.dataProps ? props.el.dataProps.dataTitle: null}/>
+                <DataDropdown onSelectData={updateDataProps} currentData={dataProps ? dataProps.dataTitle: null}/>
                 {axesConfig}
             </Col>
             {
@@ -155,11 +161,6 @@ const EditModal = props => {
                     />
                 </Col>
             }
-
-
-
-
-
 
         </Modal>
 

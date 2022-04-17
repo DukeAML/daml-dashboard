@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const client = axios.create({
 	baseURL: "https://peagle-backend.herokuapp.com"
-	//baseURL: "http://localhost:5000"
+	// baseURL: "http://localhost:5000"
 });
 
 const printOutput = true;

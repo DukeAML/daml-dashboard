@@ -37,10 +37,11 @@ export default class PosAndNegBarChart extends PureComponent {
 			<ResponsiveContainer width="100%" height="100%">
 				<BarChart
 					data={this.props.data || data}
+					margin={{top: 5, right: 5, bottom: 35, left: 15 }}
 				>
 					<CartesianGrid strokeDasharray="3 3" />
-					<XAxis dataKey={this.props.x || "name"} />
-					<YAxis />
+					<XAxis  dataKey={this.props.x || "name"} label={{ value: `${this.props.x || "name"}`, position: 'bottom', offset:25}} />
+					<YAxis label={{ value: `${this.props.y || "name"}`, angle: -90, position: 'left'}} />
 					<Tooltip />
 					<Legend />
 					<ReferenceLine y={0} stroke="#000" />
