@@ -44,7 +44,9 @@ const CategoryModal = props => {
 	// Important for menu item context
 	const { staticContext, ...rest} = props;
 	return (
-		<span>
+		<span onKeyPress={(event) => {
+			if (event.key === "Enter"  && visible) handleCategoryOk();
+			}}>
 			<Menu.Item key="create-category" className="menu-item" onClick={showModal}>
 				<span style={{ display: 'flex', alignItems: 'center'}, props.style}>
 					<FileAddFilled style = {{margin: '0.5rem 0.5rem 0.5rem 0'}}/>

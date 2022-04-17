@@ -66,7 +66,9 @@ const WidgetModal = props => {
 	const CurrentView = widgetSteps[step];
 	const okText = step === 1 ? "Add Widget" : "Next";
 	return (
-		<span>
+		<span onKeyPress={(event) => {
+			if (event.key === "Enter"  && visible) handleOk();
+			}}>
 			<Button
 				className="modal-button-theme"
 				type="primary"
