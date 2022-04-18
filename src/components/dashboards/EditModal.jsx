@@ -82,7 +82,7 @@ const EditModal = props => {
 						Configure the axes of your widget.
           			</div>
 					<div style={{ margin: "1rem" }}>
-						<Row gutter={48}>
+						<Row gutter={48} justify='center'>
 							{["x", "y"].map((axis, index) => (
 								<React.Fragment key={index}>
 									<Col span={4} key={index}>
